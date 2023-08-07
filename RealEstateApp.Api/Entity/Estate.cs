@@ -15,6 +15,7 @@ namespace RealEstateApp.Api.Entity
     public EstateStatus EstateStatus { get; set; }
 
     public ICollection<EstatePrice> EstatePrices { get; set; }
+    public ICollection<EstatePhoto> EstatePhotos { get; set; }
 
     public Estate()
     {
@@ -22,6 +23,7 @@ namespace RealEstateApp.Api.Entity
       EstateType = new EstateType();
       EstateStatus = new EstateStatus();
       EstatePrices = new List<EstatePrice>();
+      EstatePhotos = new List<EstatePhoto>();
     }
   }
 }

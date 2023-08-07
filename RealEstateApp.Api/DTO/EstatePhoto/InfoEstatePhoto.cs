@@ -3,7 +3,7 @@ using BDTO = RealEstateApp.Api.DTO.BaseDTO;
 
 namespace RealEstateApp.Api.DTO.Estate
 {
-  public class EstatePhotoDetail : BDTO.BaseDTO
+  public class InfoEstatePhoto : BDTO.BaseDTO
   {
     public byte[] Bytes { get; set; }
     public string Description { get; set; }
@@ -11,7 +11,7 @@ namespace RealEstateApp.Api.DTO.Estate
     public decimal Size { get; set; }
     public string Estate { get; set; }
 
-    public EstatePhotoDetail()
+    public InfoEstatePhoto()
     {
       Bytes = Array.Empty<byte>();
       Description = string.Empty;
@@ -19,7 +19,7 @@ namespace RealEstateApp.Api.DTO.Estate
       Estate = string.Empty;
     }
 
-    public EstatePhotoDetail(ET.EstatePhoto estatePhoto)
+    public InfoEstatePhoto(ET.EstatePhoto estatePhoto)
     {
       Id = estatePhoto.Id;
       Bytes = estatePhoto.Bytes;

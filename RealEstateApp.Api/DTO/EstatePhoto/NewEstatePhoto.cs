@@ -1,6 +1,6 @@
 using ET = RealEstateApp.Api.Entity;
 
-namespace RealEstateApp.Api.DTO.BookDto
+namespace RealEstateApp.Api.DTO.EstatePhoto
 {
   public class NewEstatePhoto
   {

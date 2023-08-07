@@ -1,7 +1,7 @@
 using ET = RealEstateApp.Api.Entity;
 using BDTO = RealEstateApp.Api.DTO.BaseDTO;
 
-namespace RealEstateApp.Api.DTO.BookDto
+namespace RealEstateApp.Api.DTO.EstatePhoto
 {
   public class EditEstatePhoto : BDTO.BaseDTO
   {

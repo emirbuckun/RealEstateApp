@@ -3,7 +3,7 @@ using BDTO = RealEstateApp.Api.DTO.BaseDTO;
 
 namespace RealEstateApp.Api.DTO.Estate
 {
-  public class EstateDetail : BDTO.BaseDTO
+  public class InfoEstate : BDTO.BaseDTO
   {
     public string Name { get; set; }
     public double Latitude { get; set; }
@@ -13,7 +13,7 @@ namespace RealEstateApp.Api.DTO.Estate
     public string EstateType { get; set; }
     public string EstateStatus { get; set; }
 
-    public EstateDetail(ET.Estate estate)
+    public InfoEstate(ET.Estate estate)
     {
       Id = estate.Id;
       Name = estate.Name;
