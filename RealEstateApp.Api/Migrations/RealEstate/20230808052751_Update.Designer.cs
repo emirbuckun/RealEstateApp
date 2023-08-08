@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateApp.Api.DatabaseContext;
 
@@ -11,9 +12,11 @@ using RealEstateApp.Api.DatabaseContext;
 namespace RealEstateApp.Api.Migrations.RealEstate
 {
     [DbContext(typeof(RealEstateContext))]
-    partial class RealEstateContextModelSnapshot : ModelSnapshot
+    [Migration("20230808052751_Update")]
+    partial class Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,7 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -43,6 +47,7 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -89,6 +94,7 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
@@ -127,6 +133,7 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -158,6 +165,7 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -180,6 +188,7 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<byte[]>("Bytes")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -189,12 +198,14 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EstateId")
                         .HasColumnType("int");
 
                     b.Property<string>("FileExtension")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -237,7 +248,7 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstateId")
+                    b.Property<int?>("EstateId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -296,15 +307,11 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RealEstateApp.Api.Entity.Estate", "Estate")
+                    b.HasOne("RealEstateApp.Api.Entity.Estate", null)
                         .WithMany("Prices")
-                        .HasForeignKey("EstateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EstateId");
 
                     b.Navigation("Currency");
-
-                    b.Navigation("Estate");
                 });
 
             modelBuilder.Entity("RealEstateApp.Api.Entity.Estate", b =>
