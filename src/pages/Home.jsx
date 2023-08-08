@@ -1,7 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import { Col } from "react-bootstrap";
 
 const Home = () => {
+  const navigate = useNavigate();
   const list = [
     { name: "Currencies", url: "/currencies" },
     { name: "Estates", url: "/estates" },
@@ -14,24 +19,32 @@ const Home = () => {
   return (
     <>
       <h1>Home</h1>
-      <span>Click to see the lists.</span>
-      <br />
-      <br />
-      <div className="card-container">
-        {list.map((item, index) => {
-          return <Card key={index} name={item.name} url={item.url} />;
-        })}
-      </div>
+      <Container>
+        <Row>
+          {list.map((item, index) => {
+            const { name, url } = item;
+            return (
+              <Col key={index}>
+                <Card
+                  key={index}
+                  style={{
+                    cursor: "pointer",
+                    width: "12rem",
+                  }}
+                  onClick={() => navigate(url)}
+                  className="mb-3 card"
+                  border="primary"
+                >
+                  <Card.Body>
+                    <Card.Title>{name}</Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+      </Container>
     </>
-  );
-};
-
-const Card = ({ name, url }) => {
-  const navigate = useNavigate();
-  return (
-    <div className="card" onClick={() => navigate(url)}>
-      <h3>{name}</h3>
-    </div>
   );
 };
 
