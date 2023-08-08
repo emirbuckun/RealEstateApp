@@ -104,7 +104,7 @@ namespace RealEstateApp.Api.Controllers
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
-      var item = await _realEstateContext.Estates.SingleOrDefaultAsync(x => x.Id == id);
+      var item = await _realEstateContext.Estates.SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
       if (item != null)
       {
         var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
