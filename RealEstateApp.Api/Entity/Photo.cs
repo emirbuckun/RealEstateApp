@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RealEstateApp.Api.Entity
 {
-  public class EstatePhoto : BaseEntity
+  public class Photo : BaseEntity
   {
     public byte[] Bytes { get; set; }
     public string Description { get; set; }
@@ -13,7 +13,7 @@ namespace RealEstateApp.Api.Entity
     public int EstateId { get; set; }
     public Estate Estate { get; set; }
 
-    public EstatePhoto()
+    public Photo()
     {
       Bytes = Array.Empty<byte>();
       Description = string.Empty;

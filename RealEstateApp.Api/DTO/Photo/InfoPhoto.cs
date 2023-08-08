@@ -1,7 +1,7 @@
 using ET = RealEstateApp.Api.Entity;
 using BDTO = RealEstateApp.Api.DTO.BaseDTO;
 
-namespace RealEstateApp.Api.DTO.EstatePhoto
+namespace RealEstateApp.Api.DTO.Photo
 {
   public class InfoEstatePhoto : BDTO.BaseDTO
   {
@@ -19,14 +19,14 @@ namespace RealEstateApp.Api.DTO.EstatePhoto
       Estate = string.Empty;
     }
 
-    public InfoEstatePhoto(ET.EstatePhoto estatePhoto)
+    public InfoEstatePhoto(ET.Photo photo)
     {
-      Id = estatePhoto.Id;
-      Bytes = estatePhoto.Bytes;
-      Description = estatePhoto.Description;
-      FileExtension = estatePhoto.FileExtension;
-      Size = estatePhoto.Size;
-      Estate = estatePhoto.Estate.Name;
+      Id = photo.Id;
+      Bytes = photo.Bytes;
+      Description = photo.Description;
+      FileExtension = photo.FileExtension;
+      Size = photo.Size;
+      Estate = photo.Estate.Name;
     }
   }
 }

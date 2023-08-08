@@ -14,16 +14,16 @@ namespace RealEstateApp.Api.Entity
     public EstateType EstateType { get; set; }
     public EstateStatus EstateStatus { get; set; }
 
-    public ICollection<EstatePrice> EstatePrices { get; set; }
-    public ICollection<EstatePhoto> EstatePhotos { get; set; }
+    public ICollection<Price> Prices { get; set; }
+    public ICollection<Photo> Photos { get; set; }
 
     public Estate()
     {
       Name = string.Empty;
       EstateType = new EstateType();
       EstateStatus = new EstateStatus();
-      EstatePrices = new List<EstatePrice>();
-      EstatePhotos = new List<EstatePhoto>();
+      Prices = new List<Price>();
+      Photos = new List<Photo>();
     }
   }
 }

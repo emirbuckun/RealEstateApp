@@ -1,15 +1,15 @@
 using ET = RealEstateApp.Api.Entity;
 
-namespace RealEstateApp.Api.DTO.EstatePrice
+namespace RealEstateApp.Api.DTO.Price
 {
-  public class NewEstatePrice
+  public class NewPrice
   {
     public double Amount { get; set; }
     public int CurrencyId { get; set; }
 
-    public ET.EstatePrice ToEstatePrice()
+    public ET.Price ToPrice()
     {
-      return new ET.EstatePrice()
+      return new ET.Price()
       {
         Id = 0,
         Amount = this.Amount,

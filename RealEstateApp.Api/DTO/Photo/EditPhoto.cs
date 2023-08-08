@@ -1,9 +1,9 @@
 using ET = RealEstateApp.Api.Entity;
 using BDTO = RealEstateApp.Api.DTO.BaseDTO;
 
-namespace RealEstateApp.Api.DTO.EstatePhoto
+namespace RealEstateApp.Api.DTO.Photo
 {
-  public class EditEstatePhoto : BDTO.BaseDTO
+  public class EditPhoto : BDTO.BaseDTO
   {
     public byte[] Bytes { get; set; }
     public string Description { get; set; }
@@ -11,16 +11,16 @@ namespace RealEstateApp.Api.DTO.EstatePhoto
     public decimal Size { get; set; }
     public int EstateId { get; set; }
 
-    public EditEstatePhoto()
+    public EditPhoto()
     {
       Bytes = Array.Empty<byte>();
       Description = string.Empty;
       FileExtension = string.Empty;
     }
 
-    public ET.EstatePhoto ToEstatePhoto()
+    public ET.Photo ToEstatePhoto()
     {
-      return new ET.EstatePhoto()
+      return new ET.Photo()
       {
         Id = this.Id,
         Bytes = this.Bytes,

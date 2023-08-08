@@ -1,12 +1,12 @@
 namespace RealEstateApp.Api.Entity
 {
-  public class EstatePrice : BaseEntity
+  public class Price : BaseEntity
   {
     public double Amount { get; set; }
     public int CurrencyId { get; set; }
     public Currency Currency { get; set; }
 
-    public EstatePrice()
+    public Price()
     {
       Currency = new Currency();
     }
