@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { addType, editType, getType } from "/src/services/TypeService";
+import { addStatus, editStatus, getStatus } from "/src/services/StatusService";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
@@ -7,12 +7,12 @@ const Edit = () => {
   const { id } = useParams();
   const [name, setName] = useState("");
   const navigate = useNavigate();
-  const navigateUrl = "/types";
+  const navigateUrl = "/statuses";
   const operation = id ? "Edit" : "Add";
 
   const handleSubmit = () => {
     if (id) {
-      editType({ id: id, name: name })
+      editStatus({ id: id, name: name })
         .then((response) => {
           if (response.status == 200) {
             alert("Edit operation successful!");
@@ -24,7 +24,7 @@ const Edit = () => {
           alert("Error occurred:\n" + error);
         });
     } else {
-      addType({ name: name })
+      addStatus({ name: name })
         .then((response) => {
           if (response.status == 200) {
             alert("Add operation successful!");
@@ -38,30 +38,30 @@ const Edit = () => {
     }
   };
 
-  const fetchType = () => {
-    getType(id)
+  const fetchStatus = () => {
+    getStatus(id)
       .then((response) => {
         if (response.status == 200) {
           setName(response.data.name);
         } else console.log("Error occurred!");
       })
       .catch((error) =>
-        console.log("Error occurred while fetching type: " + error)
+        console.log("Error occurred while fetching status: " + error)
       );
   };
 
   useEffect(() => {
-    id && fetchType();
+    id && fetchStatus();
   }, []);
 
   return (
     <>
-      <h1>{operation} Type</h1>
+      <h1>{operation} Status</h1>
       <div>
-        <label name="name">Type Name</label>&nbsp;
+        <label name="name">Status Name</label>&nbsp;
         <input
           value={name}
-          type="text"
+          status="text"
           name="name"
           id="txtName"
           onChange={(e) => setName(e.target.value)}

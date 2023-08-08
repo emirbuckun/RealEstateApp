@@ -16,7 +16,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/types" element={<TypeList />} />
           <Route exact path="/statuses" element={<StatusList />} />
-          <Route exact path="/type/edit/:?" element={<TypeEdit />} />
+          <Route exact path="/type/edit/:id?" element={<TypeEdit />} />
           <Route exact path="/status/edit/:id?" element={<StatusEdit />} />
         </Route>
       </Routes>
