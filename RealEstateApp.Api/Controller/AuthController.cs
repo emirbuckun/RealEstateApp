@@ -11,15 +11,15 @@ using Microsoft.AspNetCore.Authorization;
 namespace RealEstateApp.Api.Controllers
 {
   [AllowAnonymous]
-  [Route("api/[controller]")]
+  [Route("[controller]")]
   [ApiController]
-  public class AuthenticateController : ControllerBase
+  public class AuthController : ControllerBase
   {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
 
-    public AuthenticateController(
+    public AuthController(
         UserManager<IdentityUser> userManager,
         RoleManager<IdentityRole> roleManager,
         IConfiguration configuration)
