@@ -1,6 +1,6 @@
 import { getAPI, postAPI, putAPI, deleteAPI } from "./BaseService";
 
-export const getStatuss = async () => {
+export const getStatuses = async () => {
   const url = "/EstateStatus/list";
   return await getAPI(url)
     .then((res) => res)
