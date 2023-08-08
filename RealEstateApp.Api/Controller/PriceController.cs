@@ -24,7 +24,12 @@ namespace RealEstateApp.Api.Controllers
     [Route("list")]
     public async Task<IActionResult> GetAll()
     {
-      var result = await _realEstateContext.Prices.Where(x => !x.IsDeleted).ToListAsync();
+      var result = await _realEstateContext.Prices
+        .Include(x => x.Currency)
+        .Include(x => x.Estate)
+        .Where(x => !x.IsDeleted)
+        .ToListAsync();
+
       if (result == null) return NotFound();
       var list = new List<InfoPrice>();
       result.ForEach(x => list.Add(new InfoPrice(x)));
@@ -35,7 +40,10 @@ namespace RealEstateApp.Api.Controllers
     [HttpGet]
     public async Task<IActionResult> GetById(int id)
     {
-      var result = await _realEstateContext.Prices.SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+      var result = await _realEstateContext.Prices
+        .Include(x => x.Currency)
+        .Include(x => x.Estate)
+        .SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
       if (result != null) return Ok(new InfoPrice(result));
       return NotFound();
     }
@@ -59,7 +67,11 @@ namespace RealEstateApp.Api.Controllers
     [HttpPut]
     public async Task<IActionResult> Put([FromBody] EditPrice request)
     {
-      var item = await _realEstateContext.Prices.SingleOrDefaultAsync(x => x.Id == request.Id && !x.IsDeleted);
+      var item = await _realEstateContext.Prices
+        .Include(x => x.Currency)
+        .Include(x => x.Estate)
+        .SingleOrDefaultAsync(x => x.Id == request.Id && !x.IsDeleted);
+
       if (item != null)
       {
         var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
@@ -79,7 +91,10 @@ namespace RealEstateApp.Api.Controllers
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
-      var item = await _realEstateContext.Prices.SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+      var item = await _realEstateContext.Prices
+        .Include(x => x.Currency)
+        .Include(x => x.Estate)
+        .SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
       if (item != null)
       {
         var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
