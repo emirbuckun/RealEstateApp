@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RealEstateApp.Api.Auth;
 using RealEstateApp.Api.DTO.EstateType;
 using RealEstateApp.Api.DatabaseContext;
-using RealEstateApp.Api.Entity;
 using System.Security.Claims;
 
 namespace RealEstateApp.Api.Controllers
@@ -47,7 +46,7 @@ namespace RealEstateApp.Api.Controllers
     {
       var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
 
-      EstateType newItem = request.ToEstateType();
+      var newItem = request.ToEstateType();
       newItem.CreatedAt = DateTime.Now;
       newItem.CreatedBy = username;
 
