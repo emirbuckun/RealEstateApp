@@ -2,9 +2,9 @@ using ET = RealEstateApp.Api.Entity;
 
 namespace RealEstateApp.Api.DTO.Currency
 {
-  public class InfoEstateCurrency : EditCurrency
+  public class InfoCurrency : EditCurrency
   {
-    public InfoEstateCurrency(ET.Currency currency)
+    public InfoCurrency(ET.Currency currency)
     {
       Id = currency.Id;
       Name = currency.Name;
