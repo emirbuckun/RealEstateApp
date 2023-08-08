@@ -1,7 +1,6 @@
 using ET = RealEstateApp.Api.Entity;
-using RealEstateApp.Api.DTO.EstateStatus;
 
-namespace RealEstateApp.Api.DTO.Estate
+namespace RealEstateApp.Api.DTO.EstateStatus
 {
   public class InfoEstateStatus : EditEstateStatus
   {

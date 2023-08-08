@@ -1,11 +1,10 @@
 using ET = RealEstateApp.Api.Entity;
-using RealEstateApp.Api.DTO.EstateType;
 
-namespace RealEstateApp.Api.DTO.Estate
+namespace RealEstateApp.Api.DTO.EstateType
 {
   public class InfoEstateType : EditEstateType
   {
-    public InfoEstateType(ET.Estate estate)
+    public InfoEstateType(ET.EstateType estate)
     {
       Id = estate.Id;
       Name = estate.Name;
