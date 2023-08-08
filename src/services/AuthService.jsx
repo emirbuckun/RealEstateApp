@@ -1,7 +1,7 @@
 import { postAPI } from "./BaseService";
 
 export const login = async (form) => {
-  const url = "/api/Authenticate/login";
+  const url = "/Auth/login";
   return await postAPI(url, form)
     .then((res) => {
       localStorage.setItem("token", res.data.token);
@@ -12,7 +12,7 @@ export const login = async (form) => {
 };
 
 export const register = async (form) => {
-  const url = "/api/Authenticate/register";
+  const url = "/Auth/register";
   return await postAPI(url, form)
     .then((res) => res)
     .catch((error) => error);
