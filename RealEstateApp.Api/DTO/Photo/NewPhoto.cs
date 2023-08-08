@@ -17,7 +17,7 @@ namespace RealEstateApp.Api.DTO.Photo
       FileExtension = string.Empty;
     }
 
-    public ET.Photo ToEstatePhoto()
+    public ET.Photo ToPhoto()
     {
       return new ET.Photo()
       {
