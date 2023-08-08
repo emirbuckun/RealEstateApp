@@ -16,13 +16,13 @@ namespace RealEstateApp.Api.DTO.Estate
     public InfoEstate(ET.Estate estate)
     {
       Id = estate.Id;
-      Name = estate.Name;
+      Name = estate.Name ?? string.Empty;
       Latitude = estate.Latitude;
       Longitude = estate.Longitude;
       StartDate = estate.StartDate;
       EndDate = estate.EndDate;
-      EstateType = estate.EstateType.Name;
-      EstateStatus = estate.EstateStatus.Name;
+      EstateType = estate.EstateType != null ? estate.EstateType.Name ?? string.Empty : string.Empty;
+      EstateStatus = estate.EstateStatus != null ? estate.EstateStatus.Name ?? string.Empty : string.Empty;
     }
   }
 }

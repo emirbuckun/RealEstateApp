@@ -7,8 +7,8 @@ namespace RealEstateApp.Api.DTO.Currency
     public InfoCurrency(ET.Currency currency)
     {
       Id = currency.Id;
-      Name = currency.Name;
-      Code = currency.Code;
+      Name = currency.Name ?? string.Empty;
+      Code = currency.Code ?? string.Empty;
     }
   }
 }

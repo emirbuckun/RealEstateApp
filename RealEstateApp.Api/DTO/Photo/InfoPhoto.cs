@@ -22,11 +22,11 @@ namespace RealEstateApp.Api.DTO.Photo
     public InfoEstatePhoto(ET.Photo photo)
     {
       Id = photo.Id;
-      Bytes = photo.Bytes;
-      Description = photo.Description;
-      FileExtension = photo.FileExtension;
+      Bytes = photo.Bytes ?? Array.Empty<byte>();
+      Description = photo.Description ?? string.Empty;
+      FileExtension = photo.FileExtension ?? string.Empty;
       Size = photo.Size;
-      Estate = photo.Estate.Name;
+      Estate = photo.Estate != null ? photo.Estate.Name ?? string.Empty : string.Empty;
     }
   }
 }

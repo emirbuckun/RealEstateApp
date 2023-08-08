@@ -7,7 +7,7 @@ namespace RealEstateApp.Api.DTO.EstateType
     public InfoEstateType(ET.EstateType estate)
     {
       Id = estate.Id;
-      Name = estate.Name;
+      Name = estate.Name ?? string.Empty;
     }
   }
 }
