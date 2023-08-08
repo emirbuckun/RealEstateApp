@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateApp.Api.DatabaseContext;
 
@@ -11,9 +12,11 @@ using RealEstateApp.Api.DatabaseContext;
 namespace RealEstateApp.Api.Migrations.RealEstate
 {
     [DbContext(typeof(RealEstateContext))]
-    partial class RealEstateContextModelSnapshot : ModelSnapshot
+    [Migration("20230807155132_AddCreatedUpdatedBy")]
+    partial class AddCreatedUpdatedBy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,58 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityUser");
+                });
 
             modelBuilder.Entity("RealEstateApp.Api.Entity.Currency", b =>
                 {
@@ -37,8 +92,8 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -50,10 +105,14 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("UpdatedById");
 
                     b.ToTable("Currencies");
                 });
@@ -69,8 +128,8 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -100,14 +159,18 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("EstateStatusId");
 
                     b.HasIndex("EstateTypeId");
+
+                    b.HasIndex("UpdatedById");
 
                     b.ToTable("Estates");
                 });
@@ -127,8 +190,8 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -145,18 +208,21 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Size")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedById");
+
                     b.HasIndex("EstateId");
+
+                    b.HasIndex("UpdatedById");
 
                     b.ToTable("EstatePhotos");
                 });
@@ -175,8 +241,8 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CurrencyId")
                         .HasColumnType("int");
@@ -190,14 +256,18 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("CurrencyId");
 
                     b.HasIndex("EstateId");
+
+                    b.HasIndex("UpdatedById");
 
                     b.ToTable("EstatePrices");
                 });
@@ -213,8 +283,8 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -226,10 +296,14 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("UpdatedById");
 
                     b.ToTable("EstateStatuses");
                 });
@@ -245,8 +319,8 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -258,16 +332,39 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("UpdatedById");
 
                     b.ToTable("EstateTypes");
                 });
 
+            modelBuilder.Entity("RealEstateApp.Api.Entity.Currency", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("UpdatedBy");
+                });
+
             modelBuilder.Entity("RealEstateApp.Api.Entity.Estate", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
                     b.HasOne("RealEstateApp.Api.Entity.EstateStatus", "EstateStatus")
                         .WithMany()
                         .HasForeignKey("EstateStatusId")
@@ -280,24 +377,48 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("EstateStatus");
 
                     b.Navigation("EstateType");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("RealEstateApp.Api.Entity.EstatePhoto", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
                     b.HasOne("RealEstateApp.Api.Entity.Estate", "Estate")
                         .WithMany("EstatePhotos")
                         .HasForeignKey("EstateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("Estate");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("RealEstateApp.Api.Entity.EstatePrice", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
                     b.HasOne("RealEstateApp.Api.Entity.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
@@ -308,7 +429,45 @@ namespace RealEstateApp.Api.Migrations.RealEstate
                         .WithMany("EstatePrices")
                         .HasForeignKey("EstateId");
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("Currency");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("RealEstateApp.Api.Entity.EstateStatus", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("RealEstateApp.Api.Entity.EstateType", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("RealEstateApp.Api.Entity.Estate", b =>
