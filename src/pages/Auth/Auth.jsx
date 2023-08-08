@@ -47,7 +47,7 @@ export const Auth = () => {
 
   return (
     <>
-      <h1>Login or Register</h1>
+      <h3>Login or Register</h3>
       <Tabs
         fill
         className="mb-3"

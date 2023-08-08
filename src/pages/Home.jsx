@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <>
-      <h1>Home</h1>
+      <h3>Home</h3>
       <Container>
         <Row>
           {list.map((item, index) => {

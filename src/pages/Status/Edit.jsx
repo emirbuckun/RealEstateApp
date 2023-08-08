@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { addStatus, editStatus, getStatus } from "/src/services/StatusService";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const Edit = () => {
   const { id } = useParams();
@@ -10,32 +14,25 @@ const Edit = () => {
   const navigateUrl = "/statuses";
   const operation = id ? "Edit" : "Add";
 
-  const handleSubmit = () => {
-    if (id) {
-      editStatus({ id: id, name: name })
-        .then((response) => {
-          if (response.status == 200) {
-            alert("Edit operation successful!");
-            navigate(navigateUrl);
-          } else alert("Edit operation failed!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error occurred:\n" + error);
-        });
-    } else {
-      addStatus({ name: name })
-        .then((response) => {
-          if (response.status == 200) {
-            alert("Add operation successful!");
-            navigate(navigateUrl);
-          } else alert("Add operation failed!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error occurred:\n" + error);
-        });
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    var response;
+
+    id
+      ? (response = editStatus({ id: id, name: name }))
+      : (response = addStatus({ name: name }));
+
+    response
+      .then((response) => {
+        if (response.status == 200) {
+          alert(operation + " operation successful!");
+          navigate(navigateUrl);
+        } else alert(operation + " operation failed!");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Error occurred:\n" + error);
+      });
   };
 
   const fetchStatus = () => {
@@ -56,20 +53,28 @@ const Edit = () => {
 
   return (
     <>
-      <h1>{operation} Status</h1>
-      <div>
-        <label name="name">Status Name</label>&nbsp;
-        <input
-          value={name}
-          status="text"
-          name="name"
-          id="txtName"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <br />
-        <br />
-        <button onClick={handleSubmit}>{operation}</button>
-      </div>
+      <h3>{operation} Status</h3>
+
+      <Form onSubmit={handleSubmit}>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label column sm="5">
+            Status Name
+          </Form.Label>
+          <Col sm="7">
+            <Form.Control
+              required
+              value={name}
+              name="name"
+              type="text"
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Col>
+        </Form.Group>
+        <Button variant="outline-primary" type="submit">
+          Submit
+        </Button>
+      </Form>
     </>
   );
 };

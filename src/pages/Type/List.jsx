@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { deleteType, getTypes } from "/src/services/TypeService";
 import { useNavigate } from "react-router-dom";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
 const List = () => {
   const navigate = useNavigate();
@@ -48,57 +50,64 @@ const List = () => {
 
   return (
     <>
-      <h1>Types</h1>
+      <h3>Types</h3>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <button onClick={fetchTypes}>Reload</button>
-        <button onClick={() => navigate("/type/edit")}>Add Type</button>
-      </div>
-      <br />
-
-      <div>
-        {!loading ? (
-          error ? (
-            "An error occurred: " + error
-          ) : types.length > 0 ? (
-            types.map((type) => {
-              const { name, id } = type;
-              return (
-                <div key={id}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <p>{name}</p>
-                    <div>
-                      <button onClick={() => navigate("/type/edit/" + id)}>
-                        Edit
-                      </button>
-                      <button onClick={() => handleDelete({ id, name })}>
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                  <hr />
-                </div>
-              );
-            })
-          ) : (
-            <p>There is no any type.</p>
-          )
+      {!loading ? (
+        error ? (
+          "An error occurred: " + error
+        ) : types.length > 0 ? (
+          <>
+            <Table striped bordered hover>
+              <thead className="align-middle">
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>
+                    <Button
+                      variant="outline-success"
+                      size="sm"
+                      onClick={() => navigate("/type/edit/")}
+                    >
+                      Add
+                    </Button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="align-middle">
+                {types.map((type, index) => {
+                  const { name, id } = type;
+                  return (
+                    <tr key={id}>
+                      <td>{index + 1}</td>
+                      <td>{name}</td>
+                      <td>
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          onClick={() => navigate("/type/edit/" + id)}
+                        >
+                          Edit
+                        </Button>{" "}
+                        <Button
+                          variant="outline-danger"
+                          size="sm"
+                          onClick={() => handleDelete({ id, name })}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </>
         ) : (
-          <p>Loading..</p>
-        )}
-      </div>
+          <p>There is no any type.</p>
+        )
+      ) : (
+        <p>Loading..</p>
+      )}
     </>
   );
 };
