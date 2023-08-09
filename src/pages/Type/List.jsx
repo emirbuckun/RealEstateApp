@@ -51,28 +51,29 @@ const List = () => {
     <>
       <h3>Types</h3>
 
-      {!loading ? (
-        error ? (
-          "An error occurred: " + error
-        ) : types.length > 0 ? (
-          <>
-            <Table striped bordered hover>
-              <thead className="align-middle">
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>
-                    <Button
-                      variant="outline-success"
-                      size="sm"
-                      onClick={() => navigate("/type/edit/")}
-                    >
-                      Add
-                    </Button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="align-middle">
+      <Table striped bordered hover>
+        <thead className="align-middle">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>
+              <Button
+                variant="outline-success"
+                size="sm"
+                onClick={() => navigate("/type/edit/")}
+              >
+                Add
+              </Button>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody className="align-middle">
+          {!loading ? (
+            error ? (
+              "An error occurred: " + error
+            ) : types.length > 0 ? (
+              <>
                 {types.map((type, index) => {
                   const { name, id } = type;
                   return (
@@ -98,15 +99,19 @@ const List = () => {
                     </tr>
                   );
                 })}
-              </tbody>
-            </Table>
-          </>
-        ) : (
-          <p>There is no any type.</p>
-        )
-      ) : (
-        <p>Loading..</p>
-      )}
+              </>
+            ) : (
+              <tr>
+                <td colSpan={3}>There is no any type.</td>
+              </tr>
+            )
+          ) : (
+            <tr>
+              <td colSpan={3}>Loading..</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
     </>
   );
 };

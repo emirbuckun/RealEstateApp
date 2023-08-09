@@ -51,29 +51,30 @@ const List = () => {
     <>
       <h3>Currencies</h3>
 
-      {!loading ? (
-        error ? (
-          "An error occurred: " + error
-        ) : currencies.length > 0 ? (
-          <>
-            <Table striped bordered hover>
-              <thead className="align-middle">
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Code</th>
-                  <th>
-                    <Button
-                      variant="outline-success"
-                      size="sm"
-                      onClick={() => navigate("/currency/edit/")}
-                    >
-                      Add
-                    </Button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="align-middle">
+      <Table striped bordered hover>
+        <thead className="align-middle">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>
+              <Button
+                variant="outline-success"
+                size="sm"
+                onClick={() => navigate("/currency/edit/")}
+              >
+                Add
+              </Button>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody className="align-middle">
+          {!loading ? (
+            error ? (
+              "An error occurred: " + error
+            ) : currencies.length > 0 ? (
+              <>
                 {currencies.map((currency, index) => {
                   const { name, code, id } = currency;
                   return (
@@ -100,15 +101,19 @@ const List = () => {
                     </tr>
                   );
                 })}
-              </tbody>
-            </Table>
-          </>
-        ) : (
-          <p>There is no any currency.</p>
-        )
-      ) : (
-        <p>Loading..</p>
-      )}
+              </>
+            ) : (
+              <tr>
+                <td colSpan={4}>There is no any currency.</td>
+              </tr>
+            )
+          ) : (
+            <tr>
+              <td colSpan={4}>Loading..</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
     </>
   );
 };

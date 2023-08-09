@@ -55,29 +55,30 @@ const List = () => {
     <>
       <h3>Prices</h3>
 
-      {!loading ? (
-        error ? (
-          "An error occurred: " + error
-        ) : prices.length > 0 ? (
-          <>
-            <Table striped bordered hover>
-              <thead className="align-middle">
-                <tr>
-                  <th>#</th>
-                  <th>Estate</th>
-                  <th>Price</th>
-                  <th>
-                    <Button
-                      variant="outline-success"
-                      size="sm"
-                      onClick={() => navigate("/price/edit/")}
-                    >
-                      Add
-                    </Button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="align-middle">
+      <Table striped bordered hover>
+        <thead className="align-middle">
+          <tr>
+            <th>#</th>
+            <th>Estate</th>
+            <th>Price</th>
+            <th>
+              <Button
+                variant="outline-success"
+                size="sm"
+                onClick={() => navigate("/price/edit/")}
+              >
+                Add
+              </Button>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody className="align-middle">
+          {!loading ? (
+            error ? (
+              "An error occurred: " + error
+            ) : prices.length > 0 ? (
+              <>
                 {prices.map((price, index) => {
                   const { id, estateName, currencyCode, amount } = price;
                   const priceMix = amount + " " + currencyCode;
@@ -112,15 +113,19 @@ const List = () => {
                     </tr>
                   );
                 })}
-              </tbody>
-            </Table>
-          </>
-        ) : (
-          <p>There is no any price.</p>
-        )
-      ) : (
-        <p>Loading..</p>
-      )}
+              </>
+            ) : (
+              <tr>
+                <td colSpan={4}>There is no any price.</td>
+              </tr>
+            )
+          ) : (
+            <tr>
+              <td colSpan={4}>Loading..</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
     </>
   );
 };

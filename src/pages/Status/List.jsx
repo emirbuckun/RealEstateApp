@@ -51,28 +51,29 @@ const List = () => {
     <>
       <h3>Statuses</h3>
 
-      {!loading ? (
-        error ? (
-          "An error occurred: " + error
-        ) : statuses.length > 0 ? (
-          <>
-            <Table striped bordered hover>
-              <thead className="align-middle">
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>
-                    <Button
-                      variant="outline-success"
-                      size="sm"
-                      onClick={() => navigate("/status/edit/")}
-                    >
-                      Add
-                    </Button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="align-middle">
+      <Table striped bordered hover>
+        <thead className="align-middle">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>
+              <Button
+                variant="outline-success"
+                size="sm"
+                onClick={() => navigate("/status/edit/")}
+              >
+                Add
+              </Button>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody className="align-middle">
+          {!loading ? (
+            error ? (
+              "An error occurred: " + error
+            ) : statuses.length > 0 ? (
+              <>
                 {statuses.map((status, index) => {
                   const { name, id } = status;
                   return (
@@ -98,15 +99,19 @@ const List = () => {
                     </tr>
                   );
                 })}
-              </tbody>
-            </Table>
-          </>
-        ) : (
-          <p>There is no any status.</p>
-        )
-      ) : (
-        <p>Loading..</p>
-      )}
+              </>
+            ) : (
+              <tr>
+                <td colSpan={3}>There is no any status.</td>
+              </tr>
+            )
+          ) : (
+            <tr>
+              <td colSpan={3}>Loading..</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
     </>
   );
 };
