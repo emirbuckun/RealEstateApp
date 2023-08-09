@@ -7,7 +7,7 @@ namespace RealEstateApp.Api.DTO.Estate
     public string Name { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
-    public DateTime StartDate { get; set; }
+    // public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public int EstateTypeId { get; set; }
     public int EstateStatusId { get; set; }
@@ -25,7 +25,7 @@ namespace RealEstateApp.Api.DTO.Estate
         Name = this.Name,
         Latitude = this.Latitude,
         Longitude = this.Longitude,
-        StartDate = this.StartDate,
+        // StartDate = this.StartDate,
         EndDate = this.EndDate,
         EstateTypeId = this.EstateTypeId,
         EstateStatusId = this.EstateStatusId,

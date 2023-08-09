@@ -55,9 +55,11 @@ namespace RealEstateApp.Api.Controllers
     public async Task<IActionResult> Post([FromBody] NewEstate request)
     {
       var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+      var currentTime = DateTime.Now;
 
       var newItem = request.ToEstate();
-      newItem.CreatedAt = DateTime.Now;
+      newItem.StartDate = currentTime;
+      newItem.CreatedAt = currentTime;
       newItem.CreatedBy = username;
       var result = _realEstateContext.Estates.Add(newItem);
       await _realEstateContext.SaveChangesAsync();
@@ -87,7 +89,7 @@ namespace RealEstateApp.Api.Controllers
         item.Name = request.Name;
         item.Latitude = request.Latitude;
         item.Longitude = request.Longitude;
-        item.StartDate = request.StartDate;
+        // item.StartDate = request.StartDate;
         item.EndDate = request.EndDate;
         item.EstateTypeId = request.EstateTypeId;
         item.EstateStatusId = request.EstateStatusId;
