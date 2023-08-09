@@ -26,9 +26,9 @@ export const getAPI = async (url) => {
     });
 };
 
-export const postAPI = async (url, data) => {
+export const postAPI = async (url, data, headers) => {
   return await api
-    .post(url, data)
+    .post(url, data, headers && headers)
     .then((response) => {
       return {
         status: response.status,

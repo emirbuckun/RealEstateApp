@@ -23,7 +23,13 @@ export const getPhotoByEstate = async (id) => {
 
 export const addPhoto = async (data) => {
   const url = "/Photo";
-  return await postAPI(url, data)
+  const headers = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  return await postAPI(url, data, headers)
     .then((res) => res)
     .catch((error) => error);
 };
