@@ -27,6 +27,9 @@ namespace RealEstateApp.Api.Controllers
       var result = await _realEstateContext.Estates
         .Include(x => x.EstateType)
         .Include(x => x.EstateStatus)
+        .Include(x => x.Photos)
+        .Include(x => x.Prices)
+        .ThenInclude(price => price.Currency)
         .Where(x => !x.IsDeleted)
         .ToListAsync();
 
