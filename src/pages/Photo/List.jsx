@@ -60,7 +60,8 @@ const List = () => {
           <tr>
             <th>#</th>
             <th>Estate</th>
-            <th>Picture</th>
+            <th>Picture Name</th>
+            <th>Picture View</th>
             <th>
               <Button
                 variant="outline-success"
@@ -79,12 +80,20 @@ const List = () => {
             ) : photos.length > 0 ? (
               <>
                 {photos.map((photo, index) => {
-                  const { id, estate, description } = photo;
+                  const { id, estate, description, bytes, fileExtension } =
+                    photo;
+                  const extension = fileExtension.replace(".", "");
                   return (
                     <tr key={id}>
                       <td>{index + 1}</td>
                       <td>{estate}</td>
                       <td>{description}</td>
+                      <td>
+                        <img
+                          style={{ width: "5rem" }}
+                          src={`data:image/${extension};base64,${bytes}`}
+                        ></img>
+                      </td>
                       <td>
                         <Button
                           variant="outline-danger"
@@ -102,12 +111,12 @@ const List = () => {
               </>
             ) : (
               <tr>
-                <td colSpan={4}>There is no any photo.</td>
+                <td colSpan={5}>There is no any photo.</td>
               </tr>
             )
           ) : (
             <tr>
-              <td colSpan={4}>Loading..</td>
+              <td colSpan={5}>Loading..</td>
             </tr>
           )}
         </tbody>
