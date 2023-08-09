@@ -7,9 +7,11 @@ import StatusList from "./pages/Status/List";
 import StatusEdit from "./pages/Status/Edit";
 import CurrencyList from "./pages/Currency/List";
 import CurrencyEdit from "./pages/Currency/Edit";
+import PriceList from "./pages/Price/List";
+import PriceEdit from "./pages/Price/Edit";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
+function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
@@ -20,13 +22,15 @@ function App() {
           <Route exact path="/types" element={<TypeList />} />
           <Route exact path="/statuses" element={<StatusList />} />
           <Route exact path="/currencies" element={<CurrencyList />} />
+          <Route exact path="/prices" element={<PriceList />} />
           <Route exact path="/type/edit/:id?" element={<TypeEdit />} />
           <Route exact path="/status/edit/:id?" element={<StatusEdit />} />
           <Route exact path="/currency/edit/:id?" element={<CurrencyEdit />} />
+          <Route exact path="/price/edit/:id?" element={<PriceEdit />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default AppRouter;
