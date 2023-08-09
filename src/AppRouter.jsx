@@ -11,6 +11,8 @@ import PriceList from "./pages/Price/List";
 import PriceEdit from "./pages/Price/Edit";
 import PhotoList from "./pages/Photo/List";
 import PhotoAdd from "./pages/Photo/Add";
+import EstateList from "./pages/Estate/List";
+import EstateEdit from "./pages/Estate/Edit";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function AppRouter() {
@@ -26,11 +28,13 @@ function AppRouter() {
           <Route exact path="/currencies" element={<CurrencyList />} />
           <Route exact path="/prices" element={<PriceList />} />
           <Route exact path="/photos" element={<PhotoList />} />
+          <Route exact path="/estates" element={<EstateList />} />
           <Route exact path="/type/edit/:id?" element={<TypeEdit />} />
           <Route exact path="/status/edit/:id?" element={<StatusEdit />} />
           <Route exact path="/currency/edit/:id?" element={<CurrencyEdit />} />
           <Route exact path="/price/edit/:id?" element={<PriceEdit />} />
           <Route exact path="/photo/add" element={<PhotoAdd />} />
+          <Route exact path="/estate/edit/:id?" element={<EstateEdit />} />
         </Route>
       </Routes>
     </BrowserRouter>
