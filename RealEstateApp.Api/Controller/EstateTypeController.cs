@@ -69,7 +69,7 @@ namespace RealEstateApp.Api.Controllers
         item.UpdatedAt = DateTime.Now;
 
         var result = await _realEstateContext.SaveChangesAsync();
-        return Ok(item);
+        return Ok(new InfoEstateType(item));
       }
       return NotFound();
     }
