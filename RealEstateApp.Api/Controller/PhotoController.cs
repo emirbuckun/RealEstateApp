@@ -68,7 +68,7 @@ namespace RealEstateApp.Api.Controllers
 
     [Authorize(Roles = UserRoles.Admin)]
     [HttpPost]
-    public async Task<IActionResult> Post(int estateId, IFormFile file)
+    public async Task<IActionResult> Post([FromForm] int estateId, IFormFile file)
     {
       var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
 
@@ -87,20 +87,22 @@ namespace RealEstateApp.Api.Controllers
 
           if (photoExists == null)
           {
-            var newPhoto = new Photo()
+            var newPhoto = new NewPhoto()
             {
               Bytes = memoryStream.ToArray(),
               Description = file.FileName,
               FileExtension = Path.GetExtension(file.FileName),
               Size = file.Length,
               EstateId = estateId,
-              CreatedBy = username,
-              CreatedAt = DateTime.Now
             };
 
-            var result = _realEstateContext.Photos.Add(newPhoto);
+            var addPhoto = newPhoto.ToPhoto();
+            addPhoto.CreatedBy = username;
+            addPhoto.CreatedAt = DateTime.Now;
+
+            var result = _realEstateContext.Photos.Add(addPhoto);
             await _realEstateContext.SaveChangesAsync();
-            return Ok(result.Entity);
+            return Ok(new InfoPhoto(addPhoto));
           }
           else return BadRequest("Photo already exists.");
         }
