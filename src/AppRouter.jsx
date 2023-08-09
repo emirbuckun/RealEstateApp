@@ -14,6 +14,7 @@ function App() {
         <Route exact path="/auth" element={<Auth />} />
         <Route element={<Authenticated />}>
           <Route exact path="/" element={<Home />} />
+          <Route path="*" element={<Home />} /> {/* page-not-found route */}
           <Route exact path="/types" element={<TypeList />} />
           <Route exact path="/statuses" element={<StatusList />} />
           <Route exact path="/type/edit/:id?" element={<TypeEdit />} />
