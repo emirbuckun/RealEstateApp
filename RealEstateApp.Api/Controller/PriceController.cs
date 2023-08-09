@@ -78,11 +78,12 @@ namespace RealEstateApp.Api.Controllers
 
         item.Amount = request.Amount;
         item.CurrencyId = request.CurrencyId;
+        item.EstateId = request.EstateId;
         item.UpdatedBy = username;
         item.UpdatedAt = DateTime.Now;
 
         var result = await _realEstateContext.SaveChangesAsync();
-        return Ok(item);
+        return Ok(new InfoPrice(item));
       }
       return NotFound();
     }
