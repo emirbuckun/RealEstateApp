@@ -12,8 +12,7 @@ const List = () => {
     error: null,
   });
 
-  const handleDelete = (currency) => {
-    const { id, name } = currency;
+  const handleDelete = ({ id, name }) => {
     if (window.confirm("Delete the currency named " + name + "?")) {
       deleteCurrency(id)
         .then((response) => {

@@ -12,8 +12,7 @@ const List = () => {
     error: null,
   });
 
-  const handleDelete = (status) => {
-    const { id, name } = status;
+  const handleDelete = ({ id, name }) => {
     if (window.confirm("Delete the status named " + name + "?")) {
       deleteStatus(id)
         .then((response) => {

@@ -12,8 +12,7 @@ const List = () => {
     error: null,
   });
 
-  const handleDelete = (type) => {
-    const { id, name } = type;
+  const handleDelete = ({ id, name }) => {
     if (window.confirm("Delete the type named " + name + "?")) {
       deleteType(id)
         .then((response) => {
