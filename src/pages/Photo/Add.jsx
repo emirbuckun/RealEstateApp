@@ -8,7 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 const Add = () => {
-  const [form, setForm] = useState({ estateId: 0, photo: {} });
+  const [form, setForm] = useState({ estateId: 0, photo: null });
   const [estates, setEstates] = useState([]);
   const navigate = useNavigate();
   const navigateUrl = "/photos";
@@ -17,22 +17,33 @@ const Add = () => {
     e.preventDefault();
     const { estateId, photo } = form;
 
-    var formData = new FormData();
-    formData.append("estateId", estateId);
-    formData.append("file", photo);
+    if (estateId > 0 && photo != null) {
+      const isTypeValid = photo.type.split("/")[0] == "image";
+      const isSizeValid = photo.size < 2097152;
 
-    addPhoto(formData)
-      .then((response) => {
-        console.log(response);
-        if (response.status == 200) {
-          alert("Add operation successful!");
-          navigate(navigateUrl);
-        } else alert(response.data.statusText);
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Error occurred:\n" + error);
-      });
+      if (!isTypeValid) {
+        alert("Please upload file with a type of image.");
+      } else if (!isSizeValid) {
+        alert("Please upload file smaller than 2MB.");
+      } else {
+        var formData = new FormData();
+        formData.append("estateId", estateId);
+        formData.append("file", photo);
+
+        addPhoto(formData)
+          .then((response) => {
+            console.log(response);
+            if (response.status == 200) {
+              alert("Add operation successful!");
+              navigate(navigateUrl);
+            } else alert(response.data.data);
+          })
+          .catch((error) => {
+            console.error(error);
+            alert("Error occurred:\n" + error);
+          });
+      }
+    } else alert("Please fill the form.");
   };
 
   const fetchEstates = () => {
