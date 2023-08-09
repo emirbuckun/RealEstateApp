@@ -5,6 +5,8 @@ import TypeList from "./pages/Type/List";
 import TypeEdit from "./pages/Type/Edit";
 import StatusList from "./pages/Status/List";
 import StatusEdit from "./pages/Status/Edit";
+import CurrencyList from "./pages/Currency/List";
+import CurrencyEdit from "./pages/Currency/Edit";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,8 +19,10 @@ function App() {
           <Route path="*" element={<Home />} /> {/* page-not-found route */}
           <Route exact path="/types" element={<TypeList />} />
           <Route exact path="/statuses" element={<StatusList />} />
+          <Route exact path="/currencies" element={<CurrencyList />} />
           <Route exact path="/type/edit/:id?" element={<TypeEdit />} />
           <Route exact path="/status/edit/:id?" element={<StatusEdit />} />
+          <Route exact path="/currency/edit/:id?" element={<CurrencyEdit />} />
         </Route>
       </Routes>
     </BrowserRouter>
