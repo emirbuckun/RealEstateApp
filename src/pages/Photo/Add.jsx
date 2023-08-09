@@ -32,7 +32,6 @@ const Add = () => {
 
         addPhoto(formData)
           .then((response) => {
-            console.log(response);
             if (response.status == 200) {
               alert("Add operation successful!");
               navigate(navigateUrl);

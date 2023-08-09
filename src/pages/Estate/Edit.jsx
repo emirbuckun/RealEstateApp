@@ -26,7 +26,6 @@ const Edit = () => {
   const operation = id ? "Edit" : "Add";
 
   const handleSubmit = (e) => {
-    console.log(new Date(form.endDate).toISOString().split("T")[0]);
     e.preventDefault();
     const { name, estateTypeId, estateStatusId, latitude, longitude, endDate } =
       form;
@@ -76,7 +75,6 @@ const Edit = () => {
   const fetchEstate = () => {
     getEstate(id)
       .then((response) => {
-        console.log(response.data);
         if (response.status == 200) {
           setForm(response.data);
         } else console.log("Error occurred!");
