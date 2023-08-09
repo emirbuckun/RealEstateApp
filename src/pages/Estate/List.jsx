@@ -16,7 +16,7 @@ const List = () => {
     if (window.confirm(`Delete the estate named ${name}?`)) {
       deleteEstate(id)
         .then((response) => {
-          if (response.status == 207) {
+          if (response.status == 204) {
             alert("Delete operation successful!");
             fetchEstates();
           } else alert("Delete operation failed!");
@@ -32,7 +32,6 @@ const List = () => {
     setState({ error: null, loading: true });
     getEstates()
       .then((response) => {
-        console.log(response);
         if (response.status == 200) {
           setState({ estates: response.data, loading: false });
         } else
@@ -56,11 +55,13 @@ const List = () => {
         <thead className="align-middle">
           <tr>
             <th>#</th>
+            <th>Photo</th>
             <th>Name</th>
             <th>Type</th>
             <th>Status</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Price</th>
             <th>
               <Button
                 variant="outline-success"
@@ -87,15 +88,33 @@ const List = () => {
                     estateStatus,
                     startDate,
                     endDate,
+                    photo,
+                    price,
                   } = estate;
+                  if (photo) {
+                    var { fileExtension, bytes } = photo;
+                    var extension = fileExtension?.replace(".", "");
+                    var imgSrc = `data:image/${extension};base64,${bytes}`;
+                  }
+                  if (price) {
+                    var { amount, currencyCode } = price;
+                    var displayPrice = amount + " " + currencyCode;
+                  }
                   return (
                     <tr key={id}>
                       <td>{index + 1}</td>
+                      <td>
+                        <img
+                          style={{ width: "5rem" }}
+                          src={imgSrc ?? null}
+                        ></img>
+                      </td>
                       <td>{name}</td>
                       <td>{estateType}</td>
                       <td>{estateStatus}</td>
                       <td>{new Date(startDate).toLocaleDateString()}</td>
                       <td>{new Date(endDate).toLocaleDateString()}</td>
+                      <td>{displayPrice}</td>
                       <td>
                         <Button
                           variant="outline-primary"
@@ -123,12 +142,12 @@ const List = () => {
               </>
             ) : (
               <tr>
-                <td colSpan={7}>There is no any estate.</td>
+                <td colSpan={9}>There is no any estate.</td>
               </tr>
             )
           ) : (
             <tr>
-              <td colSpan={7}>Loading..</td>
+              <td colSpan={9}>Loading..</td>
             </tr>
           )}
         </tbody>
