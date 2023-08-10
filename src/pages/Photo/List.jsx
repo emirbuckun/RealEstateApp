@@ -76,7 +76,9 @@ const List = () => {
         <tbody className="align-middle">
           {!loading ? (
             error ? (
-              "An error occurred: " + error
+              <tr>
+                <td colSpan={9}>An error occured: {error}.</td>
+              </tr>
             ) : photos.length > 0 ? (
               <>
                 {photos.map((photo, index) => {
