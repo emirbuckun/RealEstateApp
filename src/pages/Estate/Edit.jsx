@@ -315,25 +315,23 @@ const Edit = () => {
             Photos
           </Form.Label>
 
-          {form.photos.length > 0 ? (
-            form.photos.map((photo, index) => {
-              const { bytes, fileExtension } = photo;
-              const extension = fileExtension.replace(".", "");
-              return (
-                <Col key={index} xs={6} md={4}>
-                  <Image
-                    style={{ width: "10rem" }}
-                    src={`data:image/${extension};base64,${bytes}`}
-                    rounded
-                  />
-                </Col>
-              );
-            })
-          ) : (
-            <p className="justify-content-center">
-              There is no any photo. Click the button below to add new photo.
-            </p>
-          )}
+          <div className="justify-content-center">
+            {form.photos.length > 0
+              ? form.photos.map((photo, index) => {
+                  const { bytes, fileExtension } = photo;
+                  const extension = fileExtension.replace(".", "");
+                  return (
+                    <Col key={index}>
+                      <Image
+                        style={{ width: "10rem" }}
+                        src={`data:image/${extension};base64,${bytes}`}
+                        rounded
+                      />
+                    </Col>
+                  );
+                })
+              : "There is no any photo. Click the button below to add new photo."}
+          </div>
         </Form.Group>
 
         <Button href="/prices" variant="outline-info">
