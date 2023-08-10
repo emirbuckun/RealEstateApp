@@ -44,7 +44,7 @@ namespace RealEstateApp.Api.Controllers
         .Include(x => x.Currency)
         .Include(x => x.Estate)
         .SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
-      if (result != null) return Ok(new InfoPrice(result));
+      if (result != null) return Ok(new DetailPrice(result));
       return NotFound();
     }
 
