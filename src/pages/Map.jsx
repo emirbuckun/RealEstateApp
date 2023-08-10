@@ -46,7 +46,7 @@ const Map = () => {
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           {!loading ? (
             error ? (
-              "An error occured: " + error
+              t("errorOccurred") + error
             ) : estates.length > 0 ? (
               <>
                 {estates.map((estate, index) => {
