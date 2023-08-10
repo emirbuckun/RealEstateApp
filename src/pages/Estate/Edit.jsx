@@ -86,7 +86,6 @@ const Edit = () => {
   const fetchEstate = () => {
     getEstate(id)
       .then((response) => {
-        console.log(response);
         if (response.status == 200) {
           setForm(response.data);
         } else console.log("Error occurred!");

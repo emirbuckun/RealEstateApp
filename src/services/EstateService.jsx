@@ -8,7 +8,6 @@ export const getEstates = async () => {
 };
 
 export const getPagingEstates = async (pageNumber) => {
-  console.log(pageNumber);
   const url = "/Estate/paging?pageNumber=" + pageNumber;
   return await getAPI(url)
     .then((res) => res)
