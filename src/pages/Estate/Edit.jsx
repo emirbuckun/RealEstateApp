@@ -169,7 +169,7 @@ const Edit = () => {
                 }))
               }
             >
-              <option value={0}>{t("type")}</option>
+              <option value={0}>{t("selectType")}</option>
               {types.map((item, index) => {
                 const { id, name } = item;
                 return (
