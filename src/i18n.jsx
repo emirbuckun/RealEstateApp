@@ -7,12 +7,14 @@ const getCurrentHost =
     ? "http://localhost:3000"
     : "LINK TO PROD";
 
+const lang = localStorage.getItem("lang") ?? "en";
+
 i18n
   .use(i18nBackend)
   .use(initReactI18next)
   .init({
-    fallbackLng: "en",
-    lng: "en",
+    fallbackLng: lang,
+    lng: lang,
     interpolation: {
       escapeValue: false,
     },
