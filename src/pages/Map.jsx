@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { getEstates } from "/src/services/EstateService";
 import { useTranslation } from "react-i18next";
-import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
+import "leaflet/dist/leaflet.css";
 
 const Map = () => {
   const { t } = useTranslation();

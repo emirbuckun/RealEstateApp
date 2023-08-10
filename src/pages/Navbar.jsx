@@ -1,13 +1,9 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import NavbarB from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
 import { validateToken } from "/src/services/AuthService";
 import { LANGUAGES } from "/src/constants";
 import { useTranslation } from "react-i18next";
+import { Form, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
-const Navbar = () => {
+const NavbarComponent = () => {
   const { i18n, t } = useTranslation();
   const mainlist = [
     { name: "home", url: "/home" },
@@ -30,11 +26,11 @@ const Navbar = () => {
   };
 
   return (
-    <NavbarB fixed="top" collapseOnSelect expand="md">
+    <Navbar fixed="top" collapseOnSelect expand="md">
       <Container>
-        <NavbarB.Brand href="/">{t("title")}</NavbarB.Brand>
-        <NavbarB.Toggle aria-controls="responsive-navbar-nav" />
-        <NavbarB.Collapse id="responsive-navbar-nav">
+        <Navbar.Brand href="/">{t("title")}</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             {mainlist.map((item, index) => {
               const { name, url } = item;
@@ -81,10 +77,10 @@ const Navbar = () => {
               </Nav.Link>
             )}
           </Nav>
-        </NavbarB.Collapse>
+        </Navbar.Collapse>
       </Container>
-    </NavbarB>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default NavbarComponent;

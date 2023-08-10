@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { getEstates } from "/src/services/EstateService";
 import { useTranslation } from "react-i18next";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import { Col, Row } from "react-bootstrap/";
 
 const Dashboard = () => {
   const { t } = useTranslation();

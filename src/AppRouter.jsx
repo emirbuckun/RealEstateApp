@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Map from "./pages/Map";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
@@ -15,7 +16,6 @@ import PhotoList from "./pages/Photo/List";
 import PhotoAdd from "./pages/Photo/Add";
 import EstateList from "./pages/Estate/List";
 import EstateEdit from "./pages/Estate/Edit";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function AppRouter() {
   return (
@@ -23,7 +23,6 @@ function AppRouter() {
       <Routes>
         <Route exact path="/auth" element={<Auth />} />
         <Route element={<Authenticated />}>
-          <Route exact path="/" element={<Home />} />
           <Route path="*" element={<Home />} /> {/* page-not-found route */}
           <Route exact path="/types" element={<TypeList />} />
           <Route exact path="/statuses" element={<StatusList />} />
