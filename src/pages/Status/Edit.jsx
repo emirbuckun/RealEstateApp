@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { addStatus, editStatus, getStatus } from "/src/services/StatusService";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -9,10 +9,11 @@ import Col from "react-bootstrap/Col";
 
 const Edit = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const navigateUrl = "/statuses";
-  const operation = id ? "Edit" : "Add";
+  const operation = id ? t("edit") : t("add");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,12 +54,14 @@ const Edit = () => {
 
   return (
     <>
-      <h3>{operation} Status</h3>
+      <h3>
+        {operation} {t("status")}
+      </h3>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="5">
-            Status Name
+            {t("statusName")}
           </Form.Label>
           <Col sm="7">
             <Form.Control
@@ -72,7 +75,7 @@ const Edit = () => {
           </Col>
         </Form.Group>
         <Button variant="outline-primary" type="submit">
-          Submit
+          {t("submit")}
         </Button>
       </Form>
     </>

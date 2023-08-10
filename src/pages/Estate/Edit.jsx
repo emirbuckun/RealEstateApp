@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { addEstate, editEstate, getEstate } from "/src/services/EstateService";
 import { getTypes } from "/src/services/TypeService";
 import { getStatuses } from "/src/services/StatusService";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -12,6 +12,7 @@ import Col from "react-bootstrap/Col";
 
 const Edit = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
   const [types, setTypes] = useState([]);
   const [statuses, setStatuses] = useState([]);
   const [form, setForm] = useState({
@@ -27,7 +28,7 @@ const Edit = () => {
 
   const navigate = useNavigate();
   const navigateUrl = "/estates";
-  const operation = id ? "Edit" : "Add";
+  const operation = id ? t("edit") : t("add");
 
   const { name, estateTypeId, estateStatusId, latitude, longitude, endDate } =
     form;
@@ -127,12 +128,14 @@ const Edit = () => {
 
   return (
     <>
-      <h3>{operation} Estate</h3>
+      <h3>
+        {operation} {t("estate")}
+      </h3>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="4">
-            Name
+            {t("name")}
           </Form.Label>
           <Col sm="8">
             <Form.Control
@@ -140,7 +143,7 @@ const Edit = () => {
               value={name}
               name="name"
               type="text"
-              placeholder="Name"
+              placeholder={t("name")}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -153,7 +156,7 @@ const Edit = () => {
 
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="4">
-            Type
+            {t("type")}
           </Form.Label>
           <Col sm="8">
             <Form.Select
@@ -166,7 +169,7 @@ const Edit = () => {
                 }))
               }
             >
-              <option value={0}>Select Type</option>
+              <option value={0}>{t("type")}</option>
               {types.map((item, index) => {
                 const { id, name } = item;
                 return (
@@ -181,7 +184,7 @@ const Edit = () => {
 
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="4">
-            Status
+            {t("status")}
           </Form.Label>
           <Col sm="8">
             <Form.Select
@@ -194,7 +197,7 @@ const Edit = () => {
                 }))
               }
             >
-              <option value={0}>Select Status</option>
+              <option value={0}>{t("selectStatus")}</option>
               {statuses.map((item, index) => {
                 const { id, name } = item;
                 return (
@@ -209,7 +212,7 @@ const Edit = () => {
 
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="4">
-            Latitude
+            {t("latitude")}
           </Form.Label>
           <Col sm="8">
             <Form.Control
@@ -217,7 +220,7 @@ const Edit = () => {
               value={latitude}
               name="latitude"
               type="number"
-              placeholder="Latitude"
+              placeholder={t("latitude")}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -230,7 +233,7 @@ const Edit = () => {
 
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="4">
-            Longitude
+            {t("longitude")}
           </Form.Label>
           <Col sm="8">
             <Form.Control
@@ -238,7 +241,7 @@ const Edit = () => {
               value={longitude}
               name="longitude"
               type="number"
-              placeholder="Longitude"
+              placeholder={t("longitude")}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -251,7 +254,7 @@ const Edit = () => {
 
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="4">
-            End Date
+            {t("endDate")}
           </Form.Label>
           <Col sm="8">
             <Form.Control
@@ -259,7 +262,7 @@ const Edit = () => {
               value={new Date(endDate).toISOString().split("T")[0]}
               name="endDate"
               type="date"
-              placeholder="End Date"
+              placeholder={t("endDate")}
               onChange={(e) => {
                 setForm((prev) => ({
                   ...prev,
@@ -271,14 +274,14 @@ const Edit = () => {
         </Form.Group>
 
         <Button variant="outline-primary" type="submit">
-          Submit
+          {t("submit")}
         </Button>
 
         <hr></hr>
 
         <Form.Group as={Row} className="mt-3 mb-3">
           <Form.Label column sm="12">
-            Prices
+            {t("prices")}
           </Form.Label>
           {form.prices.length > 0 ? (
             form.prices.map((price, index) => {
@@ -297,21 +300,19 @@ const Edit = () => {
               );
             })
           ) : (
-            <p className="justify-content-center">
-              There is no any price. Click the button below to add new price.
-            </p>
+            <p className="justify-content-center">{t("noPriceExistMeesage")}</p>
           )}
         </Form.Group>
 
         <Button href="/prices" variant="outline-success">
-          Edit Prices
+          {t("editPrices")}
         </Button>
 
         <hr></hr>
 
         <Form.Group as={Row} className="mt-3 mb-3">
           <Form.Label column sm="12">
-            Photos
+            {t("photos")}
           </Form.Label>
 
           <div className="justify-content-center">
@@ -329,12 +330,12 @@ const Edit = () => {
                     </Col>
                   );
                 })
-              : "There is no any photo. Click the button below to add new photo."}
+              : t("noPhotoExistMessage")}
           </div>
         </Form.Group>
 
         <Button href="/prices" variant="outline-info">
-          Edit Photos
+          {t("editPhotos")}
         </Button>
       </Form>
     </>

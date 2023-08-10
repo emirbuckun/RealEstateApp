@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { addPrice, editPrice, getPrice } from "/src/services/PriceService";
 import { getEstates } from "/src/services/EstateService";
 import { getCurrencies } from "/src/services/CurrencyService";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -11,12 +11,13 @@ import Col from "react-bootstrap/Col";
 
 const Edit = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
   const [form, setForm] = useState({ estateId: 0, currencyId: 0, amount: 0 });
   const [estates, setEstates] = useState([]);
   const [currencies, setCurrencies] = useState([]);
   const navigate = useNavigate();
   const navigateUrl = "/prices";
-  const operation = id ? "Edit" : "Add";
+  const operation = id ? t("edit") : t("add");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,12 +88,14 @@ const Edit = () => {
 
   return (
     <>
-      <h3>{operation} Price</h3>
+      <h3>
+        {operation} {t("price")}
+      </h3>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="3">
-            Estate
+            {t("estate")}
           </Form.Label>
           <Col sm="9">
             <Form.Select
@@ -105,7 +108,7 @@ const Edit = () => {
                 }))
               }
             >
-              <option value={0}>Select Estate</option>
+              <option value={0}>{t("selectEstate")}</option>
               {estates.map((item, index) => {
                 const { id, name } = item;
                 return (
@@ -120,7 +123,7 @@ const Edit = () => {
 
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="3">
-            Currency
+            {t("currency")}
           </Form.Label>
           <Col sm="9">
             <Form.Select
@@ -133,7 +136,7 @@ const Edit = () => {
                 }))
               }
             >
-              <option value={0}>Select Currency</option>
+              <option value={0}>{t("selectCurrency")}</option>
               {currencies.map((item, index) => {
                 const { id, name, code } = item;
                 return (
@@ -148,7 +151,7 @@ const Edit = () => {
 
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="3">
-            Amount
+            {t("amount")}
           </Form.Label>
           <Col sm="9">
             <Form.Control
@@ -156,7 +159,7 @@ const Edit = () => {
               value={form.amount}
               name="amount"
               type="number"
-              placeholder="Amount"
+              placeholder={t("amount")}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -167,7 +170,7 @@ const Edit = () => {
           </Col>
         </Form.Group>
         <Button variant="outline-primary" type="submit">
-          Submit
+          {t("submit")}
         </Button>
       </Form>
     </>

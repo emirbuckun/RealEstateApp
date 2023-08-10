@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { addPhoto } from "/src/services/PhotoService";
 import { getEstates } from "/src/services/EstateService";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -10,6 +11,7 @@ import Col from "react-bootstrap/Col";
 const Add = () => {
   const [form, setForm] = useState({ estateId: 0, photo: null });
   const [estates, setEstates] = useState([]);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const navigateUrl = "/photos";
 
@@ -63,12 +65,12 @@ const Add = () => {
 
   return (
     <>
-      <h3>Add Photo</h3>
+      <h3>{t("addPhoto")}</h3>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="3">
-            Estate
+            {t("estate")}
           </Form.Label>
           <Col sm="9">
             <Form.Select
@@ -81,7 +83,7 @@ const Add = () => {
                 }))
               }
             >
-              <option value={0}>Select Estate</option>
+              <option value={0}>{t("selectEstate")}</option>
               {estates.map((item, index) => {
                 const { id, name } = item;
                 return (
@@ -94,9 +96,9 @@ const Add = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row} controlId="formFile" className="mb-3">
+        <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="3">
-            Photo
+            {t("photo")}
           </Form.Label>
           <Col sm="9">
             <Form.Control
@@ -112,7 +114,7 @@ const Add = () => {
         </Form.Group>
 
         <Button variant="outline-primary" type="submit">
-          Submit
+          {t("submit")}
         </Button>
       </Form>
     </>
