@@ -51,9 +51,6 @@ namespace RealEstateApp.Api.Controllers
         .Where(x => !x.IsDeleted)
         .AsQueryable();
 
-      if (allEstates == null)
-        return NotFound();
-
       // Filter by type
       if (parameters.TypeId > 0)
         allEstates = allEstates.Where(x => x.EstateTypeId == parameters.TypeId);
@@ -61,6 +58,9 @@ namespace RealEstateApp.Api.Controllers
       // Filter by status
       if (parameters.StatusId > 0)
         allEstates = allEstates.Where(x => x.EstateStatusId == parameters.StatusId);
+
+      if (!allEstates.Any())
+        return NotFound();
 
       var estateCount = allEstates.Count();
 
