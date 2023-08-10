@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { deleteEstate, getPagingEstates } from "/src/services/EstateService";
+import { useTranslation } from "react-i18next";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
@@ -8,6 +9,7 @@ import Filter from "./Filter";
 
 const List = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [{ estates, loading, error }, setState] = useState({
     estates: [],
     loading: true,
@@ -57,7 +59,7 @@ const List = () => {
         } else if (response.status == 404) {
           setState({
             loading: false,
-            error: "There is no any data with the given filter.",
+            error: t("noDataWithFilter"),
           });
         } else
           setState({
@@ -74,7 +76,7 @@ const List = () => {
 
   return (
     <>
-      <h3>Estates</h3>
+      <h3>{t("estates")}</h3>
 
       <Filter setFilter={setFilter} />
 
@@ -82,20 +84,20 @@ const List = () => {
         <thead className="align-middle">
           <tr>
             <th>#</th>
-            <th>Photo</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Status</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Price</th>
+            <th>{t("photo")}</th>
+            <th>{t("name")}</th>
+            <th>{t("type")}</th>
+            <th>{t("status")}</th>
+            <th>{t("startDate")}</th>
+            <th>{t("endDate")}</th>
+            <th>{t("price")}</th>
             <th>
               <Button
                 variant="outline-success"
                 size="sm"
                 onClick={() => navigate("/estate/edit/")}
               >
-                Add
+                {t("add")}
               </Button>
             </th>
           </tr>
@@ -105,7 +107,9 @@ const List = () => {
           {!loading ? (
             error ? (
               <tr>
-                <td colSpan={9}>An error occured: {error}.</td>
+                <td colSpan={9}>
+                  {t("errorOccurred")} {error}.
+                </td>
               </tr>
             ) : estates.length > 0 ? (
               <>
@@ -150,7 +154,7 @@ const List = () => {
                           size="sm"
                           onClick={() => navigate("/estate/edit/" + id)}
                         >
-                          Edit
+                          {t("edit")}
                         </Button>{" "}
                         <Button
                           variant="outline-danger"
@@ -162,7 +166,7 @@ const List = () => {
                             })
                           }
                         >
-                          Delete
+                          {t("delete")}
                         </Button>
                       </td>
                     </tr>
@@ -171,12 +175,12 @@ const List = () => {
               </>
             ) : (
               <tr>
-                <td colSpan={9}>There is no any estate.</td>
+                <td colSpan={9}>{t("thereIsNo")}</td>
               </tr>
             )
           ) : (
             <tr>
-              <td colSpan={9}>Loading..</td>
+              <td colSpan={9}>{t("loading")}</td>
             </tr>
           )}
         </tbody>

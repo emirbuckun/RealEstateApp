@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { deletePhoto, getPhotos } from "/src/services/PhotoService";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
 const List = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [{ photos, loading, error }, setState] = useState({
     photos: [],
     loading: true,
@@ -53,22 +55,22 @@ const List = () => {
 
   return (
     <>
-      <h3>Photos</h3>
+      <h3>{t("photos")}</h3>
 
       <Table striped bordered hover>
         <thead className="align-middle">
           <tr>
             <th>#</th>
-            <th>Estate</th>
-            <th>Picture Name</th>
-            <th>Picture View</th>
+            <th>{t("estate")}</th>
+            <th>{t("pictureName")}</th>
+            <th>{t("pictureView")}</th>
             <th>
               <Button
                 variant="outline-success"
                 size="sm"
                 onClick={() => navigate("/photo/add")}
               >
-                Add
+                {t("add")}
               </Button>
             </th>
           </tr>
@@ -77,7 +79,9 @@ const List = () => {
           {!loading ? (
             error ? (
               <tr>
-                <td colSpan={9}>An error occured: {error}.</td>
+                <td colSpan={9}>
+                  {t("errorOccurred")} {error}.
+                </td>
               </tr>
             ) : photos.length > 0 ? (
               <>
@@ -104,7 +108,7 @@ const List = () => {
                             handleDelete({ id, name: description, estate })
                           }
                         >
-                          Delete
+                          {t("delete")}
                         </Button>
                       </td>
                     </tr>
@@ -113,12 +117,12 @@ const List = () => {
               </>
             ) : (
               <tr>
-                <td colSpan={5}>There is no any photo.</td>
+                <td colSpan={5}>{t("thereIsNo")}</td>
               </tr>
             )
           ) : (
             <tr>
-              <td colSpan={5}>Loading..</td>
+              <td colSpan={5}>{t("loading")}</td>
             </tr>
           )}
         </tbody>

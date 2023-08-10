@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { deleteCurrency, getCurrencies } from "/src/services/CurrencyService";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
 const List = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [{ currencies, loading, error }, setState] = useState({
     currencies: [],
     loading: true,
@@ -49,21 +51,21 @@ const List = () => {
 
   return (
     <>
-      <h3>Currencies</h3>
+      <h3>{t("currencies")}</h3>
 
       <Table striped bordered hover>
         <thead className="align-middle">
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Code</th>
+            <th>{t("name")}</th>
+            <th>{t("code")}</th>
             <th>
               <Button
                 variant="outline-success"
                 size="sm"
                 onClick={() => navigate("/currency/edit/")}
               >
-                Add
+                {t("add")}
               </Button>
             </th>
           </tr>
@@ -73,7 +75,9 @@ const List = () => {
           {!loading ? (
             error ? (
               <tr>
-                <td colSpan={9}>An error occured: {error}.</td>
+                <td colSpan={9}>
+                  {t("errorOccurred")} {error}.
+                </td>
               </tr>
             ) : currencies.length > 0 ? (
               <>
@@ -90,14 +94,14 @@ const List = () => {
                           size="sm"
                           onClick={() => navigate("/currency/edit/" + id)}
                         >
-                          Edit
+                          {t("edit")}
                         </Button>{" "}
                         <Button
                           variant="outline-danger"
                           size="sm"
                           onClick={() => handleDelete({ id, name })}
                         >
-                          Delete
+                          {t("delete")}
                         </Button>
                       </td>
                     </tr>
@@ -106,12 +110,12 @@ const List = () => {
               </>
             ) : (
               <tr>
-                <td colSpan={4}>There is no any currency.</td>
+                <td colSpan={4}>{t("thereIsNo")}</td>
               </tr>
             )
           ) : (
             <tr>
-              <td colSpan={4}>Loading..</td>
+              <td colSpan={4}>{t("loading")}</td>
             </tr>
           )}
         </tbody>

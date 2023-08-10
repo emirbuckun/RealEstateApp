@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { deleteStatus, getStatuses } from "/src/services/StatusService";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
 const List = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [{ statuses, loading, error }, setState] = useState({
     statuses: [],
     loading: true,
@@ -55,14 +57,14 @@ const List = () => {
         <thead className="align-middle">
           <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>{t("name")}</th>
             <th>
               <Button
                 variant="outline-success"
                 size="sm"
                 onClick={() => navigate("/status/edit/")}
               >
-                Add
+                {t("add")}
               </Button>
             </th>
           </tr>
@@ -72,7 +74,9 @@ const List = () => {
           {!loading ? (
             error ? (
               <tr>
-                <td colSpan={9}>An error occured: {error}.</td>
+                <td colSpan={9}>
+                  {t("errorOccurred")} {error}.
+                </td>
               </tr>
             ) : statuses.length > 0 ? (
               <>
@@ -88,14 +92,14 @@ const List = () => {
                           size="sm"
                           onClick={() => navigate("/status/edit/" + id)}
                         >
-                          Edit
+                          {t("edit")}
                         </Button>{" "}
                         <Button
                           variant="outline-danger"
                           size="sm"
                           onClick={() => handleDelete({ id, name })}
                         >
-                          Delete
+                          {t("delete")}
                         </Button>
                       </td>
                     </tr>
@@ -104,12 +108,12 @@ const List = () => {
               </>
             ) : (
               <tr>
-                <td colSpan={3}>There is no any status.</td>
+                <td colSpan={3}>{t("thereIsNo")}</td>
               </tr>
             )
           ) : (
             <tr>
-              <td colSpan={3}>Loading..</td>
+              <td colSpan={3}>{t("loading")}</td>
             </tr>
           )}
         </tbody>
