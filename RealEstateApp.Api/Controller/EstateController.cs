@@ -5,6 +5,8 @@ using RealEstateApp.Api.Auth;
 using RealEstateApp.Api.DTO.Estate;
 using RealEstateApp.Api.DatabaseContext;
 using System.Security.Claims;
+using RealEstateApp.Api.DTO.Paging;
+using System.Text.Json;
 
 namespace RealEstateApp.Api.Controllers
 {
@@ -38,6 +40,42 @@ namespace RealEstateApp.Api.Controllers
       var list = new List<InfoEstate>();
       result.ForEach(x => list.Add(new InfoEstate(x)));
       return Ok(list);
+    }
+
+    [Authorize(Roles = UserRoles.User)]
+    [HttpGet]
+    [Route("paging")]
+    public async Task<IActionResult> GetAllPaging([FromQuery] PagingParams pagingParams)
+    {
+      var result = _realEstateContext.Estates
+        .Include(x => x.EstateType)
+        .Include(x => x.EstateStatus)
+        .Include(x => x.Photos)
+        .Include(x => x.Prices)
+        .ThenInclude(price => price.Currency)
+        .Where(x => !x.IsDeleted);
+
+      if (result == null) return NotFound();
+
+      var count = result.Count();
+      var pagedItems = await result.Skip((pagingParams.PageNumber - 1) * pagingParams.PageSize).Take(pagingParams.PageSize).ToListAsync();
+
+      var list = new List<InfoEstate>();
+      pagedItems.ForEach(x => list.Add(new InfoEstate(x)));
+
+      var pagedList = PagedList<InfoEstate>.ToPagedList(list, count, pagingParams.PageNumber, pagingParams.PageSize);
+
+      var metadata = new
+      {
+        totalCount = pagedList.TotalCount,
+        pageSize = pagedList.PageSize,
+        currentPage = pagedList.CurrentPage,
+        totalPages = pagedList.TotalPages,
+        hasNext = pagedList.HasNext,
+        hasPrevious = pagedList.HasPrevious
+      };
+      Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metadata));
+      return Ok(pagedList);
     }
 
     [Authorize(Roles = UserRoles.User)]
