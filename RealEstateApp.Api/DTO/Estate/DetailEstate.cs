@@ -1,6 +1,7 @@
 using ET = RealEstateApp.Api.Entity;
 using BDTO = RealEstateApp.Api.DTO.BaseDTO;
 using RealEstateApp.Api.DTO.Price;
+using RealEstateApp.Api.DTO.Photo;
 
 namespace RealEstateApp.Api.DTO.Estate
 {
@@ -13,6 +14,7 @@ namespace RealEstateApp.Api.DTO.Estate
     public DateTime EndDate { get; set; }
     public int EstateTypeId { get; set; }
     public int EstateStatusId { get; set; }
+    public ICollection<InfoPhoto> Photos { get; set; }
     public ICollection<InfoPrice> Prices { get; set; }
 
     public DetailEstate(ET.Estate estate)
@@ -28,6 +30,9 @@ namespace RealEstateApp.Api.DTO.Estate
       var priceList = new List<InfoPrice>();
       estate.Prices?.ToList().ForEach(x => priceList.Add(new InfoPrice(x)));
       Prices = priceList;
+      var photoList = new List<InfoPhoto>();
+      estate.Photos?.ToList().ForEach(x => photoList.Add(new InfoPhoto(x)));
+      Photos = photoList;
     }
   }
 }
