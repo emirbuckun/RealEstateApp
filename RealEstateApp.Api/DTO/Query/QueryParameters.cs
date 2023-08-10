@@ -17,7 +17,5 @@ namespace RealEstateApp.Api.DTO.Paging
     public int StatusId { get; set; } = 0;
     public DateTime StartDate { get; set; } = new DateTime();
     public DateTime EndDate { get; set; } = new DateTime();
-    public double Price { get; set; } = 0;
-
   }
 }
