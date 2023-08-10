@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { getTypes } from "/src/services/TypeService";
 import { getStatuses } from "/src/services/StatusService";
+import { useTranslation } from "react-i18next";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { FormGroup } from "react-bootstrap";
 
 const Filter = ({ setFilter }) => {
+  const { t } = useTranslation();
   const [types, setTypes] = useState([]);
   const [statuses, setStatuses] = useState([]);
 
@@ -44,7 +45,7 @@ const Filter = ({ setFilter }) => {
         <Col>
           <Row>
             <Col sm={5}>
-              <Form.Label>Estate Type</Form.Label>
+              <Form.Label>{t("estateType")}</Form.Label>
             </Col>
             <Col>
               <Form.Select
@@ -55,7 +56,7 @@ const Filter = ({ setFilter }) => {
                   }))
                 }
               >
-                <option value={0}>Select Type</option>
+                <option value={0}>{t("selectType")}</option>
                 {types.map((item, index) => {
                   const { id, name } = item;
                   return (
@@ -71,7 +72,7 @@ const Filter = ({ setFilter }) => {
         <Col>
           <Row>
             <Col sm={5}>
-              <Form.Label>Estate Status</Form.Label>
+              <Form.Label>{t("estateStatus")}</Form.Label>
             </Col>
             <Col>
               <Form.Select
@@ -82,7 +83,7 @@ const Filter = ({ setFilter }) => {
                   }))
                 }
               >
-                <option value={0}>Select Status</option>
+                <option value={0}>{t("selectStatus")}</option>
                 {statuses.map((item, index) => {
                   const { id, name } = item;
                   return (
@@ -100,7 +101,7 @@ const Filter = ({ setFilter }) => {
         <Col>
           <Row>
             <Col sm={5}>
-              <Form.Label>Start Date</Form.Label>
+              <Form.Label>{t("startDate")}</Form.Label>
             </Col>
             <Col>
               <Form.Control
@@ -119,7 +120,7 @@ const Filter = ({ setFilter }) => {
         <Col>
           <Row>
             <Col sm={5}>
-              <Form.Label>End Date</Form.Label>
+              <Form.Label>{t("endDate")}</Form.Label>
             </Col>
             <Col>
               <Form.Control

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
@@ -7,13 +8,14 @@ import Col from "react-bootstrap/Col";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const list = [
-    { name: "Currencies", url: "/currencies" },
-    { name: "Estates", url: "/estates" },
-    { name: "Statuses", url: "/statuses" },
-    { name: "Types", url: "/types" },
-    { name: "Photos", url: "/photos" },
-    { name: "Prices", url: "/prices" },
+    { name: t("currencies"), url: "/currencies" },
+    { name: t("estates"), url: "/estates" },
+    { name: t("statuses"), url: "/statuses" },
+    { name: t("types"), url: "/types" },
+    { name: t("photos"), url: "/photos" },
+    { name: t("prices"), url: "/prices" },
   ];
 
   return (
