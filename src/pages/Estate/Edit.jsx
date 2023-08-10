@@ -4,6 +4,7 @@ import { getTypes } from "/src/services/TypeService";
 import { getStatuses } from "/src/services/StatusService";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -11,6 +12,8 @@ import Col from "react-bootstrap/Col";
 
 const Edit = () => {
   const { id } = useParams();
+  const [types, setTypes] = useState([]);
+  const [statuses, setStatuses] = useState([]);
   const [form, setForm] = useState({
     name: "",
     latitude: 0,
@@ -18,26 +21,24 @@ const Edit = () => {
     endDate: "0001-01-01",
     estateTypeId: 0,
     estateStatusId: 0,
+    photos: [],
+    prices: [],
   });
-  const [types, setTypes] = useState([]);
-  const [statuses, setStatuses] = useState([]);
+
   const navigate = useNavigate();
   const navigateUrl = "/estates";
   const operation = id ? "Edit" : "Add";
 
+  const { name, estateTypeId, estateStatusId, latitude, longitude, endDate } =
+    form;
+  const newEndDate = new Date(endDate).toISOString();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, estateTypeId, estateStatusId, latitude, longitude, endDate } =
-      form;
-    const newEndDate = new Date(endDate).toISOString();
 
-    if (
-      estateTypeId > 0 &&
-      estateStatusId > 0 &&
-      latitude > 0 &&
-      longitude > 0 &&
-      Date.parse(newEndDate) > Date.now()
-    ) {
+    const isValid = validateForm();
+
+    if (isValid) {
       var response;
       id
         ? (response = editEstate({
@@ -72,9 +73,20 @@ const Edit = () => {
     } else alert("Please fill the form properly.");
   };
 
+  const validateForm = () => {
+    return (
+      estateTypeId > 0 &&
+      estateStatusId > 0 &&
+      latitude > 0 &&
+      longitude > 0 &&
+      Date.parse(newEndDate) > Date.now()
+    );
+  };
+
   const fetchEstate = () => {
     getEstate(id)
       .then((response) => {
+        console.log(response);
         if (response.status == 200) {
           setForm(response.data);
         } else console.log("Error occurred!");
@@ -126,7 +138,7 @@ const Edit = () => {
           <Col sm="8">
             <Form.Control
               required
-              value={form.name}
+              value={name}
               name="name"
               type="text"
               placeholder="Name"
@@ -147,7 +159,7 @@ const Edit = () => {
           <Col sm="8">
             <Form.Select
               required
-              value={form.estateTypeId}
+              value={estateTypeId}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -175,7 +187,7 @@ const Edit = () => {
           <Col sm="8">
             <Form.Select
               required
-              value={form.estateStatusId}
+              value={estateStatusId}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -203,7 +215,7 @@ const Edit = () => {
           <Col sm="8">
             <Form.Control
               required
-              value={form.latitude}
+              value={latitude}
               name="latitude"
               type="number"
               placeholder="Latitude"
@@ -224,7 +236,7 @@ const Edit = () => {
           <Col sm="8">
             <Form.Control
               required
-              value={form.longitude}
+              value={longitude}
               name="longitude"
               type="number"
               placeholder="Longitude"
@@ -245,7 +257,7 @@ const Edit = () => {
           <Col sm="8">
             <Form.Control
               required
-              value={new Date(form.endDate).toISOString().split("T")[0]}
+              value={new Date(endDate).toISOString().split("T")[0]}
               name="endDate"
               type="date"
               placeholder="End Date"
@@ -261,6 +273,70 @@ const Edit = () => {
 
         <Button variant="outline-primary" type="submit">
           Submit
+        </Button>
+
+        <hr></hr>
+
+        <Form.Group as={Row} className="mt-3 mb-3">
+          <Form.Label column sm="12">
+            Prices
+          </Form.Label>
+          {form.prices ? (
+            form.prices.map((price, index) => {
+              const { amount, currencyCode } = price;
+              const priceDisplay = amount + " " + currencyCode;
+              return (
+                <Col className="justify-content-center" key={index} sm="12">
+                  <Form.Control
+                    disabled
+                    readOnly
+                    value={priceDisplay}
+                    name="price"
+                    type="text"
+                  />
+                </Col>
+              );
+            })
+          ) : (
+            <p className="justify-content-center">
+              There is no any price. Click the button below to add new price.
+            </p>
+          )}
+        </Form.Group>
+
+        <Button href="/prices" variant="outline-success">
+          Edit Prices
+        </Button>
+
+        <hr></hr>
+
+        <Form.Group as={Row} className="mt-3 mb-3">
+          <Form.Label column sm="12">
+            Photos
+          </Form.Label>
+
+          <Row className="justify-content-center">
+            {form.photos
+              ? form.photos.map((photo, index) => {
+                  const { id, estate, description, bytes, fileExtension } =
+                    photo;
+                  const extension = fileExtension.replace(".", "");
+                  return (
+                    <Col key={index} xs={6} md={4}>
+                      <Image
+                        style={{ width: "10rem" }}
+                        src={`data:image/${extension};base64,${bytes}`}
+                        rounded
+                      />
+                    </Col>
+                  );
+                })
+              : "There is no any photo. Click the button below to add new photo."}
+          </Row>
+        </Form.Group>
+
+        <Button href="/prices" variant="outline-info">
+          Edit Photos
         </Button>
       </Form>
     </>
