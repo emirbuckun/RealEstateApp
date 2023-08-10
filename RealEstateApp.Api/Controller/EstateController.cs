@@ -27,6 +27,8 @@ namespace RealEstateApp.Api.Controllers
     public async Task<IActionResult> GetAll()
     {
       var result = await _realEstateContext.Estates
+        .Include(x => x.EstateType)
+        .Include(x => x.EstateStatus)
         .Where(x => !x.IsDeleted)
         .ToListAsync();
 
