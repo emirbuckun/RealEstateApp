@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <>
-      <h3>Home</h3>
+      <h3>{t("home")}</h3>
       <Container>
         <Row>
           {list.map((item, index) => {

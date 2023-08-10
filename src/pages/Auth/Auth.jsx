@@ -7,10 +7,12 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import { useTranslation } from "react-i18next";
 
 export const Auth = () => {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [isLogin, setIsLogin] = useState(true);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -47,14 +49,16 @@ export const Auth = () => {
 
   return (
     <>
-      <h3>Login or Register</h3>
+      <h3>
+        {t("login")} {t("or")} {t("register")}
+      </h3>
       <Tabs
         fill
         className="mb-3"
         onSelect={(key) => setIsLogin(key == "login")}
       >
-        <Tab eventKey="login" title="Login"></Tab>
-        <Tab eventKey="register" title="Register"></Tab>
+        <Tab eventKey="login" title={t("login")}></Tab>
+        <Tab eventKey="register" title={t("register")}></Tab>
       </Tabs>
       <LoginRegister
         isLogin={isLogin}
@@ -66,18 +70,19 @@ export const Auth = () => {
 };
 
 export const LoginRegister = ({ isLogin, handleInputChange, handleSubmit }) => {
+  const { t } = useTranslation();
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group as={Row} className="mb-3">
-        <Form.Label column sm="3">
-          Username
+        <Form.Label column sm="4">
+          {t("username")}
         </Form.Label>
-        <Col sm="9">
+        <Col sm="8">
           <Form.Control
             required
             name="username"
             type="text"
-            placeholder="Username"
+            placeholder={t("username")}
             onChange={handleInputChange}
           />
         </Col>
@@ -85,15 +90,15 @@ export const LoginRegister = ({ isLogin, handleInputChange, handleSubmit }) => {
 
       {!isLogin && (
         <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="3">
-            Email
+          <Form.Label column sm="4">
+            {t("email")}
           </Form.Label>
-          <Col sm="9">
+          <Col sm="8">
             <Form.Control
               required
               name="email"
               type="email"
-              placeholder="Email"
+              placeholder={t("email")}
               onChange={handleInputChange}
             />
           </Col>
@@ -101,21 +106,21 @@ export const LoginRegister = ({ isLogin, handleInputChange, handleSubmit }) => {
       )}
 
       <Form.Group as={Row} className="mb-3">
-        <Form.Label column sm="3">
-          Password
+        <Form.Label column sm="4">
+          {t("password")}
         </Form.Label>
-        <Col sm="9">
+        <Col sm="8">
           <Form.Control
             required
             name="password"
             type="password"
-            placeholder="Password"
+            placeholder={t("password")}
             onChange={handleInputChange}
           />
         </Col>
       </Form.Group>
       <Button variant="outline-primary" type="submit">
-        Submit
+        {t("submit")}
       </Button>
     </Form>
   );

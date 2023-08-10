@@ -55,7 +55,7 @@ const Navbar = () => {
             </NavDropdown>
           </Nav>
           <Form>
-            <Form.Select onChange={onChangeLang}>
+            <Form.Select onChange={onChangeLang} value={i18n.language}>
               {LANGUAGES.map(({ code, label }) => (
                 <option key={code} value={code}>
                   {label}
@@ -65,7 +65,9 @@ const Navbar = () => {
           </Form>
           <Nav>
             {!validateToken() ? (
-              <Nav.Link href="/auth">Login/Register</Nav.Link>
+              <Nav.Link href="/auth">
+                {t("login")}/{t("register")}
+              </Nav.Link>
             ) : (
               <Nav.Link
                 href="/auth"
@@ -74,7 +76,7 @@ const Navbar = () => {
                   localStorage.removeItem("tokenExpiration");
                 }}
               >
-                Log Out
+                {t("logout")}
               </Nav.Link>
             )}
           </Nav>
