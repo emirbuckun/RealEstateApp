@@ -4,6 +4,7 @@ import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import Filter from "./Filter";
 
 const List = () => {
   const navigate = useNavigate();
@@ -17,6 +18,13 @@ const List = () => {
     totalPages: 1,
   });
   const { currentPage, totalPages } = paging;
+  const [filter, setFilter] = useState({
+    typeId: 0,
+    statusId: 0,
+    startDate: null,
+    endDate: null,
+  });
+  const { typeId, statusId, startDate, endDate } = filter;
 
   const handleDelete = ({ id, name }) => {
     if (window.confirm(`Delete the estate named ${name}?`)) {
@@ -36,12 +44,21 @@ const List = () => {
 
   const fetchEstates = () => {
     setState({ error: null, loading: true });
-    getPagingEstates(currentPage)
+    var query = { pageNumber: currentPage, typeId, statusId };
+    if (startDate != null) query.startDate = startDate;
+    if (endDate != null) query.endDate = endDate;
+
+    getPagingEstates({ query })
       .then((response) => {
         if (response.status == 200) {
           const pagingHeader = JSON.parse(response.headers["x-pagination"]);
           setPaging(pagingHeader);
           setState({ estates: response.data, loading: false });
+        } else if (response.status == 404) {
+          setState({
+            loading: false,
+            error: "There is no any data with the given filter.",
+          });
         } else
           setState({
             loading: false,
@@ -53,11 +70,14 @@ const List = () => {
 
   useEffect(() => {
     fetchEstates();
-  }, [currentPage]);
+  }, [currentPage, filter]);
 
   return (
     <>
       <h3>Estates</h3>
+
+      <Filter setFilter={setFilter} />
+
       <Table striped bordered hover>
         <thead className="align-middle">
           <tr>
@@ -84,7 +104,9 @@ const List = () => {
         <tbody className="align-middle">
           {!loading ? (
             error ? (
-              "An error occurred: " + error
+              <tr>
+                <td colSpan={9}>An error occured: {error}.</td>
+              </tr>
             ) : estates.length > 0 ? (
               <>
                 {estates.map((estate, index) => {

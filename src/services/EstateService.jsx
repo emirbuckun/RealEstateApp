@@ -7,8 +7,11 @@ export const getEstates = async () => {
     .catch((error) => error);
 };
 
-export const getPagingEstates = async (pageNumber) => {
-  const url = "/Estate/paging?pageNumber=" + pageNumber;
+export const getPagingEstates = async ({ query }) => {
+  var url = "/Estate/paging?";
+  Object.keys(query).map((key) => {
+    url += `${key}=${query[key]}&`;
+  });
   return await getAPI(url)
     .then((res) => res)
     .catch((error) => error);
