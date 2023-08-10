@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { addType, editType, getType } from "/src/services/TypeService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Button, Form, Row, Col } from "react-bootstrap";
 
 const Edit = () => {
   const { id } = useParams();
@@ -19,9 +16,7 @@ const Edit = () => {
     e.preventDefault();
     var response;
 
-    id
-      ? (response = editType({ id: id, name: name }))
-      : (response = addType({ name: name }));
+    id ? (response = editType({ id, name })) : (response = addType({ name }));
 
     response
       .then((response) => {

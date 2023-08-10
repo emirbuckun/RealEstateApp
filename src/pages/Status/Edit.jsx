@@ -1,18 +1,15 @@
-import { useState, useEffect } from "react";
 import { addStatus, editStatus, getStatus } from "/src/services/StatusService";
 import { useNavigate, useParams } from "react-router-dom";
+import { Button, Form, Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { useState, useEffect } from "react";
 
 const Edit = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const [name, setName] = useState("");
   const navigate = useNavigate();
   const navigateUrl = "/statuses";
+  const [name, setName] = useState("");
   const operation = id ? t("edit") : t("add");
 
   const handleSubmit = (e) => {
@@ -20,8 +17,8 @@ const Edit = () => {
     var response;
 
     id
-      ? (response = editStatus({ id: id, name: name }))
-      : (response = addStatus({ name: name }));
+      ? (response = editStatus({ id, name }))
+      : (response = addStatus({ name }));
 
     response
       .then((response) => {

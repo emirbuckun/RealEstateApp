@@ -1,14 +1,10 @@
-import { useState, useEffect } from "react";
 import { addEstate, editEstate, getEstate } from "/src/services/EstateService";
-import { getTypes } from "/src/services/TypeService";
 import { getStatuses } from "/src/services/StatusService";
+import { getTypes } from "/src/services/TypeService";
+import { Image, Button, Form, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { useState, useEffect } from "react";
 
 const Edit = () => {
   const { id } = useParams();

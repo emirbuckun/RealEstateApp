@@ -1,12 +1,9 @@
-import { useState, useEffect } from "react";
-import { addPhoto } from "/src/services/PhotoService";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { getEstates } from "/src/services/EstateService";
+import { addPhoto } from "/src/services/PhotoService";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { useState, useEffect } from "react";
 
 const Add = () => {
   const [form, setForm] = useState({ estateId: 0, photo: null });

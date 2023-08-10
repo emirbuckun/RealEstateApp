@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
 import { deleteEstate, getPagingEstates } from "/src/services/EstateService";
+import { Table, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
+import { useEffect, useState } from "react";
+import Pagination from "./Pagination";
 import Filter from "./Filter";
 
 const List = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
   const [{ estates, loading, error }, setState] = useState({
     estates: [],
     loading: true,
     error: null,
   });
+
   const [paging, setPaging] = useState({
     currentPage: 1,
     totalPages: 1,
   });
   const { currentPage, totalPages } = paging;
+
   const [filter, setFilter] = useState({
     typeId: 0,
     statusId: 0,
@@ -185,6 +187,7 @@ const List = () => {
           )}
         </tbody>
       </Table>
+
       <Pagination
         currentPage={currentPage}
         pagesCount={totalPages}

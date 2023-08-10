@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { getTypes } from "/src/services/TypeService";
 import { getStatuses } from "/src/services/StatusService";
+import { getTypes } from "/src/services/TypeService";
+import { Form, Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import { useState, useEffect } from "react";
 
 const Filter = ({ setFilter }) => {
   const { t } = useTranslation();
@@ -39,6 +37,7 @@ const Filter = ({ setFilter }) => {
     fetchTypes();
     fetchStatuses();
   }, []);
+
   return (
     <Form>
       <Row className="mb-3">

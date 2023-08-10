@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import { useEffect } from "react";
 
 const PaginationComponent = ({
   currentPage,
@@ -21,11 +21,11 @@ const PaginationComponent = ({
   };
 
   const onPreviousPageClick = () => {
-    changePage((currentPage) => currentPage - 1);
+    changePage(currentPage - 1);
   };
 
   const onNextPageClick = () => {
-    changePage((currentPage) => currentPage + 1);
+    changePage(currentPage + 1);
   };
 
   const setLastPageAsCurrent = () => {

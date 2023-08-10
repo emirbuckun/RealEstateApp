@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import { deletePhoto, getPhotos } from "/src/services/PhotoService";
+import { Table, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
+import { useEffect, useState } from "react";
 
 const List = () => {
   const navigate = useNavigate();

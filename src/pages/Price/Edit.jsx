@@ -1,23 +1,21 @@
-import { useState, useEffect } from "react";
 import { addPrice, editPrice, getPrice } from "/src/services/PriceService";
-import { getEstates } from "/src/services/EstateService";
 import { getCurrencies } from "/src/services/CurrencyService";
+import { getEstates } from "/src/services/EstateService";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { useState, useEffect } from "react";
 
 const Edit = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const [form, setForm] = useState({ estateId: 0, currencyId: 0, amount: 0 });
-  const [estates, setEstates] = useState([]);
-  const [currencies, setCurrencies] = useState([]);
   const navigate = useNavigate();
   const navigateUrl = "/prices";
   const operation = id ? t("edit") : t("add");
+
+  const [form, setForm] = useState({ estateId: 0, currencyId: 0, amount: 0 });
+  const [estates, setEstates] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

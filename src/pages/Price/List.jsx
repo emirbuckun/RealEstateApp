@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { deletePrice, getPrices } from "/src/services/PriceService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";

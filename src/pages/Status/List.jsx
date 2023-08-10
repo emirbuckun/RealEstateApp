@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import { deleteStatus, getStatuses } from "/src/services/StatusService";
+import { Table, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
+import { useEffect, useState } from "react";
 
 const List = () => {
   const navigate = useNavigate();
@@ -51,7 +50,7 @@ const List = () => {
 
   return (
     <>
-      <h3>Statuses</h3>
+      <h3>{t("statuses")}</h3>
 
       <Table striped bordered hover>
         <thead className="align-middle">
