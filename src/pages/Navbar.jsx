@@ -12,6 +12,7 @@ const Navbar = () => {
     { name: "Types", url: "/types" },
     { name: "Photos", url: "/photos" },
     { name: "Prices", url: "/prices" },
+    { name: "Map", url: "/map" },
   ];
   return (
     <NavbarB fixed="top" collapseOnSelect expand="md">
