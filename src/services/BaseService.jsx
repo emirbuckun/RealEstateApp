@@ -16,6 +16,7 @@ export const getAPI = async (url) => {
       return {
         status: response.status,
         data: response.data,
+        headers: response.headers,
       };
     })
     .catch((error) => {

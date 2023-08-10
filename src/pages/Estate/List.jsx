@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { deleteEstate, getEstates } from "/src/services/EstateService";
+import { deleteEstate, getPagingEstates } from "/src/services/EstateService";
+import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -11,6 +12,11 @@ const List = () => {
     loading: true,
     error: null,
   });
+  const [paging, setPaging] = useState({
+    currentPage: 1,
+    totalPages: 1,
+  });
+  const { currentPage, totalPages } = paging;
 
   const handleDelete = ({ id, name }) => {
     if (window.confirm(`Delete the estate named ${name}?`)) {
@@ -30,9 +36,11 @@ const List = () => {
 
   const fetchEstates = () => {
     setState({ error: null, loading: true });
-    getEstates()
+    getPagingEstates(currentPage)
       .then((response) => {
         if (response.status == 200) {
+          const pagingHeader = JSON.parse(response.headers["x-pagination"]);
+          setPaging(pagingHeader);
           setState({ estates: response.data, loading: false });
         } else
           setState({
@@ -45,12 +53,11 @@ const List = () => {
 
   useEffect(() => {
     fetchEstates();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
       <h3>Estates</h3>
-
       <Table striped bordered hover>
         <thead className="align-middle">
           <tr>
@@ -152,6 +159,14 @@ const List = () => {
           )}
         </tbody>
       </Table>
+      <Pagination
+        currentPage={currentPage}
+        pagesCount={totalPages}
+        setCurrentPage={(number) =>
+          setPaging({ ...paging, currentPage: number })
+        }
+        alwaysShown={true}
+      />
     </>
   );
 };
