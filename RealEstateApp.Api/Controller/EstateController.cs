@@ -86,8 +86,11 @@ namespace RealEstateApp.Api.Controllers
         .Include(x => x.EstateType)
         .Include(x => x.EstateStatus)
         .Where(x => !x.IsDeleted)
+        .Include(x => x.Photos)
+        .Include(x => x.Prices)
+        .ThenInclude(price => price.Currency)
         .SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
-      if (result != null) return Ok(new InfoEstate(result));
+      if (result != null) return Ok(new DetailEstate(result));
       return NotFound();
     }
 
