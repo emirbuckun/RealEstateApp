@@ -59,6 +59,14 @@ namespace RealEstateApp.Api.Controllers
       if (parameters.StatusId > 0)
         allEstates = allEstates.Where(x => x.EstateStatusId == parameters.StatusId);
 
+      // Filter by date
+      if (parameters.StartDate != DateTime.MinValue)
+        allEstates = allEstates.Where(x => x.StartDate >= parameters.StartDate);
+
+      if (parameters.EndDate != DateTime.MinValue)
+        allEstates = allEstates.Where(x => x.EndDate <= parameters.EndDate);
+
+      // Null check
       if (!allEstates.Any())
         return NotFound();
 
