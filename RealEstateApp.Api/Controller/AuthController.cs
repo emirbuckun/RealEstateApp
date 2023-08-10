@@ -40,7 +40,7 @@ namespace RealEstateApp.Api.Controllers
 
         var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Name, user.UserName ?? "Anonymous"),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
@@ -115,7 +115,7 @@ namespace RealEstateApp.Api.Controllers
 
     private JwtSecurityToken GetToken(List<Claim> authClaims)
     {
-      var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+      var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]!));
 
       var token = new JwtSecurityToken(
           issuer: _configuration["JWT:ValidIssuer"],
