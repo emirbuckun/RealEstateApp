@@ -55,5 +55,6 @@
   "pictureName": "Resim Adı",
   "pictureView": "Resim Görünümü",
   "estateType": "Emlak Tipi",
-  "estateStatus": "Emlak Durumu"
+  "estateStatus": "Emlak Durumu",
+  "dashboard": "Pano"
 }

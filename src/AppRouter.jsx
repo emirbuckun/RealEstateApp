@@ -1,5 +1,6 @@
 import Map from "./pages/Map";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth/Auth";
 import Authenticated from "./pages/Auth/Authenticated";
 import TypeList from "./pages/Type/List";
@@ -31,6 +32,7 @@ function AppRouter() {
           <Route exact path="/photos" element={<PhotoList />} />
           <Route exact path="/estates" element={<EstateList />} />
           <Route exact path="/map" element={<Map />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/type/edit/:id?" element={<TypeEdit />} />
           <Route exact path="/status/edit/:id?" element={<StatusEdit />} />
           <Route exact path="/currency/edit/:id?" element={<CurrencyEdit />} />

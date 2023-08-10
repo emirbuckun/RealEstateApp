@@ -15,6 +15,7 @@ const Navbar = () => {
     { name: "photos", url: "/photos" },
     { name: "prices", url: "/prices" },
     { name: "map", url: "/map" },
+    { name: "dashboard", url: "/dashboard" },
   ];
   const lookUplist = [
     { name: "currencies", url: "/currencies" },

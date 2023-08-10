@@ -55,5 +55,6 @@
   "pictureName": "Picture Name",
   "pictureView": "Picture View",
   "estateType": "Estate Type",
-  "estateStatus": "Estate Status"
+  "estateStatus": "Estate Status",
+  "dashboard": "Dashboard"
 }
