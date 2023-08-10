@@ -27,8 +27,16 @@ namespace RealEstateApp.Api.DTO.Estate
       EndDate = estate.EndDate;
       EstateType = estate.EstateType != null ? estate.EstateType.Name ?? string.Empty : string.Empty;
       EstateStatus = estate.EstateStatus != null ? estate.EstateStatus.Name ?? string.Empty : string.Empty;
-      Photo = estate.Photos != null && estate.Photos.Where(x => !x.IsDeleted).Any() ? new InfoPhoto(estate.Photos.Where(x => !x.IsDeleted).FirstOrDefault()) : null;
-      Price = estate.Prices != null && estate.Prices.Where(x => !x.IsDeleted).Any() ? new InfoPrice(estate.Prices.Where(x => !x.IsDeleted).FirstOrDefault()) : null;
+      if (estate.Photos != null && estate.Photos.Any())
+      {
+        var firstPhoto = estate.Photos.FirstOrDefault() ?? new ET.Photo();
+        Photo = new InfoPhoto(firstPhoto);
+      }
+      if (estate.Prices != null && estate.Prices.Count > 0)
+      {
+        var firstPrice = estate.Prices.FirstOrDefault() ?? new ET.Price();
+        Price = new InfoPrice(firstPrice);
+      }
     }
   }
 }
