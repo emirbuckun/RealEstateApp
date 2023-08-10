@@ -92,6 +92,7 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowAnyOrigin()
+    .WithExposedHeaders("x-pagination")
 );
 
 app.UseAuthentication();
