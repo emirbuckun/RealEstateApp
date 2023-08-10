@@ -48,7 +48,7 @@ namespace RealEstateApp.Api.Controllers
         .Include(x => x.EstateType)
         .Include(x => x.EstateStatus)
         .Include(x => x.Photos)
-        .Include(x => x.Prices)
+        .Include(x => x.Prices!)
         .ThenInclude((price) => price.Currency)
         .Where(x => !x.IsDeleted)
         .AsQueryable();
@@ -103,7 +103,7 @@ namespace RealEstateApp.Api.Controllers
         .Include(x => x.EstateType)
         .Include(x => x.EstateStatus)
         .Include(x => x.Photos)
-        .Include(x => x.Prices)
+        .Include(x => x.Prices!)
         .ThenInclude((price) => price.Currency)
         .Where(x => !x.IsDeleted)
         .SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
