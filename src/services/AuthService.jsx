@@ -4,8 +4,28 @@ export const login = async (form) => {
   const url = "/Auth/login";
   return await postAPI(url, form)
     .then((res) => {
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("tokenExpiration", res.data.expiration);
+      const token = res.data.token;
+      const expiration = res.data.expiration;
+
+      // Set token and expiration date
+      localStorage.setItem("token", token);
+      localStorage.setItem("tokenExpiration", expiration);
+
+      // Decode token
+      const tokenData = token.split(".")[1];
+      const decodedTokenJsonData = window.atob(tokenData);
+      const decodedTokenData = JSON.parse(decodedTokenJsonData);
+
+      // Set username
+      const username = decodedTokenData.username;
+      localStorage.setItem("username", username);
+
+      // Set is admin value
+      const roles = decodedTokenData.roles;
+      const roleValues = Object.values(roles);
+      const isAdmin = roleValues.includes("Admin");
+      localStorage.setItem("isAdmin", isAdmin);
+
       return res.status;
     })
     .catch((error) => error);
