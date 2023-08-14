@@ -80,7 +80,10 @@ const NavbarComponent = () => {
               </Nav.Link>
             ) : (
               <>
-                &nbsp;<Navbar.Text>User: {username}</Navbar.Text>
+                &nbsp;
+                <Navbar.Text>
+                  {t("user")}: {username}
+                </Navbar.Text>
                 <Nav.Link
                   href="/auth"
                   onClick={() => {
