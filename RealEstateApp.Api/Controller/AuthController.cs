@@ -39,13 +39,13 @@ namespace RealEstateApp.Api.Controllers
         var userRoles = await _userManager.GetRolesAsync(user);
 
         var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName ?? "Anonymous"),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
+          {
+              new Claim("username", user.UserName ?? "Anonymous"),
+              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+          };
 
         foreach (var userRole in userRoles)
-          authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+          authClaims.Add(new Claim("roles", userRole));
 
         var token = GetToken(authClaims);
 
