@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
@@ -94,6 +97,8 @@ app.UseCors(x => x
     .AllowAnyOrigin()
     .WithExposedHeaders("x-pagination")
 );
+
+app.UseSerilogRequestLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();
