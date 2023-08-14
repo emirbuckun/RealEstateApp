@@ -71,6 +71,8 @@ const NavbarComponent = () => {
                 onClick={() => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("tokenExpiration");
+                  localStorage.removeItem("username");
+                  localStorage.removeItem("isAdmin");
                 }}
               >
                 {t("logout")}
