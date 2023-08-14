@@ -45,3 +45,11 @@ export const validateToken = () => {
   const parseTokenExp = tokenExp && Date.parse(tokenExp);
   return token && parseTokenExp && parseTokenExp > current;
 };
+
+export const validateAdmin = () => {
+  return JSON.parse(localStorage.getItem("isAdmin"));
+};
+
+export const getUsername = () => {
+  return localStorage.getItem("username");
+};
