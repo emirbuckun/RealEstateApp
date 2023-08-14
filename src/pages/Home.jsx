@@ -1,21 +1,25 @@
+import { Container, Card, Row, Col } from "react-bootstrap";
+import { validateAdmin } from "../services/AuthService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const isAdmin = validateAdmin();
   const list = [
-    { name: t("currencies"), url: "/currencies" },
     { name: t("estates"), url: "/estates" },
-    { name: t("statuses"), url: "/statuses" },
-    { name: t("types"), url: "/types" },
+    { name: t("map"), url: "/map" },
+    { name: t("dashboard"), url: "/dashboard" },
     { name: t("photos"), url: "/photos" },
     { name: t("prices"), url: "/prices" },
   ];
+
+  if (isAdmin) {
+    list.push({ name: t("types"), url: "/types" });
+    list.push({ name: t("statuses"), url: "/statuses" });
+    list.push({ name: t("currencies"), url: "/currencies" });
+  }
 
   return (
     <>

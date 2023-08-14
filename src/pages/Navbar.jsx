@@ -1,23 +1,34 @@
-import { validateToken } from "/src/services/AuthService";
-import { LANGUAGES } from "/src/constants";
-import { useTranslation } from "react-i18next";
 import { Form, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  validateToken,
+  validateAdmin,
+  getUsername,
+} from "/src/services/AuthService";
+import { useTranslation } from "react-i18next";
+import { LANGUAGES } from "/src/constants";
 
 const NavbarComponent = () => {
   const { i18n, t } = useTranslation();
+  const authenticated = validateToken();
+  const isAdmin = authenticated ? validateAdmin() : false;
+  const username = authenticated ? getUsername() : "";
+
   const mainlist = [
     { name: "home", url: "/home" },
     { name: "estates", url: "/estates" },
-    { name: "photos", url: "/photos" },
-    { name: "prices", url: "/prices" },
     { name: "map", url: "/map" },
     { name: "dashboard", url: "/dashboard" },
+    { name: "photos", url: "/photos" },
+    { name: "prices", url: "/prices" },
   ];
-  const lookUplist = [
-    { name: "currencies", url: "/currencies" },
-    { name: "statuses", url: "/statuses" },
-    { name: "types", url: "/types" },
-  ];
+
+  const lookUplist = isAdmin
+    ? [
+        { name: "currencies", url: "/currencies" },
+        { name: "statuses", url: "/statuses" },
+        { name: "types", url: "/types" },
+      ]
+    : [];
 
   const onChangeLang = (e) => {
     const lang_code = e.target.value;
@@ -40,16 +51,18 @@ const NavbarComponent = () => {
                 </Nav.Link>
               );
             })}
-            <NavDropdown title={t("lookup")} id="collasible-nav-dropdown">
-              {lookUplist.map((item, index) => {
-                const { name, url } = item;
-                return (
-                  <NavDropdown.Item key={index} href={url}>
-                    {t(name)}
-                  </NavDropdown.Item>
-                );
-              })}
-            </NavDropdown>
+            {lookUplist.length > 0 && (
+              <NavDropdown title={t("lookup")} id="collasible-nav-dropdown">
+                {lookUplist.map((item, index) => {
+                  const { name, url } = item;
+                  return (
+                    <NavDropdown.Item key={index} href={url}>
+                      {t(name)}
+                    </NavDropdown.Item>
+                  );
+                })}
+              </NavDropdown>
+            )}
           </Nav>
           <Form>
             <Form.Select onChange={onChangeLang} value={i18n.language}>
@@ -61,22 +74,25 @@ const NavbarComponent = () => {
             </Form.Select>
           </Form>
           <Nav>
-            {!validateToken() ? (
+            {!authenticated ? (
               <Nav.Link href="/auth">
                 {t("login")}/{t("register")}
               </Nav.Link>
             ) : (
-              <Nav.Link
-                href="/auth"
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("tokenExpiration");
-                  localStorage.removeItem("username");
-                  localStorage.removeItem("isAdmin");
-                }}
-              >
-                {t("logout")}
-              </Nav.Link>
+              <>
+                &nbsp;<Navbar.Text>User: {username}</Navbar.Text>
+                <Nav.Link
+                  href="/auth"
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("tokenExpiration");
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("isAdmin");
+                  }}
+                >
+                  {t("logout")}
+                </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
