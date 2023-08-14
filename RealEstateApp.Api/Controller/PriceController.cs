@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RealEstateApp.Api.Auth;
 using RealEstateApp.Api.DTO.Price;
 using RealEstateApp.Api.DatabaseContext;
-using System.Security.Claims;
 
 namespace RealEstateApp.Api.Controllers
 {
@@ -52,7 +51,7 @@ namespace RealEstateApp.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] NewPrice request)
     {
-      var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+      var username = User.Claims.First(x => x.Type == "username").Value;
 
       var newItem = request.ToPrice();
       newItem.CreatedAt = DateTime.Now;
@@ -74,7 +73,7 @@ namespace RealEstateApp.Api.Controllers
 
       if (item != null)
       {
-        var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+        var username = User.Claims.First(x => x.Type == "username").Value;
 
         item.Amount = request.Amount;
         item.CurrencyId = request.CurrencyId;
@@ -98,7 +97,7 @@ namespace RealEstateApp.Api.Controllers
         .SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
       if (item != null)
       {
-        var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+        var username = User.Claims.First(x => x.Type == "username").Value;
 
         item.IsDeleted = true;
         item.UpdatedBy = username;

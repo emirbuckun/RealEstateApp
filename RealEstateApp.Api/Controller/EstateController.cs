@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RealEstateApp.Api.Auth;
 using RealEstateApp.Api.DTO.Estate;
 using RealEstateApp.Api.DatabaseContext;
-using System.Security.Claims;
 using RealEstateApp.Api.DTO.Paging;
 using System.Text.Json;
 
@@ -115,7 +114,7 @@ namespace RealEstateApp.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] NewEstate request)
     {
-      var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+      var username = User.Claims.First(x => x.Type == "username").Value;
       var currentTime = DateTime.Now;
 
       var newItem = request.ToEstate();
@@ -145,7 +144,7 @@ namespace RealEstateApp.Api.Controllers
 
       if (item != null)
       {
-        var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+        var username = User.Claims.First(x => x.Type == "username").Value;
 
         item.Name = request.Name;
         item.Latitude = request.Latitude;
@@ -170,7 +169,7 @@ namespace RealEstateApp.Api.Controllers
       var item = await _realEstateContext.Estates.SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
       if (item != null)
       {
-        var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+        var username = User.Claims.First(x => x.Type == "username").Value;
 
         item.IsDeleted = true;
         item.UpdatedBy = username;

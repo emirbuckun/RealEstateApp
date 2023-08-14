@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RealEstateApp.Api.Auth;
 using RealEstateApp.Api.DTO.EstateStatus;
 using RealEstateApp.Api.DatabaseContext;
-using System.Security.Claims;
 
 namespace RealEstateApp.Api.Controllers
 {
@@ -44,7 +43,7 @@ namespace RealEstateApp.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] NewEstateStatus request)
     {
-      var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+      var username = User.Claims.First(x => x.Type == "username").Value;
 
       var newItem = request.ToEstateStatus();
       newItem.CreatedAt = DateTime.Now;
@@ -62,7 +61,7 @@ namespace RealEstateApp.Api.Controllers
       var item = await _realEstateContext.EstateStatuses.SingleOrDefaultAsync(x => x.Id == request.Id && !x.IsDeleted);
       if (item != null)
       {
-        var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+        var username = User.Claims.First(x => x.Type == "username").Value;
 
         item.Name = request.Name;
         item.UpdatedBy = username;
@@ -81,7 +80,7 @@ namespace RealEstateApp.Api.Controllers
       var item = await _realEstateContext.EstateStatuses.SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
       if (item != null)
       {
-        var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+        var username = User.Claims.First(x => x.Type == "username").Value;
 
         item.IsDeleted = true;
         item.UpdatedBy = username;

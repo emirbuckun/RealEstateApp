@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RealEstateApp.Api.Auth;
 using RealEstateApp.Api.DTO.Photo;
 using RealEstateApp.Api.DatabaseContext;
-using System.Security.Claims;
-using RealEstateApp.Api.Entity;
 
 namespace RealEstateApp.Api.Controllers
 {
@@ -70,7 +68,7 @@ namespace RealEstateApp.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromForm] int estateId, IFormFile file)
     {
-      var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+      var username = User.Claims.First(x => x.Type == "username").Value;
 
       if (file.Length > 0)
       {
@@ -121,7 +119,7 @@ namespace RealEstateApp.Api.Controllers
 
       if (item != null)
       {
-        var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+        var username = User.Claims.First(x => x.Type == "username").Value;
 
         item.IsDeleted = true;
         item.UpdatedBy = username;
