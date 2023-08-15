@@ -1,4 +1,5 @@
 using System.Text;
+using RealEstateApp.Api.Middleware;
 using RealEstateApp.Api.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -8,8 +9,10 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
+
 ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
@@ -98,7 +101,17 @@ app.UseCors(x => x
     .WithExposedHeaders("x-pagination")
 );
 
-app.UseSerilogRequestLogging();
+if (Convert.ToBoolean(configuration["Middleware:EnableTraceMiddleware"]))
+    app.UseTraceMiddleware();
+
+if (Convert.ToBoolean(configuration["Middleware:EnablePerformanceMiddleware"]))
+    app.UsePerformanceMiddleware();
+
+if (Convert.ToBoolean(configuration["Middleware:EnableLoggingMiddleware"]))
+    app.UseLoggingMiddleware();
+
+if (Convert.ToBoolean(configuration["Middleware:EnableSerilogRequestLogging"]))
+    app.UseSerilogRequestLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();
