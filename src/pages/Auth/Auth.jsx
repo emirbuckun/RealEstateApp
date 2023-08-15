@@ -1,8 +1,8 @@
+import { LoginRegister } from "/src/components/LoginRegister";
 import { login, register } from "/src/services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Tab, Tabs } from "react-bootstrap";
-import { LoginRegister } from "./Form";
 import { useState } from "react";
 
 const Auth = () => {
