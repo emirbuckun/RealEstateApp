@@ -3,8 +3,8 @@ import { Table, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Pagination from "./Pagination";
-import Filter from "./Filter";
+import Pagination from "/src/components/Pagination";
+import Filter from "/src/components/Filter";
 
 const List = () => {
   const navigate = useNavigate();
