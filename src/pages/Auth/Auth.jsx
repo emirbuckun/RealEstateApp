@@ -1,4 +1,4 @@
-import { LoginRegister } from "/src/components/LoginRegister";
+import { AuthForm } from "/src/components/AuthForm";
 import { login, register } from "/src/services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -56,7 +56,7 @@ const Auth = () => {
         <Tab eventKey="login" title={t("login")}></Tab>
         <Tab eventKey="register" title={t("register")}></Tab>
       </Tabs>
-      <LoginRegister
+      <AuthForm
         isLogin={isLogin}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}

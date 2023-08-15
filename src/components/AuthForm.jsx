@@ -1,7 +1,7 @@
 import { Col, Form, Row, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-export const LoginRegister = ({ isLogin, handleInputChange, handleSubmit }) => {
+export const AuthForm = ({ isLogin, handleInputChange, handleSubmit }) => {
   const { t } = useTranslation();
   return (
     <Form onSubmit={handleSubmit}>
