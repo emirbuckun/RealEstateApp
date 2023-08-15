@@ -4,7 +4,6 @@ export const LANGUAGES = [
 ];
 
 export const PAGE_LIST = [
-  { name: "home", url: "/home" },
   { name: "estates", url: "/estates" },
   { name: "map", url: "/map" },
   { name: "dashboard", url: "/dashboard" },
