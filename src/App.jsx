@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import AppRouter from "./AppRouter";
-import Navbar from "./pages/Navbar";
+import Navbar from "./components/Navbar";
 import { useTranslation } from "react-i18next";
 
 function App() {

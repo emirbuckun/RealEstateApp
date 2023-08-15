@@ -1,41 +1,15 @@
-import { Form, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { PAGE_LIST, LOOKUP_LIST } from "/src/constants";
+import { useTranslation } from "react-i18next";
+import SelectLanguage from "./SelectLanguage";
 import {
   validateToken,
   validateAdmin,
   getUsername,
 } from "/src/services/AuthService";
-import { useTranslation } from "react-i18next";
-import { LANGUAGES } from "/src/constants";
 
 const NavbarComponent = () => {
-  const { i18n, t } = useTranslation();
-  const authenticated = validateToken();
-  const isAdmin = authenticated ? validateAdmin() : false;
-  const username = authenticated ? getUsername() : "";
-
-  const mainlist = [
-    { name: "home", url: "/home" },
-    { name: "estates", url: "/estates" },
-    { name: "map", url: "/map" },
-    { name: "dashboard", url: "/dashboard" },
-    { name: "photos", url: "/photos" },
-    { name: "prices", url: "/prices" },
-  ];
-
-  const lookUplist = isAdmin
-    ? [
-        { name: "currencies", url: "/currencies" },
-        { name: "statuses", url: "/statuses" },
-        { name: "types", url: "/types" },
-      ]
-    : [];
-
-  const onChangeLang = (e) => {
-    const lang_code = e.target.value;
-    i18n.changeLanguage(lang_code);
-    localStorage.setItem("lang", lang_code);
-  };
-
+  const { t } = useTranslation();
   return (
     <Navbar fixed="top" collapseOnSelect expand="md">
       <Container>
@@ -43,7 +17,7 @@ const NavbarComponent = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            {mainlist.map((item, index) => {
+            {PAGE_LIST.map((item, index) => {
               const { name, url } = item;
               return (
                 <Nav.Link key={index} href={url}>
@@ -51,9 +25,9 @@ const NavbarComponent = () => {
                 </Nav.Link>
               );
             })}
-            {lookUplist.length > 0 && (
+            {validateAdmin() && (
               <NavDropdown title={t("lookup")} id="collasible-nav-dropdown">
-                {lookUplist.map((item, index) => {
+                {LOOKUP_LIST.map((item, index) => {
                   const { name, url } = item;
                   return (
                     <NavDropdown.Item key={index} href={url}>
@@ -64,17 +38,9 @@ const NavbarComponent = () => {
               </NavDropdown>
             )}
           </Nav>
-          <Form>
-            <Form.Select onChange={onChangeLang} value={i18n.language}>
-              {LANGUAGES.map(({ code, label }) => (
-                <option key={code} value={code}>
-                  {label}
-                </option>
-              ))}
-            </Form.Select>
-          </Form>
+          <SelectLanguage />
           <Nav>
-            {!authenticated ? (
+            {!validateToken() ? (
               <Nav.Link href="/auth">
                 {t("login")}/{t("register")}
               </Nav.Link>
@@ -82,7 +48,7 @@ const NavbarComponent = () => {
               <>
                 &nbsp;
                 <Navbar.Text>
-                  {t("user")}: {username}
+                  {t("user")}: {getUsername()}
                 </Navbar.Text>
                 <Nav.Link
                   href="/auth"

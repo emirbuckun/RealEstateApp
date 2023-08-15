@@ -48,9 +48,14 @@ export const validateToken = () => {
 
 export const validateAdmin = () => {
   const isAdmin = localStorage.getItem("isAdmin");
-  return isAdmin != null && isAdmin != "" && JSON.parse(isAdmin) == true;
+  return (
+    validateToken() &&
+    isAdmin != null &&
+    isAdmin != "" &&
+    JSON.parse(isAdmin) == true
+  );
 };
 
 export const getUsername = () => {
-  return localStorage.getItem("username");
+  return validateToken() ? localStorage.getItem("username") : "";
 };
