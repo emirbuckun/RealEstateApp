@@ -1,42 +1,13 @@
-import { getStatuses } from "/src/services/StatusService";
-import { getTypes } from "/src/services/TypeService";
+import { TypeContext } from "/src/contexts/TypeContext";
+import { StatusContext } from "/src/contexts/StatusContext";
 import { Form, Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 
 const Filter = ({ setFilter }) => {
+  const { types } = useContext(TypeContext);
+  const { statuses } = useContext(StatusContext);
   const { t } = useTranslation();
-  const [types, setTypes] = useState([]);
-  const [statuses, setStatuses] = useState([]);
-
-  const fetchTypes = () => {
-    getTypes()
-      .then((response) => {
-        if (response.status == 200) {
-          setTypes(response.data);
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching types: " + error)
-      );
-  };
-
-  const fetchStatuses = () => {
-    getStatuses()
-      .then((response) => {
-        if (response.status == 200) {
-          setStatuses(response.data);
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching statuses: " + error)
-      );
-  };
-
-  useEffect(() => {
-    fetchTypes();
-    fetchStatuses();
-  }, []);
 
   return (
     <Form>

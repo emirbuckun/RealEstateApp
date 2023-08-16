@@ -1,16 +1,17 @@
 import { addEstate, editEstate, getEstate } from "/src/services/EstateService";
-import { getStatuses } from "/src/services/StatusService";
-import { getTypes } from "/src/services/TypeService";
+import { TypeContext } from "/src/contexts/TypeContext";
+import { StatusContext } from "/src/contexts/StatusContext";
 import { Image, Button, Form, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
+import { useContext } from "react";
 
 const Edit = () => {
+  const { types } = useContext(TypeContext);
+  const { statuses } = useContext(StatusContext);
   const { id } = useParams();
   const { t } = useTranslation();
-  const [types, setTypes] = useState([]);
-  const [statuses, setStatuses] = useState([]);
   const [form, setForm] = useState({
     name: "",
     latitude: 0,
@@ -92,34 +93,8 @@ const Edit = () => {
       );
   };
 
-  const fetchTypes = () => {
-    getTypes()
-      .then((response) => {
-        if (response.status == 200) {
-          setTypes(response.data);
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching types: " + error)
-      );
-  };
-
-  const fetchStatuses = () => {
-    getStatuses()
-      .then((response) => {
-        if (response.status == 200) {
-          setStatuses(response.data);
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching statuses: " + error)
-      );
-  };
-
   useEffect(() => {
     id && fetchEstate();
-    fetchTypes();
-    fetchStatuses();
   }, []);
 
   return (
