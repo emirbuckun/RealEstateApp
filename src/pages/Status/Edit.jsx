@@ -1,58 +1,29 @@
-import { addStatus, editStatus, getStatus } from "/src/services/StatusService";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import { StatusContext } from "/src/contexts/StatusContext";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const Edit = () => {
-  const { id } = useParams();
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const navigateUrl = "/statuses";
+  const { fetchStatus, handleAddStatus, handleEditStatus } =
+    useContext(StatusContext);
   const [name, setName] = useState("");
-  const operation = id ? t("edit") : t("add");
+  const { t } = useTranslation();
+  const { id } = useParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var response;
-
-    id
-      ? (response = editStatus({ id, name }))
-      : (response = addStatus({ name }));
-
-    response
-      .then((response) => {
-        if (response.status == 200) {
-          alert(operation + " operation successful!");
-          navigate(navigateUrl);
-        } else alert(operation + " operation failed!");
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Error occurred:\n" + error);
-      });
-  };
-
-  const fetchStatus = () => {
-    getStatus(id)
-      .then((response) => {
-        if (response.status == 200) {
-          setName(response.data.name);
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching status: " + error)
-      );
+    id ? handleEditStatus({ id, name }) : handleAddStatus({ name });
   };
 
   useEffect(() => {
-    id && fetchStatus();
+    id && fetchStatus({ id, setName });
   }, []);
 
   return (
     <>
       <h3>
-        {operation} {t("status")}
+        {id ? t("edit") : t("add")} {t("status")}
       </h3>
 
       <Form onSubmit={handleSubmit}>
