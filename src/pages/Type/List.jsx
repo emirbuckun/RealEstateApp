@@ -1,52 +1,13 @@
-import { deleteType, getTypes } from "/src/services/TypeService";
+import { TypeContext } from "/src/contexts/TypeContext";
 import { Table, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 
 const List = () => {
+  const { types, handleDeleteType } = useContext(TypeContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [{ types, loading, error }, setState] = useState({
-    types: [],
-    loading: true,
-    error: null,
-  });
-
-  const handleDelete = ({ id, name }) => {
-    if (window.confirm("Delete the type named " + name + "?")) {
-      deleteType(id)
-        .then((response) => {
-          if (response.status == 204) {
-            alert("Delete operation successful!");
-            fetchTypes();
-          } else alert("Delete operation failed!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error occurred:\n" + error);
-        });
-    }
-  };
-
-  const fetchTypes = () => {
-    setState({ error: null, loading: true });
-    getTypes()
-      .then((response) => {
-        if (response.status == 200) {
-          setState({ types: response.data, loading: false });
-        } else
-          setState({
-            loading: false,
-            error: response.status + ": " + response.data.statusText,
-          });
-      })
-      .catch((error) => setState({ error, loading: false }));
-  };
-
-  useEffect(() => {
-    fetchTypes();
-  }, []);
 
   return (
     <>
@@ -70,51 +31,31 @@ const List = () => {
         </thead>
 
         <tbody className="align-middle">
-          {!loading ? (
-            error ? (
-              <tr>
-                <td colSpan={9}>
-                  {t("errorOccurred")} {error}.
+          {types.map((type, index) => {
+            const { name, id } = type;
+            return (
+              <tr key={id}>
+                <td>{index + 1}</td>
+                <td>{name}</td>
+                <td>
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={() => navigate("/type/edit/" + id)}
+                  >
+                    {t("edit")}
+                  </Button>{" "}
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => handleDeleteType({ id, name })}
+                  >
+                    {t("delete")}
+                  </Button>
                 </td>
               </tr>
-            ) : types.length > 0 ? (
-              <>
-                {types.map((type, index) => {
-                  const { name, id } = type;
-                  return (
-                    <tr key={id}>
-                      <td>{index + 1}</td>
-                      <td>{name}</td>
-                      <td>
-                        <Button
-                          variant="outline-primary"
-                          size="sm"
-                          onClick={() => navigate("/type/edit/" + id)}
-                        >
-                          {t("edit")}
-                        </Button>{" "}
-                        <Button
-                          variant="outline-danger"
-                          size="sm"
-                          onClick={() => handleDelete({ id, name })}
-                        >
-                          {t("delete")}
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </>
-            ) : (
-              <tr>
-                <td colSpan={3}>{t("thereIsNo")}</td>
-              </tr>
-            )
-          ) : (
-            <tr>
-              <td colSpan={3}>{t("loading")}</td>
-            </tr>
-          )}
+            );
+          })}
         </tbody>
       </Table>
     </>

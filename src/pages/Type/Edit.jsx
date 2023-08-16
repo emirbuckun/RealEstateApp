@@ -1,56 +1,28 @@
-import { useState, useEffect } from "react";
-import { addType, editType, getType } from "/src/services/TypeService";
-import { useNavigate, useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useContext, useState, useEffect } from "react";
+import { TypeContext } from "/src/contexts/TypeContext";
 import { Button, Form, Row, Col } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 const Edit = () => {
-  const { id } = useParams();
-  const { t } = useTranslation();
+  const { fetchType, handleAddType, handleEditType } = useContext(TypeContext);
   const [name, setName] = useState("");
-  const navigate = useNavigate();
-  const navigateUrl = "/types";
-  const operation = id ? t("edit") : t("add");
+  const { t } = useTranslation();
+  const { id } = useParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var response;
-
-    id ? (response = editType({ id, name })) : (response = addType({ name }));
-
-    response
-      .then((response) => {
-        if (response.status == 200) {
-          alert(operation + " operation successful!");
-          navigate(navigateUrl);
-        } else alert(operation + " operation failed!");
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Error occurred:\n" + error);
-      });
-  };
-
-  const fetchType = () => {
-    getType(id)
-      .then((response) => {
-        if (response.status == 200) {
-          setName(response.data.name);
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching type: " + error)
-      );
+    id ? handleEditType({ id, name }) : handleAddType({ name });
   };
 
   useEffect(() => {
-    id && fetchType();
+    id && fetchType({ id, setName });
   }, []);
 
   return (
     <>
       <h3>
-        {operation} {t("type")}
+        {id ? t("edit") : t("add")} {t("type")}
       </h3>
 
       <Form onSubmit={handleSubmit}>
