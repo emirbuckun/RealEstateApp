@@ -1,10 +1,10 @@
 import { TypeContext } from "/src/contexts/TypeContext";
 import { StatusContext } from "/src/contexts/StatusContext";
-import { Form, Col, Row } from "react-bootstrap";
+import { Form, Col, Row, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useContext } from "react";
 
-const Filter = ({ setFilter }) => {
+const Filter = ({ setFilter, fetchEstates }) => {
   const { types } = useContext(TypeContext);
   const { statuses } = useContext(StatusContext);
   const { t } = useTranslation();
@@ -107,6 +107,9 @@ const Filter = ({ setFilter }) => {
           </Row>
         </Col>
       </Row>
+      <Button onClick={fetchEstates} variant="outline-info" className="mb-3">
+        Filter
+      </Button>
     </Form>
   );
 };

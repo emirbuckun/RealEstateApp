@@ -74,13 +74,13 @@ const List = () => {
 
   useEffect(() => {
     fetchEstates();
-  }, [currentPage, filter]);
+  }, [currentPage]);
 
   return (
     <>
       <h3>{t("estates")}</h3>
 
-      <Filter setFilter={setFilter} />
+      <Filter setFilter={setFilter} fetchEstates={fetchEstates} />
 
       <Table striped bordered hover>
         <thead className="align-middle">
