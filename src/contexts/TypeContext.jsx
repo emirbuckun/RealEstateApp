@@ -15,15 +15,21 @@ export const TypeProvider = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchTypes();
+    const localTypes = localStorage.getItem("types");
+    if (!localTypes) {
+      fetchTypes();
+    } else setTypes(JSON.parse(localTypes));
   }, []);
 
   // FETCH FUNCTIONS
   const fetchTypes = () => {
+    console.log("fetch all");
     getTypes()
       .then((response) => {
-        if (response.status == 200) setTypes(response.data);
-        else alert("Error occurred.");
+        if (response.status == 200) {
+          setTypes(response.data);
+          localStorage.setItem("types", JSON.stringify(response.data));
+        } else alert("Error occurred.");
       })
       .catch((error) => alert("Error occurred: " + error));
   };
