@@ -105,7 +105,7 @@ namespace RealEstateApp.Api.Controllers
         .Include(x => x.Prices!)
         .ThenInclude((price) => price.Currency)
         .Where(x => !x.IsDeleted)
-        .SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+        .SingleOrDefaultAsync(x => x.Id == id);
       if (result != null) return Ok(new DetailEstate(result));
       return NotFound();
     }

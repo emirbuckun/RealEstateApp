@@ -28,10 +28,10 @@ namespace RealEstateApp.Api.DTO.Estate
       EstateTypeId = estate.EstateType != null ? estate.EstateType.Id : 0;
       EstateStatusId = estate.EstateStatus != null ? estate.EstateStatus.Id : 0;
       var priceList = new List<InfoPrice>();
-      estate.Prices?.ToList().ForEach(x => priceList.Add(new InfoPrice(x)));
+      estate.Prices?.Where(x => !x.IsDeleted).ToList().ForEach(x => priceList.Add(new InfoPrice(x)));
       Prices = priceList;
       var photoList = new List<InfoPhoto>();
-      estate.Photos?.ToList().ForEach(x => photoList.Add(new InfoPhoto(x)));
+      estate.Photos?.Where(x => !x.IsDeleted).ToList().ForEach(x => photoList.Add(new InfoPhoto(x)));
       Photos = photoList;
     }
   }
