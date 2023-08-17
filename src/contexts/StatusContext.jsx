@@ -16,9 +16,8 @@ export const StatusProvider = (props) => {
 
   useEffect(() => {
     const localStatuses = localStorage.getItem("statuses");
-    if (!localStatuses) {
-      fetchStatuses();
-    } else setStatuses(JSON.parse(localStatuses));
+    if (!localStatuses) fetchStatuses();
+    else setStatuses(JSON.parse(localStatuses));
   }, []);
 
   // FETCH FUNCTIONS

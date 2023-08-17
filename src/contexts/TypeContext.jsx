@@ -16,9 +16,8 @@ export const TypeProvider = (props) => {
 
   useEffect(() => {
     const localTypes = localStorage.getItem("types");
-    if (!localTypes) {
-      fetchTypes();
-    } else setTypes(JSON.parse(localTypes));
+    if (!localTypes) fetchTypes();
+    else setTypes(JSON.parse(localTypes));
   }, []);
 
   // FETCH FUNCTIONS
