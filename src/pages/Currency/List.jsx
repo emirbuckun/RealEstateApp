@@ -1,52 +1,18 @@
-import { deleteCurrency, getCurrencies } from "/src/services/CurrencyService";
+import { CurrencyContext } from "/src/contexts/CurrencyContext";
 import { Table, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 
 const List = () => {
+  const { currencies, handleDeleteCurrency } = useContext(CurrencyContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [{ currencies, loading, error }, setState] = useState({
-    currencies: [],
-    loading: true,
-    error: null,
-  });
 
   const handleDelete = ({ id, name }) => {
-    if (window.confirm("Delete the currency named " + name + "?")) {
-      deleteCurrency(id)
-        .then((response) => {
-          if (response.status == 204) {
-            alert("Delete operation successful!");
-            fetchCurrencies();
-          } else alert("Delete operation failed!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error occurred:\n" + error);
-        });
-    }
+    window.confirm("Delete the currency named " + name + "?") &&
+      handleDeleteCurrency({ id });
   };
-
-  const fetchCurrencies = () => {
-    setState({ error: null, loading: true });
-    getCurrencies()
-      .then((response) => {
-        if (response.status == 200) {
-          setState({ currencies: response.data, loading: false });
-        } else
-          setState({
-            loading: false,
-            error: response.status + ": " + response.data.statusText,
-          });
-      })
-      .catch((error) => setState({ error, loading: false }));
-  };
-
-  useEffect(() => {
-    fetchCurrencies();
-  }, []);
 
   return (
     <>
@@ -71,52 +37,32 @@ const List = () => {
         </thead>
 
         <tbody className="align-middle">
-          {!loading ? (
-            error ? (
-              <tr>
-                <td colSpan={9}>
-                  {t("errorOccurred")} {error}.
+          {currencies.map((currency, index) => {
+            const { name, code, id } = currency;
+            return (
+              <tr key={id}>
+                <td>{index + 1}</td>
+                <td>{name}</td>
+                <td>{code}</td>
+                <td>
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={() => navigate("/currency/edit/" + id)}
+                  >
+                    {t("edit")}
+                  </Button>{" "}
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => handleDelete({ id, name })}
+                  >
+                    {t("delete")}
+                  </Button>
                 </td>
               </tr>
-            ) : currencies.length > 0 ? (
-              <>
-                {currencies.map((currency, index) => {
-                  const { name, code, id } = currency;
-                  return (
-                    <tr key={id}>
-                      <td>{index + 1}</td>
-                      <td>{name}</td>
-                      <td>{code}</td>
-                      <td>
-                        <Button
-                          variant="outline-primary"
-                          size="sm"
-                          onClick={() => navigate("/currency/edit/" + id)}
-                        >
-                          {t("edit")}
-                        </Button>{" "}
-                        <Button
-                          variant="outline-danger"
-                          size="sm"
-                          onClick={() => handleDelete({ id, name })}
-                        >
-                          {t("delete")}
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </>
-            ) : (
-              <tr>
-                <td colSpan={4}>{t("thereIsNo")}</td>
-              </tr>
-            )
-          ) : (
-            <tr>
-              <td colSpan={4}>{t("loading")}</td>
-            </tr>
-          )}
+            );
+          })}
         </tbody>
       </Table>
     </>

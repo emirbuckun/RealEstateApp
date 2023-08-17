@@ -1,21 +1,20 @@
+import { CurrencyContext } from "/src/contexts/CurrencyContext";
 import { PriceContext } from "/src/contexts/PriceContext";
-import { getCurrencies } from "/src/services/CurrencyService";
 import { getEstates } from "/src/services/EstateService";
 import { Button, Form, Row, Col } from "react-bootstrap";
+import { useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useContext } from "react";
 
 const Edit = () => {
   const { id } = useParams();
   const { t } = useTranslation();
+  const [form, setForm] = useState({ estateId: 0, currencyId: 0, amount: 0 });
+  const { estateId, currencyId, amount } = form;
+  const [estates, setEstates] = useState([]);
+  const { currencies } = useContext(CurrencyContext);
   const { fetchPrice, handleAddPrice, handleEditPrice } =
     useContext(PriceContext);
-  const [form, setForm] = useState({ estateId: 0, currencyId: 0, amount: 0 });
-  const [estates, setEstates] = useState([]);
-  const [currencies, setCurrencies] = useState([]);
-  const { estateId, currencyId, amount } = form;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,22 +36,9 @@ const Edit = () => {
       );
   };
 
-  const fetchCurrencies = () => {
-    getCurrencies()
-      .then((response) => {
-        if (response.status == 200) {
-          setCurrencies(response.data);
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching currencies: " + error)
-      );
-  };
-
   useEffect(() => {
     id && fetchPrice({ id, setForm });
     fetchEstates();
-    fetchCurrencies();
   }, []);
 
   return (

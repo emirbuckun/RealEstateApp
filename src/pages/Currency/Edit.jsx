@@ -1,44 +1,22 @@
-import { useState, useEffect } from "react";
-import {
-  addCurrency,
-  editCurrency,
-  getCurrency,
-} from "/src/services/CurrencyService";
-import { useNavigate, useParams } from "react-router-dom";
+import { CurrencyContext } from "/src/contexts/CurrencyContext";
+import { Button, Form, Row, Col } from "react-bootstrap";
+import { useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { useParams } from "react-router-dom";
 
 const Edit = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const [form, setForm] = useState({ name: "", code: "" });
-  const navigate = useNavigate();
-  const navigateUrl = "/currencies";
-  const operation = id ? t("edit") : t("add");
+  const { fetchCurrency, handleAddCurrency, handleEditCurrency } =
+    useContext(CurrencyContext);
+  const { name, code } = form;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, code } = form;
-    var response;
-
     id
-      ? (response = editCurrency({ id, name, code }))
-      : (response = addCurrency({ name, code }));
-
-    response
-      .then((response) => {
-        if (response.status == 200) {
-          alert(operation + " operation successful!");
-          navigate(navigateUrl);
-        } else alert(operation + " operation failed!");
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Error occurred:\n" + error);
-      });
+      ? handleEditCurrency({ id, name, code })
+      : handleAddCurrency({ name, code });
   };
 
   const handleInputChange = (e) => {
@@ -46,27 +24,14 @@ const Edit = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const fetchCurrency = () => {
-    getCurrency(id)
-      .then((response) => {
-        if (response.status == 200) {
-          const { name, code } = response.data;
-          setForm({ name, code });
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching currency: " + error)
-      );
-  };
-
   useEffect(() => {
-    id && fetchCurrency();
+    id && fetchCurrency({ id, setForm });
   }, []);
 
   return (
     <>
       <h3>
-        {operation} {t("currency")}
+        {id ? t("edit") : t("add")} {t("currency")}
       </h3>
 
       <Form onSubmit={handleSubmit}>
@@ -77,7 +42,7 @@ const Edit = () => {
           <Col sm="7">
             <Form.Control
               required
-              value={form.name}
+              value={name}
               name="name"
               type="text"
               placeholder={t("name")}
@@ -92,7 +57,7 @@ const Edit = () => {
           <Col sm="7">
             <Form.Control
               required
-              value={form.code}
+              value={code}
               name="code"
               type="text"
               placeholder={t("code")}
