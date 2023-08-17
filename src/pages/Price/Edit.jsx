@@ -1,65 +1,36 @@
-import { addPrice, editPrice, getPrice } from "/src/services/PriceService";
+import { PriceContext } from "/src/contexts/PriceContext";
 import { getCurrencies } from "/src/services/CurrencyService";
 import { getEstates } from "/src/services/EstateService";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useContext } from "react";
 
 const Edit = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const navigateUrl = "/prices";
-  const operation = id ? t("edit") : t("add");
-
+  const { fetchPrice, handleAddPrice, handleEditPrice } =
+    useContext(PriceContext);
   const [form, setForm] = useState({ estateId: 0, currencyId: 0, amount: 0 });
   const [estates, setEstates] = useState([]);
   const [currencies, setCurrencies] = useState([]);
+  const { estateId, currencyId, amount } = form;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { estateId, currencyId, amount } = form;
-    var response;
-
     if (estateId > 0 && currencyId > 0 && amount > 0) {
       id
-        ? (response = editPrice({ id, estateId, currencyId, amount }))
-        : (response = addPrice({ estateId, currencyId, amount }));
-
-      response
-        .then((response) => {
-          if (response.status == 200) {
-            alert(operation + " operation successful!");
-            navigate(navigateUrl);
-          } else alert(operation + " operation failed!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error occurred:\n" + error);
-        });
+        ? handleEditPrice({ id, estateId, currencyId, amount })
+        : handleAddPrice({ estateId, currencyId, amount });
     } else alert("Please fill the form!");
-  };
-
-  const fetchPrice = () => {
-    getPrice(id)
-      .then((response) => {
-        if (response.status == 200) {
-          const { estateId, currencyId, amount } = response.data;
-          setForm({ estateId, currencyId, amount });
-        } else console.log("Error occurred!");
-      })
-      .catch((error) =>
-        console.log("Error occurred while fetching price: " + error)
-      );
   };
 
   const fetchEstates = () => {
     getEstates()
       .then((response) => {
-        if (response.status == 200) {
-          setEstates(response.data);
-        } else console.log("Error occurred!");
+        if (response.status == 200) setEstates(response.data);
+        else console.log("Error occurred!");
       })
       .catch((error) =>
         console.log("Error occurred while fetching estates: " + error)
@@ -79,7 +50,7 @@ const Edit = () => {
   };
 
   useEffect(() => {
-    id && fetchPrice();
+    id && fetchPrice({ id, setForm });
     fetchEstates();
     fetchCurrencies();
   }, []);
@@ -87,7 +58,7 @@ const Edit = () => {
   return (
     <>
       <h3>
-        {operation} {t("price")}
+        {id ? t("edit") : t("add")} {t("price")}
       </h3>
 
       <Form onSubmit={handleSubmit}>
@@ -98,7 +69,7 @@ const Edit = () => {
           <Col sm="9">
             <Form.Select
               required
-              value={form.estateId}
+              value={estateId}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -126,7 +97,7 @@ const Edit = () => {
           <Col sm="9">
             <Form.Select
               required
-              value={form.currencyId}
+              value={currencyId}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -154,7 +125,7 @@ const Edit = () => {
           <Col sm="9">
             <Form.Control
               required
-              value={form.amount}
+              value={amount}
               name="amount"
               type="number"
               placeholder={t("amount")}
