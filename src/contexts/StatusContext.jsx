@@ -23,7 +23,6 @@ export const StatusProvider = (props) => {
 
   // FETCH FUNCTIONS
   const fetchStatuses = () => {
-    console.log("fetch all");
     getStatuses()
       .then((response) => {
         if (response.status == 200) {
@@ -77,20 +76,18 @@ export const StatusProvider = (props) => {
       });
   };
 
-  const handleDeleteStatus = ({ id, name }) => {
-    if (window.confirm("Delete the status named " + name + "?")) {
-      deleteStatus(id)
-        .then((response) => {
-          if (response.status == 204) {
-            alert("Operation successful!");
-            fetchStatuses();
-          } else alert("Operation failed!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error occurred:\n" + error);
-        });
-    }
+  const handleDeleteStatus = ({ id }) => {
+    deleteStatus(id)
+      .then((response) => {
+        if (response.status == 204) {
+          alert("Operation successful!");
+          fetchStatuses();
+        } else alert("Operation failed!");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Error occurred:\n" + error);
+      });
   };
 
   return (

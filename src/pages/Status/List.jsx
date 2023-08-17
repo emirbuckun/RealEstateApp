@@ -9,6 +9,11 @@ const List = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const handleDelete = ({ id, name }) => {
+    window.confirm("Delete the status named " + name + "?") &&
+      handleDeleteStatus({ id });
+  };
+
   return (
     <>
       <h3>{t("statuses")}</h3>
@@ -48,7 +53,7 @@ const List = () => {
                   <Button
                     variant="outline-danger"
                     size="sm"
-                    onClick={() => handleDeleteStatus({ id, name })}
+                    onClick={() => handleDelete({ id, name })}
                   >
                     {t("delete")}
                   </Button>

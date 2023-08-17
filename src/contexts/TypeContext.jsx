@@ -23,7 +23,6 @@ export const TypeProvider = (props) => {
 
   // FETCH FUNCTIONS
   const fetchTypes = () => {
-    console.log("fetch all");
     getTypes()
       .then((response) => {
         if (response.status == 200) {
@@ -77,20 +76,18 @@ export const TypeProvider = (props) => {
       });
   };
 
-  const handleDeleteType = ({ id, name }) => {
-    if (window.confirm("Delete the type named " + name + "?")) {
-      deleteType(id)
-        .then((response) => {
-          if (response.status == 204) {
-            alert("Operation successful!");
-            fetchTypes();
-          } else alert("Operation failed!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error occurred:\n" + error);
-        });
-    }
+  const handleDeleteType = ({ id }) => {
+    deleteType(id)
+      .then((response) => {
+        if (response.status == 204) {
+          alert("Operation successful!");
+          fetchTypes();
+        } else alert("Operation failed!");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Error occurred:\n" + error);
+      });
   };
 
   return (

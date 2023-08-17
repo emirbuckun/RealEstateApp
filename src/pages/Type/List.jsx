@@ -9,6 +9,11 @@ const List = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const handleDelete = ({ id, name }) => {
+    window.confirm("Delete the type named " + name + "?") &&
+      handleDeleteType({ id });
+  };
+
   return (
     <>
       <h3>{t("types")}</h3>
@@ -48,7 +53,7 @@ const List = () => {
                   <Button
                     variant="outline-danger"
                     size="sm"
-                    onClick={() => handleDeleteType({ id, name })}
+                    onClick={() => handleDelete({ id, name })}
                   >
                     {t("delete")}
                   </Button>
