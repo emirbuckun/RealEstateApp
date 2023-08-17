@@ -2,8 +2,7 @@ import { PriceContext } from "/src/contexts/PriceContext";
 import { Table, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 const List = () => {
   const { prices, fetchPrices, handleDeletePrice } = useContext(PriceContext);

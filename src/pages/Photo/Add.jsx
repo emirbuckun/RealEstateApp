@@ -1,21 +1,18 @@
+import { PhotoContext } from "/src/contexts/PhotoContext";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { getEstates } from "/src/services/EstateService";
-import { addPhoto } from "/src/services/PhotoService";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
 
 const Add = () => {
+  const { handleAddPhoto } = useContext(PhotoContext);
   const [form, setForm] = useState({ estateId: 0, photo: null });
   const [estates, setEstates] = useState([]);
+  const { estateId, photo } = form;
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const navigateUrl = "/photos";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { estateId, photo } = form;
-
     if (estateId > 0 && photo != null) {
       const isTypeValid = photo.type.split("/")[0] == "image";
       const isSizeValid = photo.size < 2097152;
@@ -28,18 +25,7 @@ const Add = () => {
         var formData = new FormData();
         formData.append("estateId", estateId);
         formData.append("file", photo);
-
-        addPhoto(formData)
-          .then((response) => {
-            if (response.status == 200) {
-              alert("Add operation successful!");
-              navigate(navigateUrl);
-            } else alert(response.data.data);
-          })
-          .catch((error) => {
-            console.error(error);
-            alert("Error occurred:\n" + error);
-          });
+        handleAddPhoto(formData);
       }
     } else alert("Please fill the form.");
   };
@@ -72,7 +58,7 @@ const Add = () => {
           <Col sm="9">
             <Form.Select
               required
-              value={form.estateId}
+              value={estateId}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
