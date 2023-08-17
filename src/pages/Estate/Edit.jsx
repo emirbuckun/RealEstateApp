@@ -12,6 +12,9 @@ const Edit = () => {
   const { statuses } = useContext(StatusContext);
   const { id } = useParams();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const navigateUrl = "/estates";
+  const operation = id ? t("edit") : t("add");
   const [form, setForm] = useState({
     name: "",
     latitude: 0,
@@ -22,10 +25,6 @@ const Edit = () => {
     photos: [],
     prices: [],
   });
-
-  const navigate = useNavigate();
-  const navigateUrl = "/estates";
-  const operation = id ? t("edit") : t("add");
 
   const { name, estateTypeId, estateStatusId, latitude, longitude, endDate } =
     form;

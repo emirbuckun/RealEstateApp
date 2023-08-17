@@ -9,25 +9,23 @@ import Filter from "/src/components/Filter";
 const List = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-
   const [{ estates, loading, error }, setState] = useState({
     estates: [],
     loading: true,
     error: null,
   });
-
   const [paging, setPaging] = useState({
     currentPage: 1,
     totalPages: 1,
   });
-  const { currentPage, totalPages } = paging;
-
   const [filter, setFilter] = useState({
     typeId: 0,
     statusId: 0,
     startDate: null,
     endDate: null,
   });
+
+  const { currentPage, totalPages } = paging;
   const { typeId, statusId, startDate, endDate } = filter;
 
   const handleDelete = ({ id, name }) => {
