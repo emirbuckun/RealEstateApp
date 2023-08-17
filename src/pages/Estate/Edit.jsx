@@ -1,11 +1,12 @@
 import { addEstate, editEstate, getEstate } from "/src/services/EstateService";
 import { TypeContext } from "/src/contexts/TypeContext";
 import { StatusContext } from "/src/contexts/StatusContext";
-import { Image, Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
-import { useContext } from "react";
+import Prices from "/src/components/Prices";
+import Photos from "/src/components/Photos";
 
 const Edit = () => {
   const { types } = useContext(TypeContext);
@@ -13,7 +14,6 @@ const Edit = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const navigateUrl = "/estates";
   const operation = id ? t("edit") : t("add");
   const [form, setForm] = useState({
     name: "",
@@ -32,9 +32,7 @@ const Edit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const isValid = validateForm();
-
     if (isValid) {
       var response;
       id
@@ -60,7 +58,7 @@ const Edit = () => {
         .then((response) => {
           if (response.status == 200) {
             alert(operation + " operation successful!");
-            navigate(navigateUrl);
+            navigate("/estate/edit/" + response.data.id);
           } else alert(operation + " operation failed!");
         })
         .catch((error) => {
@@ -80,12 +78,11 @@ const Edit = () => {
     );
   };
 
-  const fetchEstate = () => {
+  const fetchEstate = (id) => {
     getEstate(id)
       .then((response) => {
-        if (response.status == 200) {
-          setForm(response.data);
-        } else console.log("Error occurred!");
+        if (response.status == 200) setForm(response.data);
+        else console.log("Error occurred!");
       })
       .catch((error) =>
         console.log("Error occurred while fetching estate: " + error)
@@ -93,7 +90,7 @@ const Edit = () => {
   };
 
   useEffect(() => {
-    id && fetchEstate();
+    id && fetchEstate(id);
   }, []);
 
   return (
@@ -248,65 +245,9 @@ const Edit = () => {
         </Button>
 
         <hr></hr>
-
-        <Form.Group as={Row} className="mt-3 mb-3">
-          <Form.Label column sm="12">
-            {t("prices")}
-          </Form.Label>
-          {form.prices.length > 0 ? (
-            form.prices.map((price, index) => {
-              const { amount, currencyCode } = price;
-              const priceDisplay = amount + " " + currencyCode;
-              return (
-                <Col className="justify-content-center" key={index} sm="12">
-                  <Form.Control
-                    disabled
-                    readOnly
-                    value={priceDisplay}
-                    name="price"
-                    type="text"
-                  />
-                </Col>
-              );
-            })
-          ) : (
-            <p className="justify-content-center">{t("noPriceExistMeesage")}</p>
-          )}
-        </Form.Group>
-
-        <Button href="/prices" variant="outline-success">
-          {t("editPrices")}
-        </Button>
-
+        <Prices id={id} prices={form.prices} fetchEstate={fetchEstate} />
         <hr></hr>
-
-        <Form.Group as={Row} className="mt-3 mb-3">
-          <Form.Label column sm="12">
-            {t("photos")}
-          </Form.Label>
-
-          <div className="justify-content-center">
-            {form.photos.length > 0
-              ? form.photos.map((photo, index) => {
-                  const { bytes, fileExtension } = photo;
-                  const extension = fileExtension.replace(".", "");
-                  return (
-                    <Col key={index}>
-                      <Image
-                        style={{ width: "10rem" }}
-                        src={`data:image/${extension};base64,${bytes}`}
-                        rounded
-                      />
-                    </Col>
-                  );
-                })
-              : t("noPhotoExistMessage")}
-          </div>
-        </Form.Group>
-
-        <Button href="/prices" variant="outline-info">
-          {t("editPhotos")}
-        </Button>
+        <Photos id={id} photos={form.photos} fetchEstate={fetchEstate} />
       </Form>
     </>
   );
