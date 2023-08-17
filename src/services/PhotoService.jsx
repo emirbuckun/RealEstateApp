@@ -7,20 +7,6 @@ export const getPhotos = async () => {
     .catch((error) => error);
 };
 
-export const getPhoto = async (id) => {
-  const url = "/Photo?id=" + id;
-  return await getAPI(url)
-    .then((res) => res)
-    .catch((error) => error);
-};
-
-export const getPhotoByEstate = async (id) => {
-  const url = "/Photo/byEstate?id=" + id;
-  return await getAPI(url)
-    .then((res) => res)
-    .catch((error) => error);
-};
-
 export const addPhoto = async (data) => {
   const url = "/Photo";
   const headers = {
@@ -28,7 +14,6 @@ export const addPhoto = async (data) => {
       "Content-Type": "multipart/form-data",
     },
   };
-
   return await postAPI(url, data, headers)
     .then((res) => res)
     .catch((error) => error);
