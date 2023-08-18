@@ -75,8 +75,10 @@ namespace RealEstateApp.Api.Controllers
 
       // Paging
       var pagedEstates = await allEstates
+        .OrderBy(x => x.Id)
         .Skip((parameters.PageNumber - 1) * parameters.PageSize)
         .Take(parameters.PageSize)
+        .AsSplitQuery()
         .ToListAsync();
 
       // Paging header
