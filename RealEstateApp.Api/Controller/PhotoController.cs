@@ -81,7 +81,7 @@ namespace RealEstateApp.Api.Controllers
           var bytes = memoryStream.ToArray();
           var photoExists = await _realEstateContext.Photos
             .Include(x => x.Estate)
-            .SingleOrDefaultAsync(x => x.Bytes == bytes && !x.IsDeleted);
+            .SingleOrDefaultAsync(x => !x.IsDeleted && x.EstateId == estateId && x.Bytes == bytes);
 
           if (photoExists == null)
           {
@@ -107,6 +107,61 @@ namespace RealEstateApp.Api.Controllers
         else return BadRequest("Photo is too large.");
       }
       else return BadRequest("Photo is empty.");
+    }
+
+    [Authorize(Roles = UserRoles.Admin)]
+    [HttpPost]
+    [Route("multiple")]
+    public async Task<IActionResult> PostMultiple([FromForm] int estateId, List<IFormFile> files)
+    {
+      var username = User.Claims.First(x => x.Type == "username").Value;
+
+      List<InfoPhoto> photolist = new();
+      if (files.Count > 0)
+      {
+        foreach (IFormFile file in files)
+        {
+          if (file.Length > 0)
+          {
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+
+            // Upload the file if less than 2 MB
+            if (memoryStream.Length < 2097152)
+            {
+              var bytes = memoryStream.ToArray();
+              var photoExists = await _realEstateContext.Photos
+                .Include(x => x.Estate)
+                .SingleOrDefaultAsync(x => !x.IsDeleted && x.EstateId == estateId && x.Bytes == bytes);
+
+              if (photoExists == null)
+              {
+                var newPhoto = new NewPhoto()
+                {
+                  Bytes = memoryStream.ToArray(),
+                  Description = file.FileName,
+                  FileExtension = Path.GetExtension(file.FileName),
+                  Size = file.Length,
+                  EstateId = estateId,
+                };
+
+                var addPhoto = newPhoto.ToPhoto();
+                addPhoto.CreatedBy = username;
+                addPhoto.CreatedAt = DateTime.Now;
+
+                var result = _realEstateContext.Photos.Add(addPhoto);
+                photolist.Add(new InfoPhoto(addPhoto));
+              }
+              else return BadRequest("Photo already exists.");
+            }
+            else return BadRequest("Photo is too large.");
+          }
+          else return BadRequest("Photo is empty.");
+        }
+        await _realEstateContext.SaveChangesAsync();
+        return Ok(photolist);
+      }
+      else return BadRequest("There is no any file uploaded.");
     }
 
     [Authorize(Roles = UserRoles.Admin)]

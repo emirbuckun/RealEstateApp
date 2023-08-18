@@ -29,12 +29,12 @@ namespace RealEstateApp.Api.DTO.Estate
       EstateStatus = estate.EstateStatus != null ? estate.EstateStatus.Name ?? string.Empty : string.Empty;
       if (estate.Photos != null && estate.Photos.Any())
       {
-        var firstPhoto = estate.Photos.FirstOrDefault() ?? new ET.Photo();
+        var firstPhoto = estate.Photos.FirstOrDefault(x => !x.IsDeleted) ?? new ET.Photo();
         Photo = new InfoPhoto(firstPhoto);
       }
       if (estate.Prices != null && estate.Prices.Count > 0)
       {
-        var firstPrice = estate.Prices.FirstOrDefault() ?? new ET.Price();
+        var firstPrice = estate.Prices.FirstOrDefault(x => !x.IsDeleted) ?? new ET.Price();
         Price = new InfoPrice(firstPrice);
       }
     }
