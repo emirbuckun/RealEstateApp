@@ -1,4 +1,6 @@
 using System.Text;
+using RealEstateApp.Api.Model;
+using RealEstateApp.Api.Service;
 using RealEstateApp.Api.Middleware;
 using RealEstateApp.Api.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,6 +19,11 @@ ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.Configure<LogDatabaseSettings>(
+    builder.Configuration.GetSection("LogDatabase"));
+
+builder.Services.AddSingleton<LogService>();
 
 builder.Services.AddDbContext<RealEstateContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("RealEstate")));
@@ -112,6 +119,9 @@ if (Convert.ToBoolean(configuration["Middleware:EnableLoggingMiddleware"]))
 
 if (Convert.ToBoolean(configuration["Middleware:EnableSerilogRequestLogging"]))
     app.UseSerilogRequestLogging();
+
+if (Convert.ToBoolean(configuration["Middleware:EnableWebSockets"]))
+    app.UseWebSockets();
 
 app.UseAuthentication();
 app.UseAuthorization();
