@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown, Badge } from "react-bootstrap";
 import { PAGE_LIST, LOOKUP_LIST } from "/src/constants";
 import { useTranslation } from "react-i18next";
 import SelectLanguage from "./SelectLanguage";
@@ -7,6 +7,11 @@ import {
   validateAdmin,
   getUsername,
 } from "/src/services/AuthService";
+
+const checkNewLog = () => {
+  const newLog = localStorage.getItem("newLog");
+  return newLog != null && newLog != "" && JSON.parse(newLog) == true;
+};
 
 const NavbarComponent = () => {
   const { t } = useTranslation();
@@ -21,7 +26,10 @@ const NavbarComponent = () => {
               const { name, url } = item;
               return (
                 <Nav.Link key={index} href={url}>
-                  {t(name)}
+                  {t(name)}{" "}
+                  {name == "logs" && checkNewLog() && (
+                    <Badge bg="primary">1</Badge>
+                  )}
                 </Nav.Link>
               );
             })}

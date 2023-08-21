@@ -9,6 +9,7 @@ export const PAGE_LIST = [
   { name: "dashboard", url: "/dashboard" },
   { name: "photos", url: "/photos" },
   { name: "prices", url: "/prices" },
+  { name: "logs", url: "/logs" },
 ];
 
 export const LOOKUP_LIST = [
