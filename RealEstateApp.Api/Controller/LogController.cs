@@ -23,22 +23,36 @@ namespace RealEstateApp.Api.Controller
       {
         using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
 
+        var message = _logService.GetLastRecords();
+        var messageSerialized = JsonSerializer.Serialize(message);
+        var bytes = Encoding.UTF8.GetBytes(messageSerialized);
+        var arraySegment = new ArraySegment<byte>(bytes, 0, bytes.Length);
+
+        if (webSocket.State == WebSocketState.Open)
+          await webSocket.SendAsync(arraySegment,
+            WebSocketMessageType.Text, true, CancellationToken.None);
+
+        Thread.Sleep(1000);
+
         while (true)
         {
-          var message = _logService.GetLastRecords();
-          var messageSerialized = JsonSerializer.Serialize(message);
-          var bytes = Encoding.UTF8.GetBytes(messageSerialized);
-          var arraySegment = new ArraySegment<byte>(bytes, 0, bytes.Length);
+          var newMessage = _logService.GetLastRecords();
+          if (!newMessage.Equals(message))
+          {
+            var newMessageSerialized = JsonSerializer.Serialize(newMessage);
+            var newBytes = Encoding.UTF8.GetBytes(newMessageSerialized);
+            var newArraySegment = new ArraySegment<byte>(newBytes, 0, newBytes.Length);
 
-          if (webSocket.State == WebSocketState.Open)
-            await webSocket.SendAsync(arraySegment,
-              WebSocketMessageType.Text, true, CancellationToken.None);
+            if (webSocket.State == WebSocketState.Open)
+              await webSocket.SendAsync(arraySegment,
+                WebSocketMessageType.Text, true, CancellationToken.None);
+          }
 
           else if (webSocket.State == WebSocketState.Closed ||
             webSocket.State == WebSocketState.Aborted)
             break;
 
-          Thread.Sleep(5000);
+          Thread.Sleep(1000);
         }
       }
       else HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
