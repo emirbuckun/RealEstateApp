@@ -33,10 +33,7 @@ const NavbarComponent = () => {
               const { name, url } = item;
               return (
                 <Nav.Link key={index} href={url}>
-                  {t(name)}{" "}
-                  {name == "logs" && logNotification && (
-                    <Badge bg="primary">1</Badge>
-                  )}
+                  {t(name)}
                 </Nav.Link>
               );
             })}
@@ -47,7 +44,10 @@ const NavbarComponent = () => {
                     const { name, url } = item;
                     return (
                       <NavDropdown.Item key={index} href={url}>
-                        {t(name)}
+                        {t(name)}{" "}
+                        {name == "logs" && logNotification && (
+                          <Badge bg="primary">1</Badge>
+                        )}
                       </NavDropdown.Item>
                     );
                   })}
