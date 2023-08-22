@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import AppRouter from "./AppRouter";
 import Navbar from "./components/Navbar";
 import { useTranslation } from "react-i18next";
+import { LogProvider } from "./contexts/LogContext";
 
 function App() {
   const { t } = useTranslation();
@@ -13,8 +14,10 @@ function App() {
         </h3>
       }
     >
-      <Navbar />
-      <AppRouter />
+      <LogProvider>
+        <Navbar />
+        <AppRouter />
+      </LogProvider>
     </Suspense>
   );
 }

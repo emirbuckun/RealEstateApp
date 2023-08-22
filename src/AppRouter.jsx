@@ -4,9 +4,10 @@ import { PriceProvider } from "./contexts/PriceContext";
 import { PhotoProvider } from "./contexts/PhotoContext";
 import { StatusProvider } from "./contexts/StatusContext";
 import { CurrencyProvider } from "./contexts/CurrencyContext";
+
 import Map from "./pages/Map";
 import Home from "./pages/Home";
-import WebSocket from "./pages/WebSocket";
+import Logs from "./pages/Logs";
 import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth/Auth";
 import Admin from "./pages/Auth/Admin";
@@ -41,7 +42,7 @@ function AppRouter() {
                     <Route exact path="/photos" element={<PhotoList />} />
                     <Route exact path="/estates" element={<EstateList />} />
                     <Route exact path="/map" element={<Map />} />
-                    <Route exact path="/logs" element={<WebSocket />} />
+                    <Route exact path="/logs" element={<Logs />} />
                     <Route exact path="/dashboard" element={<Dashboard />} />
                     <Route
                       exact

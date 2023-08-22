@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Container, Nav, Navbar, NavDropdown, Badge } from "react-bootstrap";
 import { PAGE_LIST, LOOKUP_LIST } from "/src/constants";
 import { useTranslation } from "react-i18next";
@@ -7,13 +8,10 @@ import {
   validateAdmin,
   getUsername,
 } from "/src/services/AuthService";
-
-const checkNewLog = () => {
-  const newLog = localStorage.getItem("newLog");
-  return newLog != null && newLog != "" && JSON.parse(newLog) == true;
-};
+import { LogContext } from "/src/contexts/LogContext";
 
 const NavbarComponent = () => {
+  const { logNotification } = useContext(LogContext);
   const { t } = useTranslation();
   return (
     <Navbar fixed="top" collapseOnSelect expand="md">
@@ -27,7 +25,7 @@ const NavbarComponent = () => {
               return (
                 <Nav.Link key={index} href={url}>
                   {t(name)}{" "}
-                  {name == "logs" && checkNewLog() && (
+                  {name == "logs" && logNotification && (
                     <Badge bg="primary">1</Badge>
                   )}
                 </Nav.Link>
