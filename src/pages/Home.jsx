@@ -1,5 +1,5 @@
 import { validateAdmin } from "../services/AuthService";
-import { PAGE_LIST, LOOKUP_LIST } from "/src/constants";
+import { PAGE_LIST } from "/src/constants";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Stack, Card } from "react-bootstrap";
@@ -7,8 +7,9 @@ import { Stack, Card } from "react-bootstrap";
 const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  var pageList = [...PAGE_LIST];
-  if (validateAdmin()) pageList = [...pageList, ...LOOKUP_LIST];
+  var pageList = [...PAGE_LIST.main];
+  if (validateAdmin())
+    pageList = [...pageList, ...PAGE_LIST.admin, ...PAGE_LIST.lookup];
 
   return (
     <>

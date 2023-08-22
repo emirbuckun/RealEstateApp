@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Container, Nav, Navbar, NavDropdown, Badge } from "react-bootstrap";
-import { PAGE_LIST, LOOKUP_LIST } from "/src/constants";
+import { PAGE_LIST } from "/src/constants";
 import { useTranslation } from "react-i18next";
 import SelectLanguage from "./SelectLanguage";
 import {
@@ -13,6 +13,7 @@ import { LogContext } from "/src/contexts/LogContext";
 const NavbarComponent = () => {
   const { logNotification } = useContext(LogContext);
   const { t } = useTranslation();
+
   return (
     <Navbar fixed="top" collapseOnSelect expand="md">
       <Container>
@@ -20,7 +21,7 @@ const NavbarComponent = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            {PAGE_LIST.map((item, index) => {
+            {PAGE_LIST.main.map((item, index) => {
               const { name, url } = item;
               return (
                 <Nav.Link key={index} href={url}>
@@ -32,16 +33,28 @@ const NavbarComponent = () => {
               );
             })}
             {validateAdmin() && (
-              <NavDropdown title={t("lookup")} id="collasible-nav-dropdown">
-                {LOOKUP_LIST.map((item, index) => {
-                  const { name, url } = item;
-                  return (
-                    <NavDropdown.Item key={index} href={url}>
-                      {t(name)}
-                    </NavDropdown.Item>
-                  );
-                })}
-              </NavDropdown>
+              <>
+                <NavDropdown title="Admin" id="collasible-nav-dropdown">
+                  {PAGE_LIST.admin.map((item, index) => {
+                    const { name, url } = item;
+                    return (
+                      <NavDropdown.Item key={index} href={url}>
+                        {t(name)}
+                      </NavDropdown.Item>
+                    );
+                  })}
+                </NavDropdown>
+                <NavDropdown title={t("lookup")} id="collasible-nav-dropdown">
+                  {PAGE_LIST.lookup.map((item, index) => {
+                    const { name, url } = item;
+                    return (
+                      <NavDropdown.Item key={index} href={url}>
+                        {t(name)}
+                      </NavDropdown.Item>
+                    );
+                  })}
+                </NavDropdown>
+              </>
             )}
           </Nav>
           <SelectLanguage />
