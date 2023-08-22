@@ -12,7 +12,11 @@ const SelectLanguage = () => {
 
   return (
     <Form>
-      <Form.Select onChange={onChangeLang} value={i18n.language}>
+      <Form.Select
+        style={{ borderColor: "white" }}
+        onChange={onChangeLang}
+        value={i18n.language}
+      >
         {LANGUAGES.map(({ code, label }) => (
           <option key={code} value={code}>
             {label}
