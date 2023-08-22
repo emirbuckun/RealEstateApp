@@ -80,7 +80,7 @@ const List = () => {
 
       <Filter setFilter={setFilter} fetchEstates={fetchEstates} />
 
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead className="align-middle">
           <tr>
             <th>#</th>

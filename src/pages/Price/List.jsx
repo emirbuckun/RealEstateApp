@@ -23,7 +23,7 @@ const List = () => {
     <>
       <h3>{t("prices")}</h3>
 
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead className="align-middle">
           <tr>
             <th>#</th>

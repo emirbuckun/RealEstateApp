@@ -18,7 +18,7 @@ const List = () => {
     <>
       <h3>{t("types")}</h3>
 
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead className="align-middle">
           <tr>
             <th>#</th>
