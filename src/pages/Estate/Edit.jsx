@@ -100,145 +100,159 @@ const Edit = () => {
       </h3>
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="4">
-            {t("name")}
-          </Form.Label>
-          <Col sm="8">
-            <Form.Control
-              required
-              value={name}
-              name="name"
-              type="text"
-              placeholder={t("name")}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  name: e.target.value,
-                }))
-              }
-            />
+        <Row>
+          <Col md={4} sm={6} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="4">
+                {t("name")}
+              </Form.Label>
+              <Col sm="8">
+                <Form.Control
+                  required
+                  value={name}
+                  name="name"
+                  type="text"
+                  placeholder={t("name")}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      name: e.target.value,
+                    }))
+                  }
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="4">
-            {t("type")}
-          </Form.Label>
-          <Col sm="8">
-            <Form.Select
-              required
-              value={estateTypeId}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  estateTypeId: parseInt(e.target.value),
-                }))
-              }
-            >
-              <option value={0}>{t("selectType")}</option>
-              {types.map((item, index) => {
-                const { id, name } = item;
-                return (
-                  <option key={index} value={id}>
-                    {name}
-                  </option>
-                );
-              })}
-            </Form.Select>
+          <Col md={4} sm={6} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="4">
+                {t("type")}
+              </Form.Label>
+              <Col sm="8">
+                <Form.Select
+                  required
+                  value={estateTypeId}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      estateTypeId: parseInt(e.target.value),
+                    }))
+                  }
+                >
+                  <option value={0}>{t("selectType")}</option>
+                  {types.map((item, index) => {
+                    const { id, name } = item;
+                    return (
+                      <option key={index} value={id}>
+                        {name}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="4">
-            {t("status")}
-          </Form.Label>
-          <Col sm="8">
-            <Form.Select
-              required
-              value={estateStatusId}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  estateStatusId: parseInt(e.target.value),
-                }))
-              }
-            >
-              <option value={0}>{t("selectStatus")}</option>
-              {statuses.map((item, index) => {
-                const { id, name } = item;
-                return (
-                  <option key={index} value={id}>
-                    {name}
-                  </option>
-                );
-              })}
-            </Form.Select>
+          <Col md={4} sm={6} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="4">
+                {t("status")}
+              </Form.Label>
+              <Col sm="8">
+                <Form.Select
+                  required
+                  value={estateStatusId}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      estateStatusId: parseInt(e.target.value),
+                    }))
+                  }
+                >
+                  <option value={0}>{t("selectStatus")}</option>
+                  {statuses.map((item, index) => {
+                    const { id, name } = item;
+                    return (
+                      <option key={index} value={id}>
+                        {name}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="4">
-            {t("latitude")}
-          </Form.Label>
-          <Col sm="8">
-            <Form.Control
-              required
-              value={latitude}
-              name="latitude"
-              type="number"
-              placeholder={t("latitude")}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  latitude: parseFloat(e.target.value),
-                }))
-              }
-            />
+          <Col md={4} sm={6} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="4">
+                {t("latitude")}
+              </Form.Label>
+              <Col sm="8">
+                <Form.Control
+                  required
+                  value={latitude}
+                  name="latitude"
+                  type="number"
+                  placeholder={t("latitude")}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      latitude: parseFloat(e.target.value),
+                    }))
+                  }
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="4">
-            {t("longitude")}
-          </Form.Label>
-          <Col sm="8">
-            <Form.Control
-              required
-              value={longitude}
-              name="longitude"
-              type="number"
-              placeholder={t("longitude")}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  longitude: parseFloat(e.target.value),
-                }))
-              }
-            />
+          <Col md={4} sm={6} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="4">
+                {t("longitude")}
+              </Form.Label>
+              <Col sm="8">
+                <Form.Control
+                  required
+                  value={longitude}
+                  name="longitude"
+                  type="number"
+                  placeholder={t("longitude")}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      longitude: parseFloat(e.target.value),
+                    }))
+                  }
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="4">
-            {t("endDate")}
-          </Form.Label>
-          <Col sm="8">
-            <Form.Control
-              required
-              value={new Date(endDate).toISOString().split("T")[0]}
-              name="endDate"
-              type="date"
-              placeholder={t("endDate")}
-              onChange={(e) => {
-                setForm((prev) => ({
-                  ...prev,
-                  endDate: e.target.value,
-                }));
-              }}
-            />
+          <Col md={4} sm={6} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="4">
+                {t("endDate")}
+              </Form.Label>
+              <Col sm="8">
+                <Form.Control
+                  required
+                  value={new Date(endDate).toISOString().split("T")[0]}
+                  name="endDate"
+                  type="date"
+                  placeholder={t("endDate")}
+                  onChange={(e) => {
+                    setForm((prev) => ({
+                      ...prev,
+                      endDate: e.target.value,
+                    }));
+                  }}
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
+        </Row>
 
         <Button variant="outline-primary" type="submit">
           {t("submit")}

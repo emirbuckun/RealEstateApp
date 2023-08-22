@@ -92,7 +92,7 @@ const Prices = ({ id, prices, fetchEstate }) => {
 
       <Form.Group className="mb-2">
         <Row>
-          <Col sm={4}>
+          <Col sm={4} className="mb-3">
             <Form.Control
               required
               value={amount}
@@ -107,7 +107,7 @@ const Prices = ({ id, prices, fetchEstate }) => {
               }
             />
           </Col>
-          <Col sm={4}>
+          <Col sm={4} className="mb-3">
             <Form.Select
               required
               value={currencyId}
