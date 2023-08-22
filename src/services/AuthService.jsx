@@ -59,3 +59,11 @@ export const validateAdmin = () => {
 export const getUsername = () => {
   return validateToken() ? localStorage.getItem("username") : "";
 };
+
+export const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("tokenExpiration");
+  localStorage.removeItem("username");
+  localStorage.removeItem("isAdmin");
+  return;
+};

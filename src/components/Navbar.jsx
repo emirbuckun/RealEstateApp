@@ -1,5 +1,12 @@
 import { useContext } from "react";
-import { Container, Nav, Navbar, NavDropdown, Badge } from "react-bootstrap";
+import {
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Badge,
+  Button,
+} from "react-bootstrap";
 import { PAGE_LIST } from "/src/constants";
 import { useTranslation } from "react-i18next";
 import SelectLanguage from "./SelectLanguage";
@@ -7,6 +14,7 @@ import {
   validateToken,
   validateAdmin,
   getUsername,
+  logout,
 } from "/src/services/AuthService";
 import { LogContext } from "/src/contexts/LogContext";
 
@@ -15,7 +23,7 @@ const NavbarComponent = () => {
   const { t } = useTranslation();
 
   return (
-    <Navbar fixed="top" collapseOnSelect expand="md">
+    <Navbar fixed="top" bg="dark" collapseOnSelect expand="lg">
       <Container>
         <Navbar.Brand href="/">{t("title")}</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -67,18 +75,12 @@ const NavbarComponent = () => {
               <>
                 &nbsp;
                 <Navbar.Text>
-                  {t("user")}: {getUsername()}
+                  <Button variant="outline-light" readOnly>
+                    {t("user")}: {getUsername()}
+                  </Button>
                 </Navbar.Text>
-                <Nav.Link
-                  href="/auth"
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("tokenExpiration");
-                    localStorage.removeItem("username");
-                    localStorage.removeItem("isAdmin");
-                  }}
-                >
-                  {t("logout")}
+                <Nav.Link href="/auth" onClick={logout}>
+                  <Button variant="outline-light">{t("logout")}</Button>
                 </Nav.Link>
               </>
             )}
