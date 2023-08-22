@@ -22,7 +22,7 @@ export const Chart = ({ data }) => {
   };
 
   return (
-    <PieChart width={730} height={300}>
+    <PieChart width={600} height={300}>
       <Pie
         data={data}
         color="#000000"
