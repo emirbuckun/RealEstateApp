@@ -51,54 +51,62 @@ const Add = () => {
       <h3>{t("addPhoto")}</h3>
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="3">
-            {t("estate")}
-          </Form.Label>
-          <Col sm="9">
-            <Form.Select
-              required
-              value={estateId}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  estateId: parseInt(e.target.value),
-                }))
-              }
-            >
-              <option value={0}>{t("selectEstate")}</option>
-              {estates.map((item, index) => {
-                const { id, name } = item;
-                return (
-                  <option key={index} value={id}>
-                    {name}
-                  </option>
-                );
-              })}
-            </Form.Select>
+        <Row>
+          <Col md={5} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="3">
+                {t("estate")}
+              </Form.Label>
+              <Col sm="9">
+                <Form.Select
+                  required
+                  value={estateId}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      estateId: parseInt(e.target.value),
+                    }))
+                  }
+                >
+                  <option value={0}>{t("selectEstate")}</option>
+                  {estates.map((item, index) => {
+                    const { id, name } = item;
+                    return (
+                      <option key={index} value={id}>
+                        {name}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="3">
-            {t("photo")}
-          </Form.Label>
-          <Col sm="9">
-            <Form.Control
-              type="file"
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  photo: e.target.files[0],
-                }))
-              }
-            />
+          <Col md={5} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="3">
+                {t("photo")}
+              </Form.Label>
+              <Col sm="9">
+                <Form.Control
+                  type="file"
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      photo: e.target.files[0],
+                    }))
+                  }
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Button variant="outline-primary" type="submit">
-          {t("submit")}
-        </Button>
+          <Col md={2} xs={12}>
+            <Button variant="outline-primary" type="submit">
+              {t("submit")}
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </>
   );

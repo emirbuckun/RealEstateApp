@@ -48,82 +48,91 @@ const Edit = () => {
       </h3>
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="3">
-            {t("estate")}
-          </Form.Label>
-          <Col sm="9">
-            <Form.Select
-              required
-              value={estateId}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  estateId: parseInt(e.target.value),
-                }))
-              }
-            >
-              <option value={0}>{t("selectEstate")}</option>
-              {estates.map((item, index) => {
-                const { id, name } = item;
-                return (
-                  <option key={index} value={id}>
-                    {name}
-                  </option>
-                );
-              })}
-            </Form.Select>
+        <Row>
+          <Col lg={4} sm={12} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="3">
+                {t("estate")}
+              </Form.Label>
+              <Col sm="9">
+                <Form.Select
+                  required
+                  value={estateId}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      estateId: parseInt(e.target.value),
+                    }))
+                  }
+                >
+                  <option value={0}>{t("selectEstate")}</option>
+                  {estates.map((item, index) => {
+                    const { id, name } = item;
+                    return (
+                      <option key={index} value={id}>
+                        {name}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="3">
-            {t("currency")}
-          </Form.Label>
-          <Col sm="9">
-            <Form.Select
-              required
-              value={currencyId}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  currencyId: parseInt(e.target.value),
-                }))
-              }
-            >
-              <option value={0}>{t("selectCurrency")}</option>
-              {currencies.map((item, index) => {
-                const { id, name, code } = item;
-                return (
-                  <option key={index} value={id}>
-                    {name + " (" + code + ")"}
-                  </option>
-                );
-              })}
-            </Form.Select>
+          <Col lg={4} sm={12} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="3">
+                {t("currency")}
+              </Form.Label>
+              <Col sm="9">
+                <Form.Select
+                  required
+                  value={currencyId}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      currencyId: parseInt(e.target.value),
+                    }))
+                  }
+                >
+                  <option value={0}>{t("selectCurrency")}</option>
+                  {currencies.map((item, index) => {
+                    const { id, name, code } = item;
+                    return (
+                      <option key={index} value={id}>
+                        {name + " (" + code + ")"}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="3">
-            {t("amount")}
-          </Form.Label>
-          <Col sm="9">
-            <Form.Control
-              required
-              value={amount}
-              name="amount"
-              type="number"
-              placeholder={t("amount")}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  amount: parseFloat(e.target.value),
-                }))
-              }
-            />
+          <Col lg={4} sm={12} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="3">
+                {t("amount")}
+              </Form.Label>
+              <Col sm="9">
+                <Form.Control
+                  required
+                  value={amount}
+                  name="amount"
+                  type="number"
+                  placeholder={t("amount")}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      amount: parseFloat(e.target.value),
+                    }))
+                  }
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
+        </Row>
+
         <Button variant="outline-primary" type="submit">
           {t("submit")}
         </Button>

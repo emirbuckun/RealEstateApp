@@ -35,39 +35,49 @@ const Edit = () => {
       </h3>
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="5">
-            {t("currencyName")}
-          </Form.Label>
-          <Col sm="7">
-            <Form.Control
-              required
-              value={name}
-              name="name"
-              type="text"
-              placeholder={t("name")}
-              onChange={handleInputChange}
-            />
+        <Row>
+          <Col sm={5} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="5">
+                {t("currencyName")}
+              </Form.Label>
+              <Col sm="7">
+                <Form.Control
+                  required
+                  value={name}
+                  name="name"
+                  type="text"
+                  placeholder={t("name")}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="5">
-            {t("currencyCode")}
-          </Form.Label>
-          <Col sm="7">
-            <Form.Control
-              required
-              value={code}
-              name="code"
-              type="text"
-              placeholder={t("code")}
-              onChange={handleInputChange}
-            />
+
+          <Col sm={5} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="5">
+                {t("currencyCode")}
+              </Form.Label>
+              <Col sm="7">
+                <Form.Control
+                  required
+                  value={code}
+                  name="code"
+                  type="text"
+                  placeholder={t("code")}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
-        <Button variant="outline-primary" type="submit">
-          {t("submit")}
-        </Button>
+
+          <Col sm={2} xs={12}>
+            <Button variant="outline-primary" type="submit">
+              {t("submit")}
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </>
   );

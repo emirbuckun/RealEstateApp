@@ -27,24 +27,31 @@ const Edit = () => {
       </h3>
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="5">
-            {t("statusName")}
-          </Form.Label>
-          <Col sm="7">
-            <Form.Control
-              required
-              value={name}
-              name="name"
-              type="text"
-              placeholder="Name"
-              onChange={(e) => setName(e.target.value)}
-            />
+        <Row>
+          <Col sm={9} xs={12}>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="5">
+                {t("statusName")}
+              </Form.Label>
+              <Col sm="7">
+                <Form.Control
+                  required
+                  value={name}
+                  name="name"
+                  type="text"
+                  placeholder="Name"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
-        <Button variant="outline-primary" type="submit">
-          {t("submit")}
-        </Button>
+
+          <Col sm={3} xs={12}>
+            <Button variant="outline-primary" type="submit">
+              {t("submit")}
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </>
   );
