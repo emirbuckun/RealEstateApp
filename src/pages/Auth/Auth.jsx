@@ -2,7 +2,7 @@ import { AuthForm } from "/src/components/AuthForm";
 import { login, register } from "/src/services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Tab, Tabs } from "react-bootstrap";
+import { Container, Tab, Tabs } from "react-bootstrap";
 import { useState } from "react";
 
 const Auth = () => {
@@ -48,19 +48,21 @@ const Auth = () => {
       <h3>
         {t("login")} {t("or")} {t("register")}
       </h3>
-      <Tabs
-        fill
-        className="mb-3"
-        onSelect={(key) => setIsLogin(key == "login")}
-      >
-        <Tab eventKey="login" title={t("login")}></Tab>
-        <Tab eventKey="register" title={t("register")}></Tab>
-      </Tabs>
-      <AuthForm
-        isLogin={isLogin}
-        handleInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
-      />
+      <Container style={{ maxWidth: "400px" }}>
+        <Tabs
+          fill
+          className="mb-3"
+          onSelect={(key) => setIsLogin(key == "login")}
+        >
+          <Tab eventKey="login" title={t("login")}></Tab>
+          <Tab eventKey="register" title={t("register")}></Tab>
+        </Tabs>
+        <AuthForm
+          isLogin={isLogin}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
+      </Container>
     </>
   );
 };
