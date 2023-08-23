@@ -99,7 +99,7 @@ const Photos = ({ id, photos, fetchEstate }) => {
       </Form.Group>
 
       <Form.Group as={Row} className="mb-3">
-        <Col sm="8" className="mb-3">
+        <Col sm="10" className="mb-3">
           <Form.Control
             type="file"
             onChange={(e) =>
