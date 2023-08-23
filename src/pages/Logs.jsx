@@ -19,7 +19,7 @@ const Logs = () => {
         The web socket connection is currently <b>{connectionStatus}</b>
       </label>
 
-      <Table striped bordered hover responsive>
+      <Table size="sm" striped bordered hover responsive>
         <thead>
           <tr>
             <th>#</th>

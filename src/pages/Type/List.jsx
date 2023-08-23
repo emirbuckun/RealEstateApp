@@ -18,12 +18,12 @@ const List = () => {
     <>
       <h3>{t("types")}</h3>
 
-      <Table striped bordered hover responsive>
+      <Table size="sm" striped bordered hover responsive>
         <thead className="align-middle">
           <tr>
             <th>#</th>
             <th>{t("name")}</th>
-            <th>
+            <th style={{ width: "120px" }}>
               <Button
                 variant="outline-success"
                 size="sm"

@@ -23,14 +23,14 @@ const List = () => {
     <>
       <h3>{t("photos")}</h3>
 
-      <Table striped bordered hover responsive>
+      <Table size="sm" striped bordered hover responsive>
         <thead className="align-middle">
           <tr>
             <th>#</th>
             <th>{t("estate")}</th>
             <th>{t("pictureName")}</th>
             <th>{t("pictureView")}</th>
-            <th>
+            <th style={{ width: "80px" }}>
               <Button
                 variant="outline-success"
                 size="sm"

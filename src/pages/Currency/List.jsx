@@ -18,13 +18,13 @@ const List = () => {
     <>
       <h3>{t("currencies")}</h3>
 
-      <Table striped bordered hover responsive>
+      <Table size="sm" striped bordered hover responsive>
         <thead className="align-middle">
           <tr>
             <th>#</th>
             <th>{t("name")}</th>
             <th>{t("code")}</th>
-            <th>
+            <th style={{ width: "120px" }}>
               <Button
                 variant="outline-success"
                 size="sm"

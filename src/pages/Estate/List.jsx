@@ -80,7 +80,7 @@ const List = () => {
 
       <Filter setFilter={setFilter} fetchEstates={fetchEstates} />
 
-      <Table striped bordered hover responsive>
+      <Table size="sm" striped bordered hover responsive>
         <thead className="align-middle">
           <tr>
             <th>#</th>
@@ -91,7 +91,7 @@ const List = () => {
             <th>{t("startDate")}</th>
             <th>{t("endDate")}</th>
             <th>{t("price")}</th>
-            <th>
+            <th style={{ width: "120px" }}>
               <Button
                 variant="outline-success"
                 size="sm"
