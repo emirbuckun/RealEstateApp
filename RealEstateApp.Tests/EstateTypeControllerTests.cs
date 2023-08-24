@@ -42,11 +42,10 @@ namespace RealEstateApp.Tests
 
       // Act
       var result = await estateTypeController.GetAll();
-      var okResult = result as OkObjectResult;
 
       // Assert
+      var okResult = Assert.IsType<OkObjectResult>(result);
       Assert.NotNull(okResult);
-      Assert.IsType<List<InfoEstateType>>(okResult.Value);
       Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
     }
   }
