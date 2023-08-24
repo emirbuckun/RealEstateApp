@@ -5,12 +5,12 @@ namespace RealEstateApp.Api.DatabaseContext
 {
   public class RealEstateContext : DbContext
   {
-    public DbSet<Estate> Estates { get; set; }
-    public DbSet<EstateType> EstateTypes { get; set; }
-    public DbSet<EstateStatus> EstateStatuses { get; set; }
-    public DbSet<Price> Prices { get; set; }
-    public DbSet<Photo> Photos { get; set; }
-    public DbSet<Currency> Currencies { get; set; }
+    public virtual DbSet<Estate> Estates { get; set; }
+    public virtual DbSet<EstateType> EstateTypes { get; set; }
+    public virtual DbSet<EstateStatus> EstateStatuses { get; set; }
+    public virtual DbSet<Price> Prices { get; set; }
+    public virtual DbSet<Photo> Photos { get; set; }
+    public virtual DbSet<Currency> Currencies { get; set; }
     public RealEstateContext(DbContextOptions<RealEstateContext> opt) : base(opt) { }
   }
 }
