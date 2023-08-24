@@ -8,7 +8,7 @@ namespace RealEstateApp.Tests
   public class EstateTypeControllerTests
   {
     [Fact]
-    public async void GetAll_ReturnsOK()
+    public async void GetAll_ReturnsOkAndListOfItems()
     {
       // Arrange
       var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
@@ -24,7 +24,7 @@ namespace RealEstateApp.Tests
     }
 
     [Fact]
-    public async void GetById_ValidId_ReturnsCorrectResult()
+    public async void GetById_ValidId_ReturnsOkAndCorrectItem()
     {
       // Arrange
       int expectedId = 1;
@@ -58,7 +58,7 @@ namespace RealEstateApp.Tests
     }
 
     [Fact]
-    public async void Post_ValidInput_ReturnsOKAndAddedItem()
+    public async void Post_ValidInput_ReturnsOkAndAddedItem()
     {
       // Arrange
       var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
@@ -78,7 +78,7 @@ namespace RealEstateApp.Tests
     }
 
     [Fact]
-    public async void Put_ValidInput_ReturnsOKAndUpdatedItem()
+    public async void Put_ValidInput_ReturnsOkAndUpdatedItem()
     {
       // Arrange
       var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
