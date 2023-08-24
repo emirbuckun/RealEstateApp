@@ -46,6 +46,7 @@ namespace RealEstateApp.Tests
       // Assert
       var okResult = Assert.IsType<OkObjectResult>(result);
       Assert.NotNull(okResult);
+      Assert.IsType<List<InfoEstateType>>(okResult.Value);
       Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
     }
   }
