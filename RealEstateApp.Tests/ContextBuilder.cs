@@ -24,9 +24,9 @@ namespace RealEstateApp.Tests
     {
       return new EstateType[]
       {
-        new EstateType {Id = 1, Name = "Test1" },
-        new EstateType {Id = 2, Name = "Test2" },
-        new EstateType {Id = 3, Name = "Test3"},
+        new EstateType {Id = 1, Name = "Villa" },
+        new EstateType {Id = 2, Name = "Apartment" },
+        new EstateType {Id = 3, Name = "Land" },
       };
     }
 
@@ -34,9 +34,8 @@ namespace RealEstateApp.Tests
     {
       return new EstateStatus[]
       {
-        new EstateStatus {Id = 1, Name = "Test1" },
-        new EstateStatus {Id = 2, Name = "Test2" },
-        new EstateStatus {Id = 3, Name = "Test3"},
+        new EstateStatus {Id = 1, Name = "Sale" },
+        new EstateStatus {Id = 2, Name = "Rent" },
       };
     }
 
@@ -44,9 +43,9 @@ namespace RealEstateApp.Tests
     {
       return new Currency[]
       {
-        new Currency {Id = 1, Name = "Test1" },
-        new Currency {Id = 2, Name = "Test2" },
-        new Currency {Id = 3, Name = "Test3"},
+        new Currency {Id = 1, Name = "Turkish Liras", Code = "TRY" },
+        new Currency {Id = 2, Name = "Euro", Code = "EUR" },
+        new Currency {Id = 3, Name = "Dolar", Code = "USD" },
       };
     }
 
@@ -64,9 +63,9 @@ namespace RealEstateApp.Tests
     {
       return new Estate[]
       {
-        new Estate {Id = 1, Name = "Estate1", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 1, EstateStatusId = 1 },
-        new Estate {Id = 2, Name = "Estate2", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 2, EstateStatusId = 2 },
-        new Estate {Id = 3, Name = "Estate3", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 3, EstateStatusId = 3 },
+        new Estate {Id = 1, Name = "Estate#1", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 1, EstateStatusId = 1 },
+        new Estate {Id = 2, Name = "Estate#2", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 2, EstateStatusId = 2 },
+        new Estate {Id = 3, Name = "Estate#3", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 3, EstateStatusId = 1 },
       };
     }
   }
