@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateApp.Api.DTO.EstateType;
-using RealEstateApp.Api.Entity;
 
 namespace RealEstateApp.Tests
 {
@@ -11,10 +10,10 @@ namespace RealEstateApp.Tests
     public async void GetAll_ReturnsOkAndListOfItems()
     {
       // Arrange
-      var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder().Build();
 
       // Act
-      var result = await estateTypeController.GetAll();
+      var result = await controller.GetAll();
 
       // Assert
       var okResult = Assert.IsType<OkObjectResult>(result);
@@ -27,11 +26,11 @@ namespace RealEstateApp.Tests
     public async void GetById_ValidId_ReturnsOkAndCorrectItem()
     {
       // Arrange
-      int expectedId = 1;
-      var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder().Build();
+      int validId = 1;
 
       // Act
-      var result = await estateTypeController.GetById(expectedId);
+      var result = await controller.GetById(validId);
 
       // Assert
       var okResult = Assert.IsType<OkObjectResult>(result);
@@ -39,19 +38,19 @@ namespace RealEstateApp.Tests
       Assert.IsType<InfoEstateType>(okResult.Value);
       Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
 
-      var returnedEstateType = okResult.Value as InfoEstateType;
-      Assert.Equal(expectedId, returnedEstateType?.Id);
+      var returnedItem = okResult.Value as InfoEstateType;
+      Assert.Equal(validId, returnedItem?.Id);
     }
 
     [Fact]
     public async void GetById_InvalidId_ReturnsNotFound()
     {
       // Arrange
+      var controller = new ControllerBuilder().Build();
       int invalidId = 0;
-      var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
 
       // Act
-      var result = await estateTypeController.GetById(invalidId);
+      var result = await controller.GetById(invalidId);
 
       // Assert
       Assert.IsType<NotFoundResult>(result);
@@ -61,32 +60,11 @@ namespace RealEstateApp.Tests
     public async void Post_ValidInput_ReturnsOkAndAddedItem()
     {
       // Arrange
-      var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
       NewEstateType toBeAdded = new() { Name = "Test4" };
 
       // Act
-      var result = await estateTypeController.Post(toBeAdded);
-
-      // Assert
-      var okResult = Assert.IsType<OkObjectResult>(result);
-      Assert.NotNull(okResult);
-      Assert.IsType<EstateType>(okResult.Value);
-      Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
-
-      var returnedEstateType = okResult.Value as EstateType;
-      Assert.Equal(toBeAdded.Name, returnedEstateType?.Name);
-    }
-
-    [Fact]
-    public async void Put_ValidInput_ReturnsOkAndUpdatedItem()
-    {
-      // Arrange
-      var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
-      EditEstateType toBeUpdated = new() { Id = 3, Name = "Test3" };
-      toBeUpdated.Name = "New Name";
-
-      // Act
-      var result = await estateTypeController.Put(toBeUpdated);
+      var result = await controller.Post(toBeAdded);
 
       // Assert
       var okResult = Assert.IsType<OkObjectResult>(result);
@@ -94,20 +72,69 @@ namespace RealEstateApp.Tests
       Assert.IsType<InfoEstateType>(okResult.Value);
       Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
 
-      var returnedEstateType = okResult.Value as InfoEstateType;
-      Assert.Equal(toBeUpdated.Id, returnedEstateType?.Id);
-      Assert.Equal(toBeUpdated.Name, returnedEstateType?.Name);
+      var returnedItem = okResult.Value as InfoEstateType;
+      Assert.Equal(toBeAdded.Name, returnedItem?.Name);
+    }
+
+    [Fact]
+    public async void Put_ValidInput_ReturnsOkAndUpdatedItem()
+    {
+      // Arrange
+      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
+      EditEstateType toBeUpdated = new() { Id = 3, Name = "Test3" };
+      toBeUpdated.Name = "New Name";
+
+      // Act
+      var result = await controller.Put(toBeUpdated);
+
+      // Assert
+      var okResult = Assert.IsType<OkObjectResult>(result);
+      Assert.NotNull(okResult);
+      Assert.IsType<InfoEstateType>(okResult.Value);
+      Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+
+      var returnedItem = okResult.Value as InfoEstateType;
+      Assert.Equal(toBeUpdated.Id, returnedItem?.Id);
+      Assert.Equal(toBeUpdated.Name, returnedItem?.Name);
     }
 
     [Fact]
     public async void Put_InvalidInput_ReturnsNotFound()
     {
       // Arrange
-      var estateTypeController = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
       EditEstateType toBeUpdated = new() { Id = 0, Name = "Test" };
 
       // Act
-      var result = await estateTypeController.Put(toBeUpdated);
+      var result = await controller.Put(toBeUpdated);
+
+      // Assert
+      Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
+    public async void Delete_ValidId_ReturnsNoContent()
+    {
+      // Arrange
+      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
+      int validId = 2;
+
+      // Act
+      var result = await controller.Delete(validId);
+
+      // Assert
+      Assert.IsType<NoContentResult>(result);
+    }
+
+    [Fact]
+    public async void Delete_InvalidId_ReturnsNotFound()
+    {
+      // Arrange
+      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
+      int invalidId = 0;
+
+      // Act
+      var result = await controller.Delete(invalidId);
 
       // Assert
       Assert.IsType<NotFoundResult>(result);

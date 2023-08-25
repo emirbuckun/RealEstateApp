@@ -49,9 +49,9 @@ namespace RealEstateApp.Api.Controllers
       newItem.CreatedAt = DateTime.Now;
       newItem.CreatedBy = username;
 
-      var result = _realEstateContext.EstateTypes.Add(newItem);
+      await _realEstateContext.EstateTypes.AddAsync(newItem);
       await _realEstateContext.SaveChangesAsync();
-      return Ok(result.Entity);
+      return Ok(new InfoEstateType(newItem));
     }
 
     [Authorize(Roles = UserRoles.Admin)]
@@ -67,7 +67,7 @@ namespace RealEstateApp.Api.Controllers
         item.UpdatedBy = username;
         item.UpdatedAt = DateTime.Now;
 
-        var result = await _realEstateContext.SaveChangesAsync();
+        await _realEstateContext.SaveChangesAsync();
         return Ok(new InfoEstateType(item));
       }
       return NotFound();
