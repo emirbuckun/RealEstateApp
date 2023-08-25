@@ -26,4 +26,9 @@
     <ProjectReference Include="..\RealEstateApp.Api\RealEstateApp.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Builders/" />
+    <Folder Include="Tests/" />
+  </ItemGroup>
+
 </Project>
