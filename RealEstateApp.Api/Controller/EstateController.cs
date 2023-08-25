@@ -123,15 +123,10 @@ namespace RealEstateApp.Api.Controllers
       newItem.StartDate = currentTime;
       newItem.CreatedAt = currentTime;
       newItem.CreatedBy = username;
-      var result = _realEstateContext.Estates.Add(newItem);
-      await _realEstateContext.SaveChangesAsync();
 
-      var newEntity = _realEstateContext.Estates
-        .Include(x => x.EstateType)
-        .Include(x => x.EstateStatus)
-        .Where(x => !x.IsDeleted)
-        .Single(x => x.Id == result.Entity.Id);
-      return Ok(new InfoEstate(newEntity));
+      await _realEstateContext.Estates.AddAsync(newItem);
+      await _realEstateContext.SaveChangesAsync();
+      return Ok(new InfoEstate(newItem));
     }
 
     [Authorize(Roles = UserRoles.Admin)]
@@ -151,14 +146,13 @@ namespace RealEstateApp.Api.Controllers
         item.Name = request.Name;
         item.Latitude = request.Latitude;
         item.Longitude = request.Longitude;
-        // item.StartDate = request.StartDate;
         item.EndDate = request.EndDate;
         item.EstateTypeId = request.EstateTypeId;
         item.EstateStatusId = request.EstateStatusId;
         item.UpdatedBy = username;
         item.UpdatedAt = DateTime.Now;
 
-        var result = await _realEstateContext.SaveChangesAsync();
+        await _realEstateContext.SaveChangesAsync();
         return Ok(new InfoEstate(item));
       }
       return NotFound();
@@ -177,7 +171,7 @@ namespace RealEstateApp.Api.Controllers
         item.UpdatedBy = username;
         item.UpdatedAt = DateTime.Now;
 
-        var result = await _realEstateContext.SaveChangesAsync();
+        await _realEstateContext.SaveChangesAsync();
         return NoContent();
       }
       return NotFound();
