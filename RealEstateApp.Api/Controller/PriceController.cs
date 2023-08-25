@@ -57,9 +57,9 @@ namespace RealEstateApp.Api.Controllers
       newItem.CreatedAt = DateTime.Now;
       newItem.CreatedBy = username;
 
-      var result = _realEstateContext.Prices.Add(newItem);
+      await _realEstateContext.Prices.AddAsync(newItem);
       await _realEstateContext.SaveChangesAsync();
-      return Ok(result.Entity);
+      return Ok(new InfoPrice(newItem));
     }
 
     [Authorize(Roles = UserRoles.Admin)]
@@ -81,7 +81,7 @@ namespace RealEstateApp.Api.Controllers
         item.UpdatedBy = username;
         item.UpdatedAt = DateTime.Now;
 
-        var result = await _realEstateContext.SaveChangesAsync();
+        await _realEstateContext.SaveChangesAsync();
         return Ok(new InfoPrice(item));
       }
       return NotFound();
@@ -103,7 +103,7 @@ namespace RealEstateApp.Api.Controllers
         item.UpdatedBy = username;
         item.UpdatedAt = DateTime.Now;
 
-        var result = await _realEstateContext.SaveChangesAsync();
+        await _realEstateContext.SaveChangesAsync();
         return NoContent();
       }
       return NotFound();
