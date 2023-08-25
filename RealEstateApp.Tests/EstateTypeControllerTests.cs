@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RealEstateApp.Api.Controllers;
 using RealEstateApp.Api.DTO.EstateType;
 
 namespace RealEstateApp.Tests
@@ -10,7 +11,7 @@ namespace RealEstateApp.Tests
     public async void GetAll_ReturnsOkAndListOfItems()
     {
       // Arrange
-      var controller = new ControllerBuilder().Build();
+      var controller = new ControllerBuilder<EstateTypeController>().Build();
 
       // Act
       var result = await controller.GetAll();
@@ -26,7 +27,7 @@ namespace RealEstateApp.Tests
     public async void GetById_ValidId_ReturnsOkAndCorrectItem()
     {
       // Arrange
-      var controller = new ControllerBuilder().Build();
+      var controller = new ControllerBuilder<EstateTypeController>().Build();
       int validId = 1;
 
       // Act
@@ -46,7 +47,7 @@ namespace RealEstateApp.Tests
     public async void GetById_InvalidId_ReturnsNotFound()
     {
       // Arrange
-      var controller = new ControllerBuilder().Build();
+      var controller = new ControllerBuilder<EstateTypeController>().Build();
       int invalidId = 0;
 
       // Act
@@ -60,7 +61,7 @@ namespace RealEstateApp.Tests
     public async void Post_ValidInput_ReturnsOkAndAddedItem()
     {
       // Arrange
-      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder<EstateTypeController>().WithDefaultIdentity().Build();
       NewEstateType toBeAdded = new() { Name = "Test4" };
 
       // Act
@@ -80,7 +81,7 @@ namespace RealEstateApp.Tests
     public async void Put_ValidInput_ReturnsOkAndUpdatedItem()
     {
       // Arrange
-      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder<EstateTypeController>().WithDefaultIdentity().Build();
       EditEstateType toBeUpdated = new() { Id = 3, Name = "Test3" };
       toBeUpdated.Name = "New Name";
 
@@ -102,7 +103,7 @@ namespace RealEstateApp.Tests
     public async void Put_InvalidInput_ReturnsNotFound()
     {
       // Arrange
-      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder<EstateTypeController>().WithDefaultIdentity().Build();
       EditEstateType toBeUpdated = new() { Id = 0, Name = "Test" };
 
       // Act
@@ -116,7 +117,7 @@ namespace RealEstateApp.Tests
     public async void Delete_ValidId_ReturnsNoContent()
     {
       // Arrange
-      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder<EstateTypeController>().WithDefaultIdentity().Build();
       int validId = 2;
 
       // Act
@@ -130,7 +131,7 @@ namespace RealEstateApp.Tests
     public async void Delete_InvalidId_ReturnsNotFound()
     {
       // Arrange
-      var controller = new ControllerBuilder().WithDefaultIdentity().Build();
+      var controller = new ControllerBuilder<EstateTypeController>().WithDefaultIdentity().Build();
       int invalidId = 0;
 
       // Act
