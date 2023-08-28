@@ -112,7 +112,7 @@ namespace RealEstateApp.Api.Controllers
     [Authorize(Roles = UserRoles.Admin)]
     [HttpPost]
     [Route("multiple")]
-    public async Task<IActionResult> PostMultiple([FromForm] int estateId, List<IFormFile> files)
+    public async Task<IActionResult> PostMultiple([FromForm] int estateId, IList<IFormFile> files)
     {
       var username = User.Claims.First(x => x.Type == "username").Value;
 
