@@ -14,17 +14,29 @@ const Add = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (estateId > 0 && photo != null) {
-      const isTypeValid = photo.type.split("/")[0] == "image";
-      const isSizeValid = photo.size < 2097152;
+      const fileListAsArray = Array.from(photo);
+      let filesValid = true;
 
-      if (!isTypeValid) {
-        alert("Please upload file with a type of image.");
-      } else if (!isSizeValid) {
-        alert("Please upload file smaller than 2MB.");
-      } else {
+      fileListAsArray.forEach((file) => {
+        const isTypeValid = file.type.split("/")[0] == "image";
+        const isSizeValid = file.size < 2097152;
+
+        if (!isTypeValid) {
+          filesValid = false;
+          alert("Please upload file with a type of image.");
+          return;
+        } else if (!isSizeValid) {
+          filesValid = false;
+          alert("Please upload file smaller than 2MB.");
+          return;
+        }
+      });
+
+      if (filesValid) {
         var formData = new FormData();
         formData.append("estateId", estateId);
-        formData.append("file", photo);
+        for (let i = 0; i < fileListAsArray.length; i++)
+          formData.append("files", fileListAsArray[i]);
         handleAddPhoto(formData);
       }
     } else alert("Please fill the form.");
@@ -90,10 +102,11 @@ const Add = () => {
               <Col sm="9">
                 <Form.Control
                   type="file"
+                  multiple
                   onChange={(e) =>
                     setForm((prev) => ({
                       ...prev,
-                      photo: e.target.files[0],
+                      photo: e.target.files,
                     }))
                   }
                 />

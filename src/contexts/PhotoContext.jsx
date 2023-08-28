@@ -1,4 +1,8 @@
-import { getPhotos, addPhoto, deletePhoto } from "/src/services/PhotoService";
+import {
+  getPhotos,
+  addMultiplePhoto,
+  deletePhoto,
+} from "/src/services/PhotoService";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +24,7 @@ export const PhotoProvider = (props) => {
 
   // HANDLE EVENT FUNCTIONS
   const handleAddPhoto = (formData) => {
-    addPhoto(formData)
+    addMultiplePhoto(formData)
       .then((response) => {
         if (response.status == 200) {
           alert("Add operation successful!");
