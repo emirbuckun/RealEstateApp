@@ -69,6 +69,10 @@ namespace RealEstateApp.Api.Controllers
     public async Task<IActionResult> Post([FromForm] int estateId, IFormFile file)
     {
       var username = User.Claims.First(x => x.Type == "username").Value;
+      var estate = await _realEstateContext.Estates.Where(x => !x.IsDeleted && x.Id == estateId).SingleOrDefaultAsync();
+
+      if (estate == null)
+        return NotFound("Estate is not found!");
 
       if (file.Length > 0)
       {
@@ -115,6 +119,10 @@ namespace RealEstateApp.Api.Controllers
     public async Task<IActionResult> PostMultiple([FromForm] int estateId, IList<IFormFile> files)
     {
       var username = User.Claims.First(x => x.Type == "username").Value;
+      var estate = await _realEstateContext.Estates.Where(x => !x.IsDeleted && x.Id == estateId).SingleOrDefaultAsync();
+
+      if (estate == null)
+        return NotFound("Estate is not found!");
 
       List<InfoPhoto> photolist = new();
       if (files.Count > 0)

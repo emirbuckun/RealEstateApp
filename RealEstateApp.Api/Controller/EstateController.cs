@@ -119,6 +119,12 @@ namespace RealEstateApp.Api.Controllers
       var username = User.Claims.First(x => x.Type == "username").Value;
       var currentTime = DateTime.Now;
 
+      var estateType = await _realEstateContext.Estates.Where(x => !x.IsDeleted && x.Id == request.EstateTypeId).SingleOrDefaultAsync();
+      var estateStatus = await _realEstateContext.Currencies.Where(x => !x.IsDeleted && x.Id == request.EstateStatusId).SingleOrDefaultAsync();
+
+      if (estateType == null || estateStatus == null)
+        return NotFound("Estate type or status is not found!");
+
       var newItem = request.ToEstate();
       newItem.StartDate = currentTime;
       newItem.CreatedAt = currentTime;
@@ -133,6 +139,12 @@ namespace RealEstateApp.Api.Controllers
     [HttpPut]
     public async Task<IActionResult> Put([FromBody] EditEstate request)
     {
+      var estateType = await _realEstateContext.Estates.Where(x => !x.IsDeleted && x.Id == request.EstateTypeId).SingleOrDefaultAsync();
+      var estateStatus = await _realEstateContext.Currencies.Where(x => !x.IsDeleted && x.Id == request.EstateStatusId).SingleOrDefaultAsync();
+
+      if (estateType == null || estateStatus == null)
+        return NotFound("Estate type or status is not found!");
+
       var item = await _realEstateContext.Estates
         .Include(x => x.EstateType)
         .Include(x => x.EstateStatus)
@@ -155,7 +167,7 @@ namespace RealEstateApp.Api.Controllers
         await _realEstateContext.SaveChangesAsync();
         return Ok(new InfoEstate(item));
       }
-      return NotFound();
+      return NotFound("Estate is not found!");
     }
 
     [Authorize(Roles = UserRoles.Admin)]

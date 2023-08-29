@@ -62,7 +62,7 @@ namespace RealEstateApp.Tests
     {
       // Arrange
       var controller = new ControllerBuilder<EstateController>().WithDefaultIdentity().Build();
-      NewEstate toBeAdded = new() { Name = "Estate#4" };
+      NewEstate toBeAdded = new() { Name = "Estate#4", EstateTypeId = 1, EstateStatusId = 1 };
 
       // Act
       var result = await controller.Post(toBeAdded);
@@ -78,11 +78,28 @@ namespace RealEstateApp.Tests
     }
 
     [Fact]
+    public async void Post_InvalidInput_ReturnsNotFoundObjectResult()
+    {
+      // Arrange
+      var controller = new ControllerBuilder<EstateController>().WithDefaultIdentity().Build();
+      NewEstate invalidType = new() { Name = "Estate#5", EstateTypeId = 15, EstateStatusId = 1 };
+      NewEstate invalidStatus = new() { Name = "Estate#6", EstateTypeId = 1, EstateStatusId = 15 };
+
+      // Act
+      var invalidTypeResult = await controller.Post(invalidType);
+      var invalidStatusResult = await controller.Post(invalidStatus);
+
+      // Assert
+      Assert.IsType<NotFoundObjectResult>(invalidTypeResult);
+      Assert.IsType<NotFoundObjectResult>(invalidStatusResult);
+    }
+
+    [Fact]
     public async void Put_ValidInput_ReturnsOkAndUpdatedItem()
     {
       // Arrange
       var controller = new ControllerBuilder<EstateController>().WithDefaultIdentity().Build();
-      EditEstate toBeUpdated = new() { Id = 3, Name = "Estate#3" };
+      EditEstate toBeUpdated = new() { Id = 3, Name = "Estate#3", EstateTypeId = 1, EstateStatusId = 1 };
       toBeUpdated.Name = "New Name";
 
       // Act
@@ -100,17 +117,23 @@ namespace RealEstateApp.Tests
     }
 
     [Fact]
-    public async void Put_InvalidInput_ReturnsNotFound()
+    public async void Put_InvalidInput_ReturnsNotFoundObjectResult()
     {
       // Arrange
       var controller = new ControllerBuilder<EstateController>().WithDefaultIdentity().Build();
-      EditEstate toBeUpdated = new() { Id = 0, Name = "Test" };
+      EditEstate invalidId = new() { Id = 0, Name = "Estate#5", EstateTypeId = 15, EstateStatusId = 1 };
+      EditEstate invalidType = new() { Id = 1, Name = "Estate#5", EstateTypeId = 15, EstateStatusId = 1 };
+      EditEstate invalidStatus = new() { Id = 2, Name = "Estate#6", EstateTypeId = 1, EstateStatusId = 15 };
 
       // Act
-      var result = await controller.Put(toBeUpdated);
+      var invalidIdResult = await controller.Put(invalidId);
+      var invalidTypeResult = await controller.Put(invalidType);
+      var invalidStatusResult = await controller.Put(invalidStatus);
 
       // Assert
-      Assert.IsType<NotFoundResult>(result);
+      Assert.IsType<NotFoundObjectResult>(invalidIdResult);
+      Assert.IsType<NotFoundObjectResult>(invalidTypeResult);
+      Assert.IsType<NotFoundObjectResult>(invalidStatusResult);
     }
 
     [Fact]

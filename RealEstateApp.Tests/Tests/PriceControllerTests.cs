@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateApp.Api.Controllers;
-using RealEstateApp.Api.DTO.EstateType;
 using RealEstateApp.Api.DTO.Price;
 
 namespace RealEstateApp.Tests
@@ -79,6 +78,23 @@ namespace RealEstateApp.Tests
     }
 
     [Fact]
+    public async void Post_InvalidInput_ReturnsNotFoundObjectResult()
+    {
+      // Arrange
+      var controller = new ControllerBuilder<PriceController>().WithDefaultIdentity().Build();
+      NewPrice invalidCurrency = new() { Amount = 50, CurrencyId = 15, EstateId = 1 };
+      NewPrice invalidEstate = new() { Amount = 50, CurrencyId = 1, EstateId = 15 };
+
+      // Act
+      var invalidCurrencyResult = await controller.Post(invalidCurrency);
+      var invalidEstateResult = await controller.Post(invalidEstate);
+
+      // Assert
+      Assert.IsType<NotFoundObjectResult>(invalidCurrencyResult);
+      Assert.IsType<NotFoundObjectResult>(invalidEstateResult);
+    }
+
+    [Fact]
     public async void Put_ValidInput_ReturnsOkAndUpdatedItem()
     {
       // Arrange
@@ -102,17 +118,23 @@ namespace RealEstateApp.Tests
     }
 
     [Fact]
-    public async void Put_InvalidInput_ReturnsNotFound()
+    public async void Put_InvalidInput_ReturnsNotFoundObjectResult()
     {
       // Arrange
       var controller = new ControllerBuilder<PriceController>().WithDefaultIdentity().Build();
-      EditPrice toBeUpdated = new() { Id = 0, Amount = 50, CurrencyId = 1, EstateId = 1 };
+      EditPrice invalidId = new() { Id = 0, Amount = 50, CurrencyId = 1, EstateId = 1 };
+      EditPrice invalidCurrency = new() { Id = 1, Amount = 50, CurrencyId = 15, EstateId = 1 };
+      EditPrice invalidEstate = new() { Id = 1, Amount = 50, CurrencyId = 1, EstateId = 15 };
 
       // Act
-      var result = await controller.Put(toBeUpdated);
+      var invalidIdResult = await controller.Put(invalidId);
+      var invalidCurrencyResult = await controller.Put(invalidCurrency);
+      var invalidEstateResult = await controller.Put(invalidEstate);
 
       // Assert
-      Assert.IsType<NotFoundResult>(result);
+      Assert.IsType<NotFoundObjectResult>(invalidIdResult);
+      Assert.IsType<NotFoundObjectResult>(invalidCurrencyResult);
+      Assert.IsType<NotFoundObjectResult>(invalidEstateResult);
     }
 
     [Fact]

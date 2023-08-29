@@ -52,6 +52,11 @@ namespace RealEstateApp.Api.Controllers
     public async Task<IActionResult> Post([FromBody] NewPrice request)
     {
       var username = User.Claims.First(x => x.Type == "username").Value;
+      var estate = await _realEstateContext.Estates.Where(x => !x.IsDeleted && x.Id == request.EstateId).SingleOrDefaultAsync();
+      var currency = await _realEstateContext.Currencies.Where(x => !x.IsDeleted && x.Id == request.CurrencyId).SingleOrDefaultAsync();
+
+      if (estate == null || currency == null)
+        return NotFound("Estate or currency is not found!");
 
       var newItem = request.ToPrice();
       newItem.CreatedAt = DateTime.Now;
@@ -66,10 +71,16 @@ namespace RealEstateApp.Api.Controllers
     [HttpPut]
     public async Task<IActionResult> Put([FromBody] EditPrice request)
     {
+      var estate = await _realEstateContext.Estates.Where(x => !x.IsDeleted && x.Id == request.EstateId).SingleOrDefaultAsync();
+      var currency = await _realEstateContext.Currencies.Where(x => !x.IsDeleted && x.Id == request.CurrencyId).SingleOrDefaultAsync();
+
+      if (estate == null || currency == null)
+        return NotFound("Estate or currency is not found!");
+
       var item = await _realEstateContext.Prices
-        .Include(x => x.Currency)
-        .Include(x => x.Estate)
-        .SingleOrDefaultAsync(x => x.Id == request.Id && !x.IsDeleted);
+              .Include(x => x.Currency)
+              .Include(x => x.Estate)
+              .SingleOrDefaultAsync(x => x.Id == request.Id && !x.IsDeleted);
 
       if (item != null)
       {
@@ -84,7 +95,7 @@ namespace RealEstateApp.Api.Controllers
         await _realEstateContext.SaveChangesAsync();
         return Ok(new InfoPrice(item));
       }
-      return NotFound();
+      return NotFound("Price is not found!");
     }
 
     [Authorize(Roles = UserRoles.Admin)]
