@@ -55,7 +55,7 @@ namespace RealEstateApp.Tests
       {
         new Price { Id = 1, Amount = 100, CurrencyId = 1, EstateId = 1 },
         new Price { Id = 2, Amount = 200, CurrencyId = 2, EstateId = 2 },
-        new Price { Id = 3, Amount = 300, CurrencyId = 3, EstateId = 3 },
+        new Price { Id = 3, Amount = 300, CurrencyId = 1, EstateId = 3 },
       };
     }
 
@@ -64,8 +64,8 @@ namespace RealEstateApp.Tests
       return new Estate[]
       {
         new Estate { Id = 1, Name = "Estate#1", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 1, EstateStatusId = 1 },
-        new Estate { Id = 2, Name = "Estate#2", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 2, EstateStatusId = 2 },
-        new Estate { Id = 3, Name = "Estate#3", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 3, EstateStatusId = 1 },
+        new Estate { Id = 2, Name = "Estate#2", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 2, EstateStatusId = 1 },
+        new Estate { Id = 3, Name = "Estate#3", Latitude = 15, Longitude = 20, StartDate = DateTime.Now, EndDate = DateTime.Today.AddDays(1), EstateTypeId = 1, EstateStatusId = 1 },
       };
     }
   }

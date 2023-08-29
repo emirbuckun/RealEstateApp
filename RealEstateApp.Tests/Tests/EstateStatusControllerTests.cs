@@ -141,5 +141,19 @@ namespace RealEstateApp.Tests
       // Assert
       Assert.IsType<NotFoundResult>(result);
     }
+
+    [Fact]
+    public async void Delete_WithRelation_ReturnsBadRequestObjectResult()
+    {
+      // Arrange
+      var controller = new ControllerBuilder<EstateStatusController>().WithDefaultIdentity().Build();
+      int invalidId = 1;
+
+      // Act
+      var result = await controller.Delete(invalidId);
+
+      // Assert
+      Assert.IsType<NotFoundResult>(result);
+    }
   }
 }

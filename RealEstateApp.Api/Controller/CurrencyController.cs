@@ -79,18 +79,22 @@ namespace RealEstateApp.Api.Controllers
     public async Task<IActionResult> Delete(int id)
     {
       var item = await _realEstateContext.Currencies.SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
-      if (item != null)
-      {
-        var username = User.Claims.First(x => x.Type == "username").Value;
+      if (item == null)
+        return NotFound();
 
-        item.IsDeleted = true;
-        item.UpdatedBy = username;
-        item.UpdatedAt = DateTime.Now;
+      var priceRelations = _realEstateContext.Prices.Where(x => x.CurrencyId == id && !x.IsDeleted);
 
-        await _realEstateContext.SaveChangesAsync();
-        return NoContent();
-      }
-      return NotFound();
+      if (priceRelations.Any())
+        return BadRequest("Price relations exist with this currency!");
+
+      var username = User.Claims.First(x => x.Type == "username").Value;
+
+      item.IsDeleted = true;
+      item.UpdatedBy = username;
+      item.UpdatedAt = DateTime.Now;
+
+      await _realEstateContext.SaveChangesAsync();
+      return NoContent();
     }
   }
 }

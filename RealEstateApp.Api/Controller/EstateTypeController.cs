@@ -78,18 +78,22 @@ namespace RealEstateApp.Api.Controllers
     public async Task<IActionResult> Delete(int id)
     {
       var item = await _realEstateContext.EstateTypes.SingleOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
-      if (item != null)
-      {
-        var username = User.Claims.First(x => x.Type == "username").Value;
+      if (item == null)
+        return NotFound();
 
-        item.IsDeleted = true;
-        item.UpdatedBy = username;
-        item.UpdatedAt = DateTime.Now;
+      var estateRelations = _realEstateContext.Estates.Where(x => x.EstateTypeId == id && !x.IsDeleted);
 
-        var result = await _realEstateContext.SaveChangesAsync();
-        return NoContent();
-      }
-      return NotFound();
+      if (estateRelations.Any())
+        return BadRequest("Estate relations exist with this estate type!");
+
+      var username = User.Claims.First(x => x.Type == "username").Value;
+
+      item.IsDeleted = true;
+      item.UpdatedBy = username;
+      item.UpdatedAt = DateTime.Now;
+
+      var result = await _realEstateContext.SaveChangesAsync();
+      return NoContent();
     }
   }
 }

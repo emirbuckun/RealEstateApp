@@ -118,7 +118,7 @@ namespace RealEstateApp.Tests
     {
       // Arrange
       var controller = new ControllerBuilder<EstateTypeController>().WithDefaultIdentity().Build();
-      int validId = 2;
+      int validId = 3;
 
       // Act
       var result = await controller.Delete(validId);
@@ -139,6 +139,20 @@ namespace RealEstateApp.Tests
 
       // Assert
       Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
+    public async void Delete_WithRelation_ReturnsBadRequestObjectResult()
+    {
+      // Arrange
+      var controller = new ControllerBuilder<EstateTypeController>().WithDefaultIdentity().Build();
+      int invalidId = 1;
+
+      // Act
+      var result = await controller.Delete(invalidId);
+
+      // Assert
+      Assert.IsType<BadRequestObjectResult>(result);
     }
   }
 }
