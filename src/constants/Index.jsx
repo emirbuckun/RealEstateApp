@@ -12,6 +12,7 @@ export const PAGE_LIST = {
   admin: [
     { name: "photos", url: "/photos" },
     { name: "prices", url: "/prices" },
+    { name: "users", url: "/users" },
     { name: "logs", url: "/logs" },
   ],
   lookup: [
