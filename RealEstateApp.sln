@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateApp.Api", "RealEs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateApp.Tests", "RealEstateApp.Tests\RealEstateApp.Tests.csproj", "{DE6F1572-BFC5-4C13-AC11-E16AFA83E73D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{E32DBC0F-F376-4D03-840F-B2BD3FC6D2B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{DE6F1572-BFC5-4C13-AC11-E16AFA83E73D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6F1572-BFC5-4C13-AC11-E16AFA83E73D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE6F1572-BFC5-4C13-AC11-E16AFA83E73D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E32DBC0F-F376-4D03-840F-B2BD3FC6D2B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E32DBC0F-F376-4D03-840F-B2BD3FC6D2B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E32DBC0F-F376-4D03-840F-B2BD3FC6D2B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E32DBC0F-F376-4D03-840F-B2BD3FC6D2B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

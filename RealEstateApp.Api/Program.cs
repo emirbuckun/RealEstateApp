@@ -9,19 +9,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ConfigurationManager configuration = builder.Configuration;
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
-ConfigurationManager configuration = builder.Configuration;
+var emailConfig = configuration
+    .GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
 
 // Add services to the container.
 builder.Services.AddControllers();
 
+builder.Services.AddSingleton(emailConfig!);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 builder.Services.Configure<LogDatabaseSettings>(
-    builder.Configuration.GetSection("LogDatabase"));
+    configuration.GetSection("LogDatabase"));
 
 builder.Services.AddSingleton<LogService>();
 
